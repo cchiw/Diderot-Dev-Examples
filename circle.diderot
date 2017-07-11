@@ -4,9 +4,9 @@ vec2 x=[1,1];
 real rad = 0.1;
 
 
-poly#1(2)[] enr = ptof(x, 1/tan(|x|/rad*π/2) + (|x|/rad)*π/2 - π/2);
+ofield#1(2)[] enr = poly(x, 1/tan(|x|/rad*π/2) + (|x|/rad)*π/2 - π/2);
 
-poly#1(2)[] C = ptof(x, (1/(|x|/rad))*(1 - (|x|/rad))^3);
+ofield#1(2)[] C = poly(x, (1/(|x|/rad))*(1 - (|x|/rad))^3);
 
 
 
@@ -43,8 +43,8 @@ strand sample (int ui, int vi) {
 
 //output tensor [2] out  = (3 - 1/((|pos|/rad)^2) - 2*(|pos|/rad))* (1/rad) * pos/|pos|;
 //-2.928931 -2.928931 -5.3342361 -1.7780786 -22.091167 -4.4182334 -41.093472
-//output tensor[2] out=  inst(∇C,pos);
--2.9289312 -2.9289312 -5.3342342 -1.7780782 -22.091166 -4.4182334
+output tensor[2] out=  inst(∇C,pos);
+//-2.9289312 -2.9289312 -5.3342342 -1.7780782 -22.091166 -4.4182334
 
     update {
              stabilize;

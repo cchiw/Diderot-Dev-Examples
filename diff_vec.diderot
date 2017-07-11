@@ -4,17 +4,17 @@ vec2 x=[1,1];
 
 
 
-poly#3(2)[2] T = ptof(x,  (x•x)*x);
-poly#2(2)[2,2] GT =  ∇⊗T;
-poly#1(2)[2,2,2] GGT =  ∇⊗∇⊗T;
-poly#0(2)[2,2,2,2] GGGT =  ∇⊗∇⊗∇⊗T;
+ofield#3(2)[2] T = poly(x,  (x•x)*x);
+ofield#2(2)[2,2] GT =  ∇⊗T;
+ofield#1(2)[2,2,2] GGT =  ∇⊗∇⊗T;
+ofield#0(2)[2,2,2,2] GGGT =  ∇⊗∇⊗∇⊗T;
 
 
 real y= 7;
-poly#3(1)[] A = ptof(y,  y*y*y);
-poly#2(1)[] GA =  ∇A;
-poly#1(1)[] GGA =  ∇GA;
-poly#0(1)[] GGGA =  ∇GGA;
+ofield#3(1)[] A = poly(y,  y*y*y);
+ofield#2(1)[] GA =  ∇A;
+ofield#1(1)[] GGA =  ∇GA;
+ofield#0(1)[] GGGA =  ∇GGA;
 
 strand sample (int ui, int vi) {
     real uu = lerp(0.0, 1.0, -0.5, real(ui), real(outSize)-0.5);

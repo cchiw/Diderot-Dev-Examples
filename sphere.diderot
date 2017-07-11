@@ -3,12 +3,12 @@ int outSize = 10;
 vec3 x=[1,1,1];
 real rad = 0.1;
 
-//poly#1(3)[3] A = ptof(x, x);
-//poly#1(3)[] B = ptof(x, |x|);
-//poly#1(3)[] C = ptof(x, |x|/rad);
-//poly#1(3)[] D= ptof(x, 1-(|x|/rad));
-poly#1(3)[] enr = ptof(x, (1-(|x|/rad))^4);
-//poly#1(3)[] E = ptof(x, sqrt(x•x));
+//ofield#1(3)[3] A = poly(x, x);
+//ofield#1(3)[] B = poly(x, |x|);
+//ofield#1(3)[] C = poly(x, |x|/rad);
+//ofield#1(3)[] D= poly(x, 1-(|x|/rad));
+ofield#1(3)[] enr = poly(x, (1-(|x|/rad))^4);
+//ofield#1(3)[] E = poly(x, sqrt(x•x));
 
 
 

@@ -1,0 +1,20 @@
+int outSize = 10;
+
+real f = 8;
+ofield#1(2)[] F = fem(f);
+
+
+
+strand sample (int ui, int vi) {
+    real uu = lerp(0.0, 1.0, -0.5, real(ui), real(outSize)-0.5);
+    real vv = lerp(0.0, 1.0, -0.5, real(vi), real(outSize)-0.5);
+    vec2 pos = [uu,vv];
+
+    //output tensor [] out = F(pos);
+output tensor[] out=2;
+    update {
+             stabilize;
+    }
+}
+
+initially [ sample(ui, vi) | vi in 0..(outSize-1), ui in 0..(outSize-1) ];
