@@ -1,7 +1,8 @@
 int outSize = 10;
 
+//fem#1(2)[] f ;
 real f = 8;
-ofield#1(2)[] F = fem(f);
+ofield#1(2)[] F = convert(f);
 
 
 
@@ -10,8 +11,7 @@ strand sample (int ui, int vi) {
     real vv = lerp(0.0, 1.0, -0.5, real(vi), real(outSize)-0.5);
     vec2 pos = [uu,vv];
 
-    //output tensor [] out = F(pos);
-output tensor[] out=2;
+    output tensor[] out=  inst(F,pos)+inst(F,[3,4]);
     update {
              stabilize;
     }
