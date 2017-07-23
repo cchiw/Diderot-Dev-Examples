@@ -1,0 +1,34 @@
+/*
+vec2 x=[1,1];
+ofield#1(2)[] g1 = poly(x,fmod(|fmod(x[0],1)| + |fmod(x[1],1)|, 1));
+function real posrnd1(vec2 v, real rad) {
+    vec2 p = 10000*v/rad;
+    return inst(g1,p);
+}
+*/
+
+//Gives poly two input tensors
+real rad=8;
+vec2 v=[1,3];
+//ofield#1(2)[2] g2 = poly(v,rad, v*rad);
+ofield#1(2)[2] g2 = poly(v,rad, rad*v);
+
+
+
+int outSize = 10;
+strand sample (int ui, int vi) {
+    real uu = lerp(0.0, 1.0, -0.5, real(ui), real(outSize)-0.5);
+    real vv = lerp(0.0, 1.0, -0.5, real(vi), real(outSize)-0.5);
+    vec2 pos = [uu,vv];
+
+
+
+    real s = 3;
+    tensor[2] u =[1,4];
+    output tensor[2] out = inst(g2,u,s);
+    update {
+             stabilize;
+    }
+}
+
+initially [ sample(ui, vi) | vi in 0..(outSize-1), ui in 0..(outSize-1) ];

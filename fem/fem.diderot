@@ -1,17 +1,17 @@
 int outSize = 10;
 
-//real g = 8;
-input fem#1(2)[] g;
+real g = 8;
+//input fem#1(2)[] g;
 ofield#1(2)[] F = convert(g);
 
-//changing input type: simplify for converting api type, gen-inputs-util
-//field#1(2)[] H = toField(g);//unknown error in simplify
 strand sample (int ui, int vi) {
     real uu = lerp(0.0, 1.0, -0.5, real(ui), real(outSize)-0.5);
     real vv = lerp(0.0, 1.0, -0.5, real(vi), real(outSize)-0.5);
     vec2 pos = [uu,vv];
 
-output tensor[] out=  inst(F,pos)+inst(F,[3,4]);
+
+    output tensor[] out=  inst(F,pos)+inst(F,[3,4]);
+
     update {
              stabilize;
     }
