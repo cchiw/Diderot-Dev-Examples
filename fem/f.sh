@@ -1,0 +1,1 @@
+ /Users/chariseechiw/diderot/femprime/bin/diderotc --exec fem.diderot 
