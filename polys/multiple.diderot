@@ -23,15 +23,6 @@ strand sample (int ui, int vi) {
     real uu = lerp(0.0, 1.0, -0.5, real(ui), real(outSize)-0.5);
     real vv = lerp(0.0, 1.0, -0.5, real(vi), real(outSize)-0.5);
     vec2 pos = [uu,vv];
-
-    real s = 3;
-    tensor[2] u =[1,4];
-    tensor[2] w =[2,1];
-
-    // ************************ Example G **********************
-    //output tensor[2] out = u*s;
-    //output tensor[2] out = inst(g, u, s);
-    //3 12
     // ************************ Example DG **********************
     // output tensor[2,2] out = [[1*s,0],[0, 1*s]]; // first arg is differentiated
     // [3, 0, 0, 3]
