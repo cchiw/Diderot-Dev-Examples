@@ -1,17 +1,13 @@
-/*
+//sketch incomplete
+
 vec2 x=[1,1];
+
 ofield#1(2)[] g1 = poly(x,fmod(|fmod(x[0],1)| + |fmod(x[1],1)|, 1));
 function real posrnd1(vec2 v, real rad) {
     vec2 p = 10000*v/rad;
     return inst(g1,p);
 }
-*/
 
-//Gives poly two input tensors
-real rad=8;
-vec2 v=[1,3];
-//ofield#1(2)[2] g2 = poly(v,rad, v*rad);
-ofield#1(2)[2] g2 = poly(v,rad, rad*v);
 
 
 
@@ -25,7 +21,7 @@ strand sample (int ui, int vi) {
 
     real s = 3;
     tensor[2] u =[1,4];
-    output tensor[2] out = inst(g2,u,s);
+    output tensor[2] out = posrnd1(u,s);
     update {
              stabilize;
     }
