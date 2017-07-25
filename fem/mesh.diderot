@@ -1,0 +1,28 @@
+int outSize = 10;
+
+real f = 8; //holder for fem field
+real g = 8; //holder for fem field
+mesh m = UnitSquareMesh(2,2); //mesh
+//does length determine generated code?
+element e = Lagrange(); // reference element
+int d = 2; //degree
+fnspace V1 = FunctionSpace(m, e, d);
+fnspace V = FunctionSpace(UnitSquareMesh(2,2), Lagrange(), 2);
+
+ofield#1(2)[] F = convert(f, V); //field and function space
+ofield#1(2)[] F = convert(g, V);
+
+strand sample (int ui, int vi) {
+    real uu = lerp(0.0, 1.0, -0.5, real(ui), real(outSize)-0.5);
+    real vv = lerp(0.0, 1.0, -0.5, real(vi), real(outSize)-0.5);
+    vec2 pos = [uu,vv];
+
+
+    output tensor[] out=  inst(F,pos);
+
+    update {
+             stabilize;
+    }
+}
+
+initially [ sample(ui, vi) | vi in 0..(outSize-1), ui in 0..(outSize-1) ];
