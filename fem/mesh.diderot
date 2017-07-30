@@ -1,16 +1,21 @@
 int outSize = 10;
 
-real f = 8; //holder for fem field
-real g = 8; //holder for fem field
+input fem#1(2)[] f;
+input fem#1(2)[] g;
 mesh m = UnitSquareMesh(2,2); //mesh
 //does length determine generated code?
 element e = Lagrange(); // reference element
 int d = 2; //degree
-fnspace V1 = FunctionSpace(m, e, d);
-fnspace V = FunctionSpace(UnitSquareMesh(2,2), Lagrange(), 2);
+//fnspace V1 = FunctionSpace(m, e, d);
+fnspace V1 = FunctionSpace(UnitSquareMesh(2,2), Lagrange(), 2);
+fnspace V2 = FunctionSpace(UnitSquareMesh(2,2), P(), 2);
+//path to diderot
+string path = "/Users/chariseechiw/diderot/femprime";
 
-ofield#1(2)[] F = convert(f, V); //field and function space
-ofield#1(2)[] F = convert(g, V);
+//different element, same mesh
+ofield#1(2)[] F = convert(f, V1, path); //field and function space
+ofield#1(2)[] G = convert(f, V2, path);
+
 
 strand sample (int ui, int vi) {
     real uu = lerp(0.0, 1.0, -0.5, real(ui), real(outSize)-0.5);
@@ -18,7 +23,7 @@ strand sample (int ui, int vi) {
     vec2 pos = [uu,vv];
 
 
-    output tensor[] out=  inst(F,pos);
+    output tensor[] out=  inst(F,pos)+inst(G,pos);
 
     update {
              stabilize;
