@@ -1,0 +1,27 @@
+
+int outSize = 10;
+strand sample (int ui, int vi) {
+
+    vec2 a= [1,8];
+    vec2 b =[9,7];
+    real c = -0.5;
+    real d = real(ui);
+    real e =real(outSize)-0.5;
+    
+
+    vec2 uu = lerp(a, b, c, d, e);
+
+    real xx = lerp(a[0], b[0], c, d, e);
+    real yy = lerp(a[1], b[1], c, d, e);
+
+    vec2 correct = a+((d-c)/(e-c))*(b-a);
+    vec2 pos = [xx,yy];
+
+
+    output tensor[2] out =uu ;
+    update {
+             stabilize;
+    }
+}
+
+initially [ sample(ui, vi) | vi in 0..(outSize-1), ui in 0..(outSize-1) ];

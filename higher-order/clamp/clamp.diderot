@@ -1,0 +1,23 @@
+
+int outSize = 10;
+strand sample (int ui, int vi) {
+
+    vec2 lo= [1, 3];
+    vec2 hi =[10,11];
+    vec2 a = [2, 6];
+    vec2 b = [0, 2];
+    vec2 c = [12, 15];
+    vec2 d = [11, 11];
+
+    tensor[2,2] ma=[lo,a];
+    tensor[2,2] mb= [hi, c];
+    tensor[2,2] mc = [c,d];
+    //output tensor[2] out = clamp(lo, hi, d);
+    
+    output tensor[2,2] out = clamp([[0,1],[0,0]],[[11,11],[11,11]], mb);
+    update{
+             stabilize;
+    }
+}
+
+initially [ sample(ui, vi) | vi in 0..(outSize-1), ui in 0..(outSize-1) ];
