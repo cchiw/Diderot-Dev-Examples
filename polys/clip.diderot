@@ -1,13 +1,27 @@
+/*
+In this program we create the definition  cut (x)= (x-cutPos)•curNorm with the following syntax.
+"ofield#1(3)[]cut = poly(x,(x- cutPos)•cutNorm);"
+We provide two tests to evaluate this field "(inst(cut, v)" and it's derivative "∇cut".
+
+Current setback: an initaited tensor variable x is given as the first argument.
+
+*/
+
 
 input vec3 cutPos=[5,1,6];
 input vec3 cutNorm=[4,2,9];
 vec3 x=[1,1,1];
 ofield#1(3)[]cut = poly(x,(x- cutPos)•cutNorm);
+// creates:       cut (x)= (x-cutPos)•curNorm
+
+// takes the derivative
 ofield#0(3)[3]Dcut = ∇cut;
 
 int outSize = 10;
 strand sample (int ui, int vi) {
-    vec3 v = [ui,vi,2];
+
+    //tmp variables used for testing
+    //get the x,y,z, coordinate of every tensor
     real cutPosx=cutPos[0];
     real cutNormx=cutNorm[0];
     real vx=v[0];
@@ -17,6 +31,7 @@ strand sample (int ui, int vi) {
     real cutPosz=cutPos[2];
     real cutNormz=cutNorm[2];
     real vz=v[2];
+    //the partial derivative of vx by dx
     real dxvx = 1;
     real dyvx = 0;
     real dzvx = 0;
@@ -27,19 +42,24 @@ strand sample (int ui, int vi) {
     real dyvz = 0;
     real dzvz = 1;
 
-    // ************************ Example cut **********************
+    // ************************ Evaluates and tests field **********************
+    //evaluates the other field "cut"  and uses vector v as input.
+    vec3 v = [ui,vi,2];//input tensor
+    output real out = inst(cut, v);//-58 -54 -50 -46 -42
+    //creates the expected solution (in two ways).
     //output real out = (v- cutPos)•cutNorm; //-58 -54 -50 -46 -42
-    //output real out = inst(cut, v);//-58 -54 -50 -46 -42
     //output tensor[] out = (vx*cutNormx)-(cutPosx*cutNormx)+(vy*cutNormy)-(cutPosy*cutNormy)+(vz*cutNormz)-(cutPosz*cutNormz);
     //-58 -54 -50 -46 -42 -38
 
 
-    // ************************ Example Dcut **********************
+    // ************************ Evaluates and tests derivative  **********************
+    //evaluates the derivative of the other fields and uses vector v as input.
     //output tensor[3] out = inst(Dcut, v);//4 2 9
+    //creates the expected solution.
     real a = (dxvx*cutNormx)+(dxvy*cutNormy)+(dxvz*cutNormz);
     real b = (dyvx*cutNormx)+(dyvy*cutNormy)+(dyvz*cutNormz);
     real c = (dzvx*cutNormx)+(dzvy*cutNormy)+(dzvz*cutNormz);
-    output tensor[3] out = [a,b,c];//4 2 9
+    //output tensor[3] out = [a,b,c];//4 2 9
 
     update { stabilize;}
 }
