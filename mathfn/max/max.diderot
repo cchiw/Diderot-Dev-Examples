@@ -1,0 +1,21 @@
+field#2(2)[] c = c4hexic⊛  image("../../data/const8.nrrd");
+field#2(2)[] d = c4hexic⊛  image("../../data/const1.nrrd");
+field#2(2)[] m = maxF(c, d);
+field#2(2)[] i = minF(c, d);
+
+
+int outSize = 10;
+strand sample (int ui, int vi) {
+    vec2 pos =[ui,vi];
+
+
+
+    output tensor [] out = -77;
+
+    update {
+        if(inside(pos, m)){out = (i)(pos); }
+        stabilize;
+    }
+}
+
+initially [ sample(ui, vi) | vi in 0..(outSize-1), ui in 0..(outSize-1) ];
