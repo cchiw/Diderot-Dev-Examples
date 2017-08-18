@@ -5,8 +5,7 @@ field#2(2)[] xy = c4hexic⊛  image("../../data/xy7.nrrd");
 
 field#2(2)[] m1 = maxF(a, x);
 field#2(2)[] m2 = maxF(y, xy);
-field#1(2)[2] gm1 = ∇ (maxF(a, x));
-field#1(2)[2] gm2 = ∇ (maxF(y, xy));
+
 
 
 
