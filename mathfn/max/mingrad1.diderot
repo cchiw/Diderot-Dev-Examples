@@ -1,0 +1,49 @@
+field#2(2)[] a = c4hexic⊛  image("../../data/const7.nrrd");
+field#2(2)[] x = c4hexic⊛  image("../../data/x7.nrrd");
+field#2(2)[] y = c4hexic⊛  image("../../data/y7.nrrd");
+field#2(2)[] xy = c4hexic⊛  image("../../data/xy7.nrrd");
+
+
+field#2(2)[] m2 = minF(y, xy);
+field#1(2)[2] gm2 = ∇ (minF(y, xy));
+
+
+int outSize = 5;
+//bool obs = true;//observed solution
+bool obs = false;//expected solution
+
+strand sample (int i) {
+    tensor[2] pos = [i,i];
+
+    output tensor[2] out = [-77,-77];
+    update {
+        if(i==0){pos=[0.1,0.1];}
+        else if(i==1){pos=[0.2,0.2];}
+        else if(i==2){pos=[-0.2,-0.2];}
+        else if(i==3){pos=[-0.4,-0.4];}
+        else if(i==4){pos=[0.4,0.4];}
+        if(inside(pos, m2)){
+            if(obs==true){ out = gm2(pos);}
+            else{
+                if(xy(pos)< y(pos)){out =(∇(xy))(pos);}
+                else{ out = (∇(y))(pos);}
+            }
+        }
+        stabilize;
+    }
+}  initially [ sample(i) | i in 0..(outSize-1)];
+
+/* expected
+0.69995928 0.69995862
+1.4000045 1.4000015
+0.00035177881 7.0003362
+0.00022945771 7.0000563
+2.7997952 2.7998009
+
+observed
+0.69995928 0.69995862
+1.4000045 1.4000015
+0.00035177881 7.0003362
+0.00022945771 7.0000563
+2.7997952 2.7998009
+*/
