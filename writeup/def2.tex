@@ -1,0 +1,118 @@
+% mostly unchanged packages that are used in multiple papers
+%various packages and definitions used in various documents
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%% definitions %%%%%%%
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+%%\newtheorem{corollary}[theorem]{Corollary}
+\newenvironment{definition}[1][Definition]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+%\newenvironment{proof}[1][Proof]{\begin{trivlist}
+%\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+%%
+%
+\newcommand{\appref}[1]{Appendix~\ref{#1}}
+\newcommand{\chapref}[1]{Chapter~\ref{#1}}
+\newcommand{\secref}[1]{Section~\ref{#1}}
+\newcommand{\tblref}[1]{Table~\ref{#1}}
+\newcommand{\figref}[1]{Figure~\ref{#1}}
+\newcommand{\eqqref}[1]{Equation~\ref{#1}}
+\newcommand{\thmref}[1]{Theorem~\ref{#1}}
+\newcommand{\lemref}[1]{Lemma~\ref{#1}}
+%\newcommand{\listingref}[1]{Listing~\ref{#1}}
+%\newcommand{\pref}[1]{{page~\pageref{#1}}}
+\newcommand{\defref}[1]{Definition~\ref{#1} on page \pageref{#1}}
+%\newcommand{\ruleref}[1]{Rule~\ref{#1}}
+%%
+\newcommand{\eg}{{\em e.g.}}
+%\newcommand{\cf}{{\em cf.}}
+\newcommand{\ie}{{\em i.e.}}
+\newcommand{\etc}{{\em etc.\/}}
+\newcommand{\naive}{na\"{\i}ve}
+%\newcommand{\ala}{{\em \`{a} la\/}}
+\newcommand{\etal}{{\em et al.\/}}
+\newcommand{\role}{r\^{o}le}
+%%\newcommand{\vs}{{\em vs.}}
+%%\newcommand{\forte}{{fort\'{e}\/}}
+%\newcommand{\Cplusplus}{\mbox{C\hspace{-.05em}
+%\raisebox{.4ex}{\tiny\bf ++}}}
+%%%%%%%% Colors %%%%%%%
+%\definecolor{Red}{rgb}{0.9,0.0,0.0}  % fixme
+%\definecolor{Green}{rgb}{0.0,0.4,0.0}
+%\definecolor{Blue}{rgb}{0.0,0.0,0.9}
+%\definecolor{DarkBlue}{rgb}{0.0,0.0,0.75}
+%\definecolor{Midnight}{rgb}{0.0,0.0,0.5}
+%\definecolor{Purple}{rgb}{0.5,0.0,0.4}
+\definecolor{Black}{rgb}{0.0,0.0,0.0}
+%\definecolor{Yellow}{rgb}{1.0,1.0, 0.25}
+%\definecolor{Cyan}{rgb}{0.25,1.0, 1.0}
+%
+\newcommand{\cdColor}{Black}
+%\newcommand{\kwColor}{DarkBlue}
+%\newcommand{\comColor}{Red}
+\newcommand{\mynote}[3]{\textcolor{#3}{\small\textbf{\textsf{{#1}: {#2}}}}}
+\newcommand{\CC}[1]{\mynote{cc}{#1}{magenta}}
+%
+%
+%
+%%%%%%%% Some common math notation %%%%%%%
+%%% double brackets
+\newcommand{\LDB}{\ensuremath{[\mskip -3mu [}}
+\newcommand{\RDB}{\ensuremath{]\mskip -3mu ]}}
+%%
+\newcommand{\dom}{\ensuremath{\mathrm{dom}}}
+\newcommand{\rng}{\ensuremath{\mathrm{rng}}}
+%%
+%%% sets
+\newcommand{\SET}[1]{\ensuremath{\{#1\}}}
+\newcommand{\Fin}{\textrm{Fin}}     % finite power set
+\newcommand{\DISJOINT}[2]{\ensuremath{#1 \pitchfork #2}}
+\newcommand{\finsubset}{\mathrel{\stackrel{\textrm{fin}}{\subset}}}
+%%
+%%
+%%% finite maps
+\newcommand{\finmap}{\mathrel{\stackrel{\textrm{fin}}{\rightarrow}}}
+%%\newcommand{\MAP}[2]{\SET{#1 \mapsto #2}}
+%%\newcommand{\EXTEND}[2]{\ensuremath{#1{\pm}#2}}
+%%\newcommand{\EXTENDone}[3]{\EXTEND{#1}{\MAP{#2}{#3}}}
+%%\newcommand{\SUBST}[3]{\ensuremath{#1[#2\mapsto{}#3]}}
+%%\newcommand{\SUBSTTWO}[5]{\ensuremath{#1[#2\mapsto{}#3,#4\mapsto{}#5]}}
+%%
+\definecolor{ngray}{rgb}{0.5,0.5,0.5}
+
+\lstdefinelanguage{Diderot}{%
+  % otherkeywords={|,\#},
+  morekeywords={%
+    bool,%
+    die,%
+    else,%
+    false,field,foreach,%
+identity,if,image,load,in,initially,input,int,%
+    fem,
+    kernel,%
+    nan,new,%
+    output,%
+    real,%
+    function,stabilize,strand,string,%
+    inside,tensor,true,%
+    update,%
+    vec2,vec3,vec4,%
+    zeros},
+  sensitive,%
+  morecomment=[s]{/*}{*/},%
+  morecomment=[l]//,
+  morestring=[b]"}%
+  
+  
+\lstset{
+  language=Diderot,
+  %basicstyle= \ttfamily,%\rmfamily
+  keywordstyle=\bfseries,
+  commentstyle=\itshape,
+  mathescape=true,
+  %numbers=left,
+  aboveskip=1.0em, belowskip=1.0em, lineskip=-0.10em,
+   numberstyle=\color{ngray}
+  }

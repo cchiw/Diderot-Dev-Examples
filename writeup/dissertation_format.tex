@@ -1,0 +1,125 @@
+\usepackage{mathtools}
+\newtheorem{mydef}{Definition}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Counters
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{bugs}
+\newcounter{substInf}
+
+\newcommand{\varMathFont}[1]{\text{\ttfamily{#1}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Various Fonts 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\fontit}[1]{\textit{#1}}
+\newcommand{\fontrelated}[1]{\textit{#1}}
+\newcommand{\fontemph}[1]{\emph{#1}}
+\newcommand{\fontR}{\mathbb{R}} % to do R
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% EIN syntax
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\name}{EIN}
+\newcommand{\EinExp}[2]{\ensuremath{{\left\langle{#1}\right\rangle}_{#2}}}
+\newcommand{\EinOp}[3]{\ensuremath{\lambda{}\,#1\EinExp{#2}{#3}}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% EIN expression commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\lift}[1]{\textbf{lift}_d({#1})}
+\newcommand{\val}[1]{\textbf{val}({#1})} 
+%ein differentiation
+\newcommand{\einpart}[1]{\frac{\partial}{\partial x_{#1}}\diamond}
+%indexing an ein expression
+%ein exp 1 ...from 2 to 3
+\newcommand{\expIndex}[3]{{#1}_{[{#2}/{#3}]}}
+\newcommand{\expComp}[3]{{#1}\circ 
+[\EinExp{#2}{\hat{#3}}]}
+
+\newcommand{\expCompSingle}[3]{{#1}\circ 
+e_c}
+\newcommand{\expCompList}[3]{{#1}\circ [\EinExp{#2}{\hat{#3}},e_c ]  }
+
+\newcommand{\expPolyWrap}[2]{\textit{PolyWrap}_{#1}({#2})}
+\newcommand{\expPolyWrapD}[3]{\frac{\partial}{\partial x_{#3}} \textit{PolyWrap}_{#1}({#2})}
+
+\newcommand{\expPolyTerm}[2]{{#1}^{#2}}
+\newcommand{\expPolyTermD}[3]{
+\frac{\partial}{\partial x_{#3}}{#1}^{#2}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Names of methods etc.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\fontfamily{qcr}
+
+\newcommand{\optshift}{\textit{Shift}}
+\newcommand{\optEshape}{\textit{Eshape}}
+\newcommand{\optshape}{\textit{Tshape}}
+\newcommand{\optsplit}{\textit{Split}}
+\newcommand{\optslice}{\textit{Slice}}
+\newcommand{\defSlice}{OptSlice}
+\newcommand{\checkname}[0]{\textit{DATm}}
+\newcommand{\vname}[0]{\textit{DAVm}}
+\newcommand{\lifted}{\textit{lifted}}
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Rewrites and Arrows
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%rewrites on EIN operator level
+\newcommand{\rewriteEINOP}{\xRightarrow[]{}}
+\newcommand{\rewriteInitA}{\xRightarrow[init]{}}
+\newcommand{\rewriteInitB}{\xRightarrow[subst]{surface}}
+\newcommand{\rewriteInitC}{\xRightarrow[norm]{surface}}
+\newcommand{\rewriteInitD}{\xRightarrow[split]{surface}}
+\newcommand{\rewriteSubst}{\xRightarrow[subst]{}}
+\newcommand{\rewriteSplit}{\xRightarrow[split]{}}
+\newcommand{\rewriteSlice}{\xRightarrow[slice]{}}
+\newcommand{\rewriteRecon}{\xRightarrow[recon]{}}
+
+
+%rewrites on EIN expression level
+\newcommand{\rewriteRule}{\xrightarrow[rule]{}}
+\newcommand{\rewriteNorm}{\rewriteRule^*}
+\newcommand{\rewriteShift}{\xrightarrow[shift]{}}
+\newcommand{\rewriteEINEXP}{\xrightarrow[]{}}
+
+%other arrows 
+%ein-> math
+\newcommand{\repSurface}{\xrightarrow[\text{Surface}]{EIN}}
+% math -> to math
+\newcommand{\rowSurface}{\longrightarrow_{direct-style}}
+% ty -> ty in function declaration
+\newcommand{\funcDec}{\rightarrow}
+% tensor/field term -> ein expression in substitution 
+\newcommand{\rowSubst}{\rightharpoonup}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Method specific commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\eshape}[2]{\optEshape{} ({#1})=\{{#2}\}}
+\newcommand{\tshape}[1]{\optshape{}({#1})}
+\newcommand{\ttshape}[2]{\optshape{}({#1})=\{{#2}\}}
+\newcommand{\ttttshape}[4]{\optshape{}({#1},{#2},{#3})=\{{#4}\}}
+  
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Types
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SSA-level types
+\newcommand{\TensorTy}[1]{\mathbf{Ten}[#1]}
+\newcommand{\FieldTy}[2]{\mathbf{Fld}(#1)[#2]}
+\newcommand{\ImageTy}[2]{\mathbf{Img}(#1)[#2]}
+\newcommand{\KernelTy}{\mathbf{Krn}}
+% indexed Ein expression types
+\newcommand{\genTTyB}{\ensuremath{\mathcal{T}}}      
+\newcommand{\genFTyB}{\ensuremath{\mathcal{F}^{d}}}  % 
+%indexed tensor and field type
+\newcommand{\genTTyA}[1]{\ensuremath{(#1)\genTTyB{}}}      
+\newcommand{\genFTyA}[1]{\ensuremath{(#1)\genFTyB{}}}  
+%%%%%%%%%%%%%%%%%%%%
+\newcommand{\genVTyA}[1]{\text{({$#1$})$\mathcal{I}_d$}}
+\newcommand{\genHTyA}[1]{\text{({$#1$})$\mathcal{H}$}}

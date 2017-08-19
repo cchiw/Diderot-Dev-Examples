@@ -1,0 +1,357 @@
+% ---- ETD Document Class and Useful Packages ---- %
+\documentclass{article}
+\usepackage[margin=0.5in]{geometry}
+\usepackage{subfigure,epsfig,amsfonts}
+\usepackage{natbib}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{listings} % for code 
+\usepackage{enumitem} % for creating lists
+\usepackage{lineno, blindtext} % line numbers
+\usepackage{xstring} %support if/else inside commands
+\usepackage{longtable}
+\usepackage{color}
+\usepackage{multicol}
+\usepackage{url}
+
+\input{dissertation_format}
+\input{def2} %generic input
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Use these commands to set biographic information for the title page:
+\title{EIN and DATm updates}
+\author{Charisee Chiw}
+
+
+\begin{document}
+\maketitle 
+
+Our work has made it easier and faster to add to the Diderot language.
+When we add an operator to the language we try to leverage our existing work.
+This includes a concise representation in an expressive IR, the generic implementation of operators, and a robust testing model.
+In the following, we illustrate the process of extending Diderot by providing examples.
+
+
+\section{Language Features}
+\subsection{Field Composition}
+
+\begin{lstlisting}
+field#k(d0)[$\sigma$] F0;
+field#k(d1)[d0] F1;
+field#k(d1)[$\sigma$] H = F0 $\circ$ F1; 
+tensor[d1] pos;
+tensor[$\sigma$] out = H(pos);
+\end{lstlisting}
+
+\paragraph{Representation}
+We represent the field composition operator with the generic \name{} operator.
+$$\rewriteInitA  H= \lambda(F,G) \EinExp{\expComp{F_\alpha}{G_\beta}{\beta}}{\hat{\alpha}}(F0,F1) \indent\text{ where } \hat{\alpha}=\sigma \text{ and } \hat{\beta} =[d0]$$
+The field terms F and G represent fields in the composition.
+F and G have separate index spaces. $F$ is bound by $\alpha$ and $G$ is bound by $\beta$.\\
+ 
+
+\paragraph{Normalization}
+%\paragraph{probe}
+The probe of a composition
+ $(\expComp{e_1}{e_2}{\beta})(x)$ 
+ is rewritten depending on the structure of the outer term $e_1$. 
+When the outer term is a constant the result does not depend on the composition operation.
+$$(\expCompSingle{ c}{e_2}{\beta})(x) \rewriteRule{} c $$
+Similarily, when the outer term is a non-field:
+$$\begin{array}{lllllll}
+(\expCompSingle{ \delta_{\alpha}}{e_2}{\beta})(x) &\rewriteRule{} \delta_{\alpha}& \indent &
+(\expCompSingle{ \mathcal{E}_{\alpha}}{e_2}{\beta})(x) &\rewriteRule{} \mathcal{E}_{\alpha}\\
+(\expCompSingle{ Z_{\alpha}}{e_2}{\beta})(x) &\rewriteRule{} Z_{\alpha} &&
+(\expCompSingle{ \lift{e}}{e_2}{\beta})(x) &\rewriteRule{} e &
+\end{array}$$
+The probe operator is pushed past arithmetic operators:
+$$\begin{array}{lllll}
+(\expCompSingle{\odot_1 e}{e_2}{\beta})(x) &\rewriteRule{} \odot_1 (  \expCompSingle{e}{e_2}{\beta})(x) \\
+(\expCompSingle{\sum_{\hat{\alpha}} e}{e_2}{\beta})(x) &\rewriteRule{} \sum_{\hat{\alpha}} (  \expCompSingle{e}{e_2}{\beta})(x) \\
+\end{array}$$
+The probe is distributed: 
+$$\begin{array}{lllll}
+(\expCompSingle{(e_a - e_b)}{e_2}{\beta})(x) &\rewriteRule{} (\expCompSingle{e_a}{e_2}{\beta})(x) -(\expCompSingle{e_b}{e_2}{\beta})(x) \\
+(\expCompSingle{(e_a * e_b * e_s )}{e_2}{\beta})(x) &\rewriteRule{} (\expCompSingle{e_a}{e_2}{\beta})(x) * (\expCompSingle{e_b}{e_2}{\beta})(x)*(\expCompSingle{e_s}{e_2}{\beta})(x) \end{array}$$
+
+
+
+%\paragraph{derivative}
+The derivative of a field composition is applied by using the chain rule.\\
+$$\nabla (F \circ G) \rowSurface (\nabla F \circ G)\bullet (\nabla G) $$
+The derivative of a field composition of two fields is represented in the \name{} IR as 
+$$\nabla_j (\expComp{F_\alpha}{G_{i\beta}}{i\beta}) \rewriteRule{}
+\sum_{\hat{k}}( (\expComp{\nabla_k  F_\alpha}{G_{i\beta}}{i\beta}) * (\nabla_j G_{k\beta}) )$$
+Generally we use the rewrite rule to apply the rewrite between two \name{} expressions:\\
+$$\nabla_j (\expComp{e_1}{e_2}{i\beta}) \rewriteRule{}
+\sum_{\hat{k}}( (\expComp{\nabla_k  e_1}{e_2}{i\beta}) * (\nabla_j \expIndex{e_2}{i}{k}) )$$
+
+
+%\paragraph{flatten}
+Flatten composition operator
+$$ \expCompSingle{ (\expComp{a}{b}{m})}{c}{n} 
+\rewriteRule{}
+\expCompList{a}{b}{m}
+$$
+
+$$ \expComp{a}{\expCompSingle{b}{c}{n}}{m} 
+\rewriteRule{}
+\expCompList{a}{b}{m}
+$$
+
+
+
+\paragraph{Split}
+After being normalized the probed composition operator is split into several probes.
+$$
+\text{\lstinline!out!} = \lambda F,G,x \EinExp{\expComp{F_\alpha}{G_\beta}{\beta}(x)}{\alpha}(F0, F1, x)
+\rewriteSplit{}
+\begin{array}{rl}
+\lstinline!t!_0 = & \lambda G,x\EinExp{G_\beta(x)}{\hat{\beta}}(F1,x)\\
+\text{\lstinline!out!}= & \lambda F,x \EinExp{F_\alpha(x)}{\alpha}(F0, \lstinline!t!_0)
+ \end{array}$$
+ 
+  \subsection{Concat}
+A user can define new tensors by concatenating tensors together.
+A Diderot program
+\begin{lstlisting}[mathescape=true]
+  tensor[d$_1$]S; 
+  tensor[d$_2$]T;
+  tensor[d$_1$,d$_2$]M = [S,T]; 
+\end{lstlisting}
+
+A user can refer to components of tensor fields by using the slice operation as shown in the following code.
+A Diderot program
+\begin{lstlisting}[mathescape=true]
+  field#k(d)[d$_1$,d$_2$]A; 
+  field#k(d)[d$_1$,d$_2$]B;
+  field#k(d)[d$_1$]F = A[:,0]; 
+  field#k(d)[d$_1$]G = B[:,1];
+\end{lstlisting}
+
+We would like to provide a way to define new tensors fields by concatenating components together.
+Using the tensor field variables \lstinline!F! and  \lstinline!G! defined earlier in the program the Diderot code should support the line 
+\begin{lstlisting}[mathescape=true]
+  field#k(d)[d$_1$,d$_1$]H = [F, G];
+\end{lstlisting}
+
+\noindent We illustrate the structure of \lstinline[mathescape=true]!H! below.  
+\begin{displaymath}
+  H=\left[ \begin{array}{ll}
+  F_0  & F_1\\
+  G_0  &G_1
+  \end{array}
+ \right]  
+ \end{displaymath}
+ 
+\paragraph{Representation}
+We can use \name{} expressions as building blocks to represent field concatenation. 
+In \name{} each field term is represented by an  expression and it is enabled with a delta function 
+$$\rewriteInitA{} H=\lambda F,G.\EinExp{F_{j }\delta_{0i}+G_{j }\delta_{1i}}{i:2,j:2}\text{(\lstinline[mathescape=true]!F,G!)}$$
+After substitution the new \name{} operator would be 
+$$\rewriteSubst{}H=\lambda A,B.\EinExp{A_{j 0}\delta_{0i}+B_{j 1}\delta_{1i}}{\hat{i}\hat{j}}\text{(\lstinline[mathescape=true]!A,B!)}.$$
+In the compiler we choose to create generic versions of an \name{} operator that can be instantiated to certain types.
+$$\begin{array}{l}
+\lambda F,G. \EinExp{F_{\alpha }\delta_{0i}+G_{\alpha }\delta_{1i}}{{i:2} \hat{\alpha} }\text{(\lstinline[mathescape=true]!F,G!)}\\
+\lambda F,G, H.\EinExp{F_{\alpha }\delta_{0i}+G_{\alpha }\delta_{1i}+H_{\alpha }\delta_{2i}}{{i:3} \hat{\alpha} }\text{(\lstinline[mathescape=true]!F,G,H!)}
+\end{array}$$
+To implement this operator we  need to add to cases to the Diderot typechecker and add the generic representations but not much else.
+Since we are solely using existing \name{} expressions to represent this computation, we can rely on the existing code to handle the \name{} syntax.
+
+
+\subsection{Polynomial}
+It is natural to define a field with a polynomial expression. $$F = x^3$$
+In the surface language we added function \lstinline[mathescape=true]!poly()!.
+The first argument is a variable and the second argument is a field definition.
+\begin{lstlisting}[mathescape=true]
+vec2 x;
+ofield#2(2)[2] V = poly(x, x);
+ofield#2(2)[] S = poly(x, x$^2$);
+\end{lstlisting}
+This allows the programmer to differentiate this type of field.
+\begin{lstlisting}[mathescape=true]
+ofield#1(2)[2] GS = $\nabla$S;
+\end{lstlisting}
+We illustrate the expected structure below:
+\begin{displaymath}
+  V=\left[ \begin{array}{ll}
+  V_0 \\  V_1  \\
+  \end{array}
+ \right]   \indent\indent 
+  \nabla \otimes V=\left[ \begin{array}{ll}
+ 1&   0 \\  0  &  1  \\
+  \end{array}
+ \right]   \indent\indent 
+   S=  V_0 ^2+  V_1^2  \\
+  \indent\indent
+    \nabla S=\left[ \begin{array}{ll}
+  2*V_0 \\  2*V_1  \\
+  \end{array}
+ \right] 
+ \end{displaymath}
+
+\paragraph{Representation}.\\
+As an ongoing example:
+A field F is defined by taking the cube of the input variable.\begin{lstlisting}[mathescape=true]
+real p; 
+ofield#1(2)[] F = poly(p, $p^3$);
+tensor[] out = F(pos);
+\end{lstlisting}
+
+$\rewriteInitA \begin{array}{ll} \lstinline[mathescape=true]!F!=\lambda ()\EinExp{\expPolyWrap{p}{{p}^3}}{}()\\
+\lstinline[mathescape=true]!out!=\lambda(F,x) \EinExp{F(x)}{}\lstinline[mathescape=true]!(F,x)!\end{array}$\\
+\\
+Substitution creates:\\
+$\rewriteSubst{}$ \lstinline[mathescape=true]!out!=$\lambda(x) \EinExp{\expPolyWrap{p}{p^3}(x)}{}$
+\lstinline[mathescape=true]!(x)!
+\paragraph{Replace polynomial variable}.\\
+The variable $p$ represents a vector of length 2, where p= [X,Y].\\
+The term $P_0$ represents the 0th component of the vector, or X.
+In the following, we will use the terms $X$ and $Y$, in place of $P_0$ and $P_1$.
+
+
+The polynomial variable is instantiated with the position.\\
+$\rewriteEINOP $ \lstinline[mathescape=true]!out!=$\lambda(p) \EinExp{e}{}$\lstinline[mathescape=true]!(x)! where e=$p*p*p$.\\
+The \name{} term ($p$) is replaced with an \name{} term that represents the vector components.
+ In the 2-d case there are two terms indexed with a constant index in 
+$p = X \delta_{0i}+Y \delta_{1i}$\\
+
+
+Occurrances for P are replaced inside the expression:\\ 
+$\rewriteEINEXP (P_0 \delta_{0i}+P_1 \delta_{1i})*(P_0 \delta_{0i}+P_1 \delta_{1i})*(P_0 \delta_{0i}+P_1 \delta_{1i})$.\\
+$= (X \delta_{0i}+Y \delta_{1i})*(X \delta_{0i}+Y \delta_{1i})*(X \delta_{0i}+Y\delta_{1i})$.\\
+
+
+
+
+\paragraph{Normalization}.\\
+Similar terms are collected:\\
+$$P_0*P_0\rewriteEINEXP \expPolyTerm{P_0}{2} \indent \text{or}\indent X*X\rewriteEINEXP \expPolyTerm{X}{2} $$ 
+The differentiation operator is distributed over the \name{} term, as usual,  and pushed to a polynomial term\\
+ $$\frac{\partial}{\partial x_i} (\expPolyTerm{P_0}{2}+e) \rewriteEINEXP \expPolyTermD{P_0}{2}{i} + \frac{\partial}{\partial x_i}  e
+ \indent \text{or}\indent
+ \frac{\partial}{\partial x_i} (\expPolyTerm{X}{2}+e) \rewriteEINEXP \expPolyTermD{X}{2}{i} +\frac{\partial}{\partial x_i}  e
+ $$
+
+
+\paragraph{Evaluation}.\\
+During the evaluation the variable index in a differentiation operator is bound to a number.
+An \name{} term such as $\expPolyTermD{P_c}{n}{i}$ is evaluated.\\
+When $i$ and $c$ are both 0:\\ 
+$$\frac{\partial}{\partial x_0} X \rewriteEINEXP  1 
+ \indent  \frac{\partial}{\partial x_0} X^2 \rewriteEINEXP  2*\expPolyTerm{X}{}  
+  \indent \frac{\partial}{\partial x_0} X^3  \rewriteEINEXP  3*X^{2} $$ 
+When $i$ and $c$ are both 1:\\ 
+$$
+\expPolyTermD{Y}{}{1} \rewriteEINEXP  1 
+ \indent  \expPolyTermD{Y}{2}{1} \rewriteEINEXP  2*\expPolyTerm{Y}{}  
+  \indent  \expPolyTermD{Y}{3}{1} \rewriteEINEXP  3*\expPolyTerm{Y}{2}  
+   $$  
+When $i$ and $c$ are not the same\\ 
+$$ \expPolyTermD{X}{n}{1} \rewriteEINEXP  0 
+\indent \expPolyTermD{Y}{n}{1} \rewriteEINEXP  0  $$ 
+
+
+\subsection{Max/Min}
+
+Lift max and min operators to the field level.
+\paragraph{Design}
+Need to add new syntax to support differentiation.
+$$\begin{array}{llll}
+cond &=& e>e \mid e<e & \text{conditional }\\
+e&=&  \text{Max}(a,b)  \mid \text{Min}(a,b) & \text{Binary \name{} operators}\\
+&\mid & if(cond, e, e)  &\text{If wrapper returns tensor-valued expression}
+\end{array}$$
+
+ \paragraph{Rules}
+Differentiation creates an if wrapper expressions.
+ $$\frac{\partial}{\partial x_\alpha} \text{Max}(a,b) \rewriteEINEXP if(a>b, \frac{\partial}{\partial x_\alpha}a, \frac{\partial}{\partial x_\alpha}b)  $$
+ $$\frac{\partial}{\partial x_\alpha}\text{Min}(a,b) \rewriteEINEXP if(a<b, \frac{\partial}{\partial x_\alpha}  a, \frac{\partial}{\partial x_\alpha} b)  $$
+Otherwise, Max and Min are treated like  other binary operators. The following pushes the probes to the leaves.
+  $$ (\text{Max}(a,b))(x) \rewriteEINEXP \text{Max}(a(x),  b(x)) $$
+ Differentiation of an If wrapper is pushed to leaves.
+   $$\frac{\partial}{\partial x_\alpha} \text{If}(cond, c,d) \rewriteEINEXP if(cond, \frac{\partial}{\partial x_\alpha}c, \frac{\partial}{\partial x_\alpha}d)  $$
+   
+\section{Testing}
+Once we have added a new operator to the surface language, it is natural to write some test programs by hand. 
+The tests we wrote by hand were straightforward, but limited and unhelpful since it missed bugs.
+We can apply a more rigorous approach  by using the testing system, 
+\checkname{}.
+We add the concat operator to \checkname{} (by creating a new operator object)
+and used targeted testing to only generate test cases that use the concat operator.
+\checkname{} created and ran 126 test programs that use the concat operator.
+
+
+
+
+ \subsection{\checkname{} implementation}
+\paragraph{ inside tests}
+\paragraph{adjustments}
+ \paragraph{ third-arity}
+\subsection{Results from using \checkname{}}
+
+\begin{description}
+\item[Bug 1] Mistake in index scope when using substitution.
+\begin{lstlisting}
+field#k(2)[2,2] F0;
+field#k(2)[2] F1;
+field#k(2)[2] F2;
+field#k(2)[2,2] G = (F0 $\circ$ F1) $\bullet$ F2;
+\end{lstlisting}
+
+There was a mistake in the substitution method.
+The scope of the composition indices were handled incorrectly.
+The following is the expected and observed representation of the computation in the \name{} IR.\\
+Expected: $e=\sum_{\hat{j}} \expComp{A_{ij}}{B_i}{\beta} *C_j $\\
+Observed: $e=\sum_{\hat{k}} \expComp{A_{ik}}{B_i}{\beta} *C_j$\\
+in $\lambda(A,B,C)\EinExp{e}{\beta}$(F0,F1,F2). 
+\item[Bug 2] Missing cases in split method.\\
+Probes of a composition are handled differently before reconstruction.\\
+$\sum F(x)$ and $\sum (\text{Comp} (F,G,-))(x)$.\\
+Missing case in method leads to a compile time error.
+Additionally (Comp(Comp -)-)
+\item[Bug 3]  Differentiate a composition\\
+The jacobian of a field composition:
+\begin{lstlisting}
+field#k(d1)[d] F0;
+field#k(d)[d1] F1;
+field#k(d1)[d,d1] G = $\nabla \otimes$ (F0 $\circ $ F1);
+\end{lstlisting}
+is represented as $\EinExp{\nabla_j (\text{Comp}(A_i,B_i,i))}{ij}$\\
+In accordance with the chain rule ( (f $\circ $ g)' = (f'  $\circ $ g) $\cdot$ g') the rewriting system multiplies the inner derivative (g') with a new composition operation (f'  $\circ $ g).
+In practice, the implementation does a point-wise multiplication when it should do an inner product.\\
+ Expected: $\sum_{\hat{k}} (\expComp{\nabla_k A_i}{B_i}{\beta} * \nabla_j G_k) $\\
+Observed: $\expComp{\nabla_j  A_{\beta}}{B_i}{ i} * (\nabla_j G_i)$\\
+in $\lambda(A,B)\EinExp{e}{ij}$(F0,F1). 
+\item[False positive]
+There was an error in evaluating the correct answer in \checkname{} for multiple applications of the compose operator.
+We replace the position variable in one field with the field expression of the other.
+The position variables need to be renamed in order to avoid mixing them.
+Without renaming them it resulted in a false positive. 
+
+\item[False positive]
+\checkname{} generates inside tests to see if we are probing the field in the right position.
+They did not account for all the different types of restrictions.
+
+
+
+\item[Bug 4]
+One was in the creation of the \name{}  operator for the concat operator..
+
+\item[Bug 5]
+The bug arose when computing the determinant of the concatenation of a field.
+\begin{lstlisting}[mathescape=true]
+  field#k(d)[2]F,G;
+  field#k(d)[]H = det(concat(F,G));
+\end{lstlisting}
+The bug was caused by the rewriting system.
+Our rewriting system applies index-based rewrites to reduce \name{} expressions. 
+A specific index rewrite is applied when the index in the delta term matches an index in tensor (or field)  term.
+The rewrite checked if two indices were equal and did not distinguish between variable and constant indices.
+It is mathematically incorrect to reduce constant indices, because they are not equivalent to variable indices.
+\end{description}
+\end{document}
+
