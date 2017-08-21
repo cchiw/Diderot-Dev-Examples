@@ -1,0 +1,45 @@
+
+field#4(3)[3]F0 = c4hexic⊛  image("inputfile0.nrrd");
+field#4(3)[3, 3]F1 = c4hexic⊛  image("inputfile1.nrrd");
+input real scale = 1;
+field#3(3)[2, 3, 3]G = concat((∇⊗(F0)),(F1));
+int length =7;
+strand f(int i) {
+
+	output tensor [2, 3, 3] out =  [ [ [0.0,0.0,0.0], [0.0,0.0,0.0], [0.0,0.0,0.0]], [ [0.0,0.0,0.0], [0.0,0.0,0.0], [0.0,0.0,0.0]]];
+	    update {
+
+		tensor [3] pos=[0,0,0];
+		if(i==0){
+			pos = ([0.37, -0.11, 0.25]);
+		}
+		else if(i==1){
+			pos = ([0.37, -0.11, 0.25]);
+		}
+		else if(i==2){
+			pos = ([0.14, -0.4, 0.17]);
+		}
+		else if(i==3){
+			pos = ([-0.01, 0.2, 0.32]);
+		}
+		else if(i==4){
+			pos = ([-0.2, 0.01, 0.24]);
+		}
+		else if(i==5){
+			pos = ([-0.11, -0.31, -0.04]);
+		}
+		else if(i==6){
+			pos = ([0.01, 0.28, -0.08]);
+		}
+		else if(i==7){
+			pos = ([-0.03, -0.09, 0.11]);
+		}
+
+	if((inside(pos,F0)) && (inside(pos,F1)) && true){
+			out = (G)(pos);
+	}
+	 else{out =  [ [ [7.2,7.2,7.2], [7.2,7.2,7.2], [7.2,7.2,7.2]], [ [7.2,7.2,7.2], [7.2,7.2,7.2], [7.2,7.2,7.2]]];}
+        stabilize;
+    }
+}
+initially [ f(i) | i in 0..length];

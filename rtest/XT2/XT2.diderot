@@ -1,0 +1,45 @@
+
+field#4(3)[2]F0 = c4hexic⊛  image("inputfile0.nrrd");
+field#4(3)[2]F1 = c4hexic⊛  image("inputfile1.nrrd");
+input real scale = 1;
+field#4(3)[]G = det(concat((F0),(F1)));
+int length =7;
+strand f(int i) {
+
+	output tensor [] out = 0.0;
+	    update {
+
+		tensor [3] pos=[0,0,0];
+		if(i==0){
+			pos = ([-0.1, -0.27, -0.19]);
+		}
+		else if(i==1){
+			pos = ([-0.1, -0.27, -0.19]);
+		}
+		else if(i==2){
+			pos = ([0.03, 0.31, 0.08]);
+		}
+		else if(i==3){
+			pos = ([0.08, 0.35, -0.18]);
+		}
+		else if(i==4){
+			pos = ([0.03, -0.33, 0.3]);
+		}
+		else if(i==5){
+			pos = ([-0.39, -0.22, 0.11]);
+		}
+		else if(i==6){
+			pos = ([0.24, -0.35, -0.26]);
+		}
+		else if(i==7){
+			pos = ([0.21, 0.34, 0.23]);
+		}
+
+	if((inside(pos,F0)) && (inside(pos,F1)) && true){
+			out = (G)(pos);
+	}
+	 else{out = 7.2;}
+        stabilize;
+    }
+}
+initially [ f(i) | i in 0..length];
