@@ -22,20 +22,19 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% Use these commands to set biographic information for the title page:
-\title{EIN and DATm updates}
+\title{New language features}
 \author{Charisee Chiw}
 
 
 \begin{document}
 \maketitle 
-
 Our work has made it easier and faster to add to the Diderot language.
 When we add an operator to the language we try to leverage our existing work.
 This includes a concise representation in an expressive IR, the generic implementation of operators, and a robust testing model.
 In the following, we illustrate the process of extending Diderot by providing examples.
 
 
-\section{Language Features}
+\section{Defining operators between fields}
 \subsection{Field Composition}
 
 \begin{lstlisting}
@@ -162,6 +161,41 @@ To implement this operator we  need to add to cases to the Diderot typechecker a
 Since we are solely using existing \name{} expressions to represent this computation, we can rely on the existing code to handle the \name{} syntax.
 
 
+\subsection{Abs, Max, and Min}
+
+
+Implementation lift max  and min operators to the field level and represents the magnitude of scalar fields with absolute expressions. 
+Extra syntax is created to support differentiation.
+
+
+\paragraph{Design}
+Need to add new syntax to support differentiation.
+$$\begin{array}{llll}
+cond &=& e>e \mid e<e & \text{conditional }\\
+e&=&  \text{Max}(a,b)  \mid \text{Min}(a,b) & \text{Binary \name{} operators}\\
+&\mid & \text{if}(cond, e, e)  &\text{If wrapper returns tensor-valued expression}\\
+&\mid &\text{Abs}(e) &\text{Absolute function}\\
+&\mid &\text{Sgn} (e)& \text{Returns Sign (-1, 0, 1)}\\
+\end{array}$$
+
+ \paragraph{Differentiation rules}
+ Differentiation of an absolute expression:
+  $$\frac{\partial}{\partial x_\alpha} \text{abs}(e) \rewriteEINEXP
+( \frac{\partial}{\partial x_\alpha} e) *(\text{Sgn} (e))
+ $$ 
+
+Differentiation creates an if wrapper expressions.
+ $$\frac{\partial}{\partial x_\alpha} \text{Max}(a,b) \rewriteEINEXP if(a>b, \frac{\partial}{\partial x_\alpha}a, \frac{\partial}{\partial x_\alpha}b)  $$
+ $$\frac{\partial}{\partial x_\alpha}\text{Min}(a,b) \rewriteEINEXP if(a<b, \frac{\partial}{\partial x_\alpha}  a, \frac{\partial}{\partial x_\alpha} b)  $$
+  Differentiation of an If wrapper is pushed to leaves.
+   $$\frac{\partial}{\partial x_\alpha} \text{If}(cond, c,d) \rewriteEINEXP if(cond, \frac{\partial}{\partial x_\alpha}c, \frac{\partial}{\partial x_\alpha}d)  $$
+  \paragraph{other  rules}
+Otherwise, Max and Min are treated like  other binary operators. The following pushes the probes to the leaves.
+  $$ (\text{Max}(a,b))(x) \rewriteEINEXP \text{Max}(a(x),  b(x)) $$
+
+   
+   
+\section{New ways to define a field}
 \subsection{Polynomial}
 It is natural to define a field with a polynomial expression. $$F = x^3$$
 In the surface language we added function \lstinline[mathescape=true]!poly()!.
@@ -255,103 +289,5 @@ $$ \expPolyTermD{X}{n}{1} \rewriteEINEXP  0
 \indent \expPolyTermD{Y}{n}{1} \rewriteEINEXP  0  $$ 
 
 
-\subsection{Max/Min}
-
-Lift max and min operators to the field level.
-\paragraph{Design}
-Need to add new syntax to support differentiation.
-$$\begin{array}{llll}
-cond &=& e>e \mid e<e & \text{conditional }\\
-e&=&  \text{Max}(a,b)  \mid \text{Min}(a,b) & \text{Binary \name{} operators}\\
-&\mid & if(cond, e, e)  &\text{If wrapper returns tensor-valued expression}
-\end{array}$$
-
- \paragraph{Rules}
-Differentiation creates an if wrapper expressions.
- $$\frac{\partial}{\partial x_\alpha} \text{Max}(a,b) \rewriteEINEXP if(a>b, \frac{\partial}{\partial x_\alpha}a, \frac{\partial}{\partial x_\alpha}b)  $$
- $$\frac{\partial}{\partial x_\alpha}\text{Min}(a,b) \rewriteEINEXP if(a<b, \frac{\partial}{\partial x_\alpha}  a, \frac{\partial}{\partial x_\alpha} b)  $$
-Otherwise, Max and Min are treated like  other binary operators. The following pushes the probes to the leaves.
-  $$ (\text{Max}(a,b))(x) \rewriteEINEXP \text{Max}(a(x),  b(x)) $$
- Differentiation of an If wrapper is pushed to leaves.
-   $$\frac{\partial}{\partial x_\alpha} \text{If}(cond, c,d) \rewriteEINEXP if(cond, \frac{\partial}{\partial x_\alpha}c, \frac{\partial}{\partial x_\alpha}d)  $$
-   
-\section{Testing}
-Once we have added a new operator to the surface language, it is natural to write some test programs by hand. 
-The tests we wrote by hand were straightforward, but limited and unhelpful since it missed bugs.
-We can apply a more rigorous approach  by using the testing system, 
-\checkname{}.
-We add the concat operator to \checkname{} (by creating a new operator object)
-and used targeted testing to only generate test cases that use the concat operator.
-\checkname{} created and ran 126 test programs that use the concat operator.
-
-
-
-
- \subsection{\checkname{} implementation}
-\paragraph{ inside tests}
-\paragraph{adjustments}
- \paragraph{ third-arity}
-\subsection{Results from using \checkname{}}
-
-\begin{description}
-\item[Bug 1] Mistake in index scope when using substitution.
-\begin{lstlisting}
-field#k(2)[2,2] F0;
-field#k(2)[2] F1;
-field#k(2)[2] F2;
-field#k(2)[2,2] G = (F0 $\circ$ F1) $\bullet$ F2;
-\end{lstlisting}
-
-There was a mistake in the substitution method.
-The scope of the composition indices were handled incorrectly.
-The following is the expected and observed representation of the computation in the \name{} IR.\\
-Expected: $e=\sum_{\hat{j}} \expComp{A_{ij}}{B_i}{\beta} *C_j $\\
-Observed: $e=\sum_{\hat{k}} \expComp{A_{ik}}{B_i}{\beta} *C_j$\\
-in $\lambda(A,B,C)\EinExp{e}{\beta}$(F0,F1,F2). 
-\item[Bug 2] Missing cases in split method.\\
-Probes of a composition are handled differently before reconstruction.\\
-$\sum F(x)$ and $\sum (\text{Comp} (F,G,-))(x)$.\\
-Missing case in method leads to a compile time error.
-Additionally (Comp(Comp -)-)
-\item[Bug 3]  Differentiate a composition\\
-The jacobian of a field composition:
-\begin{lstlisting}
-field#k(d1)[d] F0;
-field#k(d)[d1] F1;
-field#k(d1)[d,d1] G = $\nabla \otimes$ (F0 $\circ $ F1);
-\end{lstlisting}
-is represented as $\EinExp{\nabla_j (\text{Comp}(A_i,B_i,i))}{ij}$\\
-In accordance with the chain rule ( (f $\circ $ g)' = (f'  $\circ $ g) $\cdot$ g') the rewriting system multiplies the inner derivative (g') with a new composition operation (f'  $\circ $ g).
-In practice, the implementation does a point-wise multiplication when it should do an inner product.\\
- Expected: $\sum_{\hat{k}} (\expComp{\nabla_k A_i}{B_i}{\beta} * \nabla_j G_k) $\\
-Observed: $\expComp{\nabla_j  A_{\beta}}{B_i}{ i} * (\nabla_j G_i)$\\
-in $\lambda(A,B)\EinExp{e}{ij}$(F0,F1). 
-\item[False positive]
-There was an error in evaluating the correct answer in \checkname{} for multiple applications of the compose operator.
-We replace the position variable in one field with the field expression of the other.
-The position variables need to be renamed in order to avoid mixing them.
-Without renaming them it resulted in a false positive. 
-
-\item[False positive]
-\checkname{} generates inside tests to see if we are probing the field in the right position.
-They did not account for all the different types of restrictions.
-
-
-
-\item[Bug 4]
-One was in the creation of the \name{}  operator for the concat operator..
-
-\item[Bug 5]
-The bug arose when computing the determinant of the concatenation of a field.
-\begin{lstlisting}[mathescape=true]
-  field#k(d)[2]F,G;
-  field#k(d)[]H = det(concat(F,G));
-\end{lstlisting}
-The bug was caused by the rewriting system.
-Our rewriting system applies index-based rewrites to reduce \name{} expressions. 
-A specific index rewrite is applied when the index in the delta term matches an index in tensor (or field)  term.
-The rewrite checked if two indices were equal and did not distinguish between variable and constant indices.
-It is mathematically incorrect to reduce constant indices, because they are not equivalent to variable indices.
-\end{description}
-\end{document}
+ \end{document}
 
