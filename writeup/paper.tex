@@ -1,0 +1,50 @@
+% ---- ETD Document Class and Useful Packages ---- %
+\documentclass{article}
+\usepackage[margin=0.5in]{geometry}
+\usepackage{subfigure,epsfig,amsfonts}
+\usepackage{natbib}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{listings} % for code 
+\usepackage{enumitem} % for creating lists
+\usepackage{lineno, blindtext} % line numbers
+\usepackage{xstring} %support if/else inside commands
+\usepackage{longtable}
+\usepackage{color}
+\usepackage{multicol}
+\usepackage{url}
+
+\input{dissertation_format}
+\input{def2} %generic input
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Use these commands to set biographic information for the title page:
+\title{New language features}
+\author{Charisee Chiw}
+
+
+\begin{document}
+\maketitle 
+Our work has made it easier and faster to add to the Diderot language.
+When we add an operator to the language we try to leverage our existing work.
+This includes a concise representation in an expressive IR, the generic implementation of operators, and a robust testing model.
+In the following, we illustrate the process of extending Diderot by providing examples.
+
+\section{Defining operators between fields}
+
+\input{comp}
+\input{concat}
+\input{maxmin}
+\section{New ways to define a field}
+\input{poly}
+
+\input{test}
+
+
+
+
+ \end{document}
+

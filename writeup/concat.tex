@@ -1,0 +1,48 @@
+
+  \subsection{Concat}
+A user can define new tensors by concatenating tensors together.
+A Diderot program
+\begin{lstlisting}[mathescape=true]
+  tensor[d$_1$]S; 
+  tensor[d$_2$]T;
+  tensor[d$_1$,d$_2$]M = [S,T]; 
+\end{lstlisting}
+
+A user can refer to components of tensor fields by using the slice operation as shown in the following code.
+A Diderot program
+\begin{lstlisting}[mathescape=true]
+  field#k(d)[d$_1$,d$_2$]A; 
+  field#k(d)[d$_1$,d$_2$]B;
+  field#k(d)[d$_1$]F = A[:,0]; 
+  field#k(d)[d$_1$]G = B[:,1];
+\end{lstlisting}
+
+We would like to provide a way to define new tensors fields by concatenating components together.
+Using the tensor field variables \lstinline!F! and  \lstinline!G! defined earlier in the program the Diderot code should support the line 
+\begin{lstlisting}[mathescape=true]
+  field#k(d)[d$_1$,d$_1$]H = [F, G];
+\end{lstlisting}
+
+\noindent We illustrate the structure of \lstinline[mathescape=true]!H! below.  
+\begin{displaymath}
+  H=\left[ \begin{array}{ll}
+  F_0  & F_1\\
+  G_0  &G_1
+  \end{array}
+ \right]  
+ \end{displaymath}
+ 
+\paragraph{Representation}
+We can use \name{} expressions as building blocks to represent field concatenation. 
+In \name{} each field term is represented by an  expression and it is enabled with a delta function 
+$$\rewriteInitA{} H=\lambda F,G.\EinExp{F_{j }\delta_{0i}+G_{j }\delta_{1i}}{i:2,j:2}\text{(\lstinline[mathescape=true]!F,G!)}$$
+After substitution the new \name{} operator would be 
+$$\rewriteSubst{}H=\lambda A,B.\EinExp{A_{j 0}\delta_{0i}+B_{j 1}\delta_{1i}}{\hat{i}\hat{j}}\text{(\lstinline[mathescape=true]!A,B!)}.$$
+In the compiler we choose to create generic versions of an \name{} operator that can be instantiated to certain types.
+$$\begin{array}{l}
+\lambda F,G. \EinExp{F_{\alpha }\delta_{0i}+G_{\alpha }\delta_{1i}}{{i:2} \hat{\alpha} }\text{(\lstinline[mathescape=true]!F,G!)}\\
+\lambda F,G, H.\EinExp{F_{\alpha }\delta_{0i}+G_{\alpha }\delta_{1i}+H_{\alpha }\delta_{2i}}{{i:3} \hat{\alpha} }\text{(\lstinline[mathescape=true]!F,G,H!)}
+\end{array}$$
+To implement this operator we  need to add to cases to the Diderot typechecker and add the generic representations but not much else.
+Since we are solely using existing \name{} expressions to represent this computation, we can rely on the existing code to handle the \name{} syntax.
+

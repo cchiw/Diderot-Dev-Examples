@@ -1,0 +1,32 @@
+\subsection{Abs, Max, and Min}
+
+
+Implementation lift max  and min operators to the field level and represents the magnitude of scalar fields with absolute expressions. 
+Extra syntax is created to support differentiation.
+
+
+\paragraph{Design}
+Need to add new syntax to support differentiation.
+$$\begin{array}{llll}
+cond &=& e>e \mid e<e & \text{conditional }\\
+e&=&  \text{Max}(a,b)  \mid \text{Min}(a,b) & \text{Binary \name{} operators}\\
+&\mid & \text{if}(cond, e, e)  &\text{If wrapper returns tensor-valued expression}\\
+&\mid &\text{Abs}(e) &\text{Absolute function}\\
+&\mid &\text{Sgn} (e)& \text{Returns Sign (-1, 0, 1)}\\
+\end{array}$$
+
+ \paragraph{Differentiation rules}
+ Differentiation of an absolute expression:
+  $$\frac{\partial}{\partial x_\alpha} \text{abs}(e) \rewriteEINEXP
+( \frac{\partial}{\partial x_\alpha} e) *(\text{Sgn} (e))
+ $$ 
+
+Differentiation creates an if wrapper expressions.
+ $$\frac{\partial}{\partial x_\alpha} \text{Max}(a,b) \rewriteEINEXP if(a>b, \frac{\partial}{\partial x_\alpha}a, \frac{\partial}{\partial x_\alpha}b)  $$
+ $$\frac{\partial}{\partial x_\alpha}\text{Min}(a,b) \rewriteEINEXP if(a<b, \frac{\partial}{\partial x_\alpha}  a, \frac{\partial}{\partial x_\alpha} b)  $$
+  Differentiation of an If wrapper is pushed to leaves.
+   $$\frac{\partial}{\partial x_\alpha} \text{If}(cond, c,d) \rewriteEINEXP if(cond, \frac{\partial}{\partial x_\alpha}c, \frac{\partial}{\partial x_\alpha}d)  $$
+  \paragraph{other  rules}
+Otherwise, Max and Min are treated like  other binary operators. The following pushes the probes to the leaves.
+  $$ (\text{Max}(a,b))(x) \rewriteEINEXP \text{Max}(a(x),  b(x)) $$
+

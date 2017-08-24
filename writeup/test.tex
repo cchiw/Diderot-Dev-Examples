@@ -1,54 +1,21 @@
-% ---- ETD Document Class and Useful Packages ---- %
-\documentclass{article}
-\usepackage[margin=0.5in]{geometry}
-\usepackage{subfigure,epsfig,amsfonts}
-\usepackage{natbib}
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{amsthm}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage{listings} % for code 
-\usepackage{enumitem} % for creating lists
-\usepackage{lineno, blindtext} % line numbers
-\usepackage{xstring} %support if/else inside commands
-\usepackage{longtable}
-\usepackage{color}
-\usepackage{multicol}
-\usepackage{url}
-
-\input{dissertation_format}
-\input{def2} %generic input
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%% Use these commands to set biographic information for the title page:
-\title{EIN and DATm updates}
-\author{Charisee Chiw}
-
-
-\begin{document}
-\maketitle 
-
-\section{Testing}
-Once we have added a new operator to the surface language, it is natural to write some test programs by hand. 
-The tests we wrote by hand were straightforward, but limited and unhelpful since it missed bugs.
-We can apply a more rigorous approach  by using the testing system, 
-\checkname{}.
-We add the concat operator to \checkname{} (by creating a new operator object)
-and used targeted testing to only generate test cases that use the concat operator.
-\checkname{} created and ran 126 test programs that use the concat operator.
-
-
-
-
- \subsection{\checkname{} implementation}
-\paragraph{ inside tests}
-\paragraph{adjustments}
- \paragraph{ third-arity}
-\subsection{Results from using \checkname{}}
-
+\section{Testing results}
 \begin{description}
-\item[Bug 1] Mistake in index scope when using substitution.
+
+\item[XT1]
+One was in the creation of the \name{}  operator for the concat operator.
+The indices on the terms in the concat \name{} operator were switched.
+\item[XT2]
+The bug arose when computing the determinant of the concatenation of a field.
+\begin{lstlisting}[mathescape=true]
+  field#k(d)[2]F,G;
+  field#k(d)[]H = det(concat(F,G));
+\end{lstlisting}
+The bug was caused by the rewriting system.
+Our rewriting system applies index-based rewrites to reduce \name{} expressions. 
+A specific index rewrite is applied when the index in the delta term matches an index in tensor (or field)  term.
+The rewrite checked if two indices were equal and did not distinguish between variable and constant indices.
+It is mathematically incorrect to reduce constant indices, because they are not equivalent to variable indices.
+\item[X-3] Mistake in index scope when using substitution.
 \begin{lstlisting}
 field#k(2)[2,2] F0;
 field#k(2)[2] F1;
@@ -62,12 +29,12 @@ The following is the expected and observed representation of the computation in 
 Expected: $e=\sum_{\hat{j}} \expComp{A_{ij}}{B_i}{\beta} *C_j $\\
 Observed: $e=\sum_{\hat{k}} \expComp{A_{ik}}{B_i}{\beta} *C_j$\\
 in $\lambda(A,B,C)\EinExp{e}{\beta}$(F0,F1,F2). 
-\item[Bug 2] Missing cases in split method.\\
+\item[XC4] Missing cases in split method.\\
 Probes of a composition are handled differently before reconstruction.\\
 $\sum F(x)$ and $\sum (\text{Comp} (F,G,-))(x)$.\\
 Missing case in method leads to a compile time error.
 Additionally (Comp(Comp -)-)
-\item[Bug 3]  Differentiate a composition\\
+\item[XT5]  Differentiate a composition\\
 The jacobian of a field composition:
 \begin{lstlisting}
 field#k(d1)[d] F0;
@@ -80,32 +47,6 @@ In practice, the implementation does a point-wise multiplication when it should 
  Expected: $\sum_{\hat{k}} (\expComp{\nabla_k A_i}{B_i}{\beta} * \nabla_j G_k) $\\
 Observed: $\expComp{\nabla_j  A_{\beta}}{B_i}{ i} * (\nabla_j G_i)$\\
 in $\lambda(A,B)\EinExp{e}{ij}$(F0,F1). 
-\item[False positive]
-There was an error in evaluating the correct answer in \checkname{} for multiple applications of the compose operator.
-We replace the position variable in one field with the field expression of the other.
-The position variables need to be renamed in order to avoid mixing them.
-Without renaming them it resulted in a false positive. 
-
-\item[False positive]
-\checkname{} generates inside tests to see if we are probing the field in the right position.
-They did not account for all the different types of restrictions.
-
-
-
-\item[Bug 4]
-One was in the creation of the \name{}  operator for the concat operator..
-
-\item[Bug 5]
-The bug arose when computing the determinant of the concatenation of a field.
-\begin{lstlisting}[mathescape=true]
-  field#k(d)[2]F,G;
-  field#k(d)[]H = det(concat(F,G));
-\end{lstlisting}
-The bug was caused by the rewriting system.
-Our rewriting system applies index-based rewrites to reduce \name{} expressions. 
-A specific index rewrite is applied when the index in the delta term matches an index in tensor (or field)  term.
-The rewrite checked if two indices were equal and did not distinguish between variable and constant indices.
-It is mathematically incorrect to reduce constant indices, because they are not equivalent to variable indices.
 \item[XT6]
 Using If Wrapper with other field operators
 \begin{lstlisting}[mathescape=true]
@@ -117,6 +58,5 @@ $$(\text{If}(c, e3,e4)) \circ es
 \rightarrow
 \text{If}(c, e3  \circ es ,e4 \circ es) $$
 %:t__p_o32_o26_t1_t13__l2 
-\end{description}
-\end{document}
 
+\end{description}
