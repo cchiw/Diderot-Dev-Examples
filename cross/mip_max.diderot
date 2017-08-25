@@ -1,4 +1,4 @@
-//mip2
+
 input vec3 camAt ("camera look-at point") = [0,0,0];//[1,1,1];
 input vec3 camEye ("camera look-from point") = [6,9,2];//[7,10,3];
 
@@ -19,11 +19,11 @@ input real out0 ("value at which to initilize output max accumulator; using -inf
 
 
 //-which c -sz0 10 -sz1 10 -sz2 10 | unu save -f nrrd -o parabc.nrrd
-field#4(3)[]F0 = c4hexic⊛  image("../data/parab5.nrrd");
-field#4(3)[]F1 = c4hexic⊛  image("../data/parab6.nrrd");
-//field#4(3)[]F =  minF(F0,F1);
+field#4(3)[]F0 = c4hexic⊛  image("../data/parab13s.nrrd");
+field#4(3)[]F1 = c4hexic⊛  image("../data/parab5s.nrrd");
+field#4(3)[]F =  maxF(F0,F1);
 
-field#4(3)[]F = c4hexic⊛  image("../data/parab0s.nrrd");
+//field#4(3)[]F = c4hexic⊛  image("../data/parab13s.nrrd");
 
 
 

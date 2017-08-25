@@ -137,7 +137,7 @@ function real func(vec3 pos0) {
    real y = pos[1];
    real z = pos[2];
    real ret = 0;
-   real size = 0.5;
+   real size = 0.25;
     if (0 == which) {
         real shiftx = -1.5;
         real shifty = 0.0;
@@ -173,6 +173,22 @@ function real func(vec3 pos0) {
         real shifty = 0.0;
         real shiftz = 0.0;
         ret = size - (((shiftx-x)*(shiftx-x))+((shifty-y)*(shifty-y))+((shiftz-z)*(shiftz-z)));
+       } else if (7 == which) {
+            ret = x;
+    } else if (8 == which) {
+        ret = x*x;
+    } else if (9 == which) {
+        ret = y;
+    } else if (10 == which) {
+        ret = x - 1.0;
+    } else if (11 == which) {
+        ret = z +y- 1.0;
+} else if (12 == which) {
+ret = x +y- 1.0;
+
+} else if (13 == which) {
+ret = z +x- 1.0;
+
    } else {
       // update "input int which" annotation above as cases are added
       print("Sorry, no function defined for which = ", which, "\n");
