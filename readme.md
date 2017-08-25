@@ -7,8 +7,12 @@
 	- Max/Min/Abs 
 * We create other ways to define fields
 	- Defining fields as polynomials
-* Add support for high-order versions
+	- fem 
+		- see diderot_fem on github for more complete examples
+		- femprime branch
+* Add support for new and generic versions of tensor operators
 	-  Lerp/Clerp/Clamp 
+
 
 ##Organization of Directories
 *  Organized by topic (comp/concat/maxmin/polys/other)
