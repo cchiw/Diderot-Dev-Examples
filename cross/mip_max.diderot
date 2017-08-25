@@ -19,9 +19,11 @@ input real out0 ("value at which to initilize output max accumulator; using -inf
 
 
 //-which c -sz0 10 -sz1 10 -sz2 10 | unu save -f nrrd -o parabc.nrrd
-field#4(3)[]F0 = c4hexic⊛  image("../data/parab4.nrrd");
-field#4(3)[]F1 = c4hexic⊛  image("../data/parab0.nrrd");
-field#4(3)[]F =  maxF(F0,F1);
+field#4(3)[]F0 = c4hexic⊛  image("../data/parab5.nrrd");
+field#4(3)[]F1 = c4hexic⊛  image("../data/parab6.nrrd");
+//field#4(3)[]F =  minF(F0,F1);
+
+field#4(3)[]F = c4hexic⊛  image("../data/parab0s.nrrd");
 
 
 
@@ -46,7 +48,8 @@ strand raycast(real rayU, real rayV) {
 
     update { // how to compute one sample of a MIP
         vec3 pos = rayOrig + rayN*rayVec;  // pos = ray sample position
-        if (inside(pos,F) && (!inSphere || |pos-camAt| < 1)) {
+    //    if (inside(pos,F) && (!inSphere || |pos-camAt| < 1)) {
+     if (inside(pos,F)) {
             out = max(out, F(pos));  // update output based on last sample
         }
         if (rayN > camFarVsp) {  // ray hit the far clipping plane
