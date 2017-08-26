@@ -19,11 +19,11 @@ input real out0 ("value at which to initilize output max accumulator; using -inf
 
 
 //-which c -sz0 10 -sz1 10 -sz2 10 | unu save -f nrrd -o parabc.nrrd
-field#4(3)[]F0 = c4hexic⊛  image("../data/parab13s.nrrd");
-field#4(3)[]F1 = c4hexic⊛  image("../data/parab5s.nrrd");
+field#4(3)[]F0 = c4hexic⊛  image("../../data/parab13s.nrrd");
+field#4(3)[]F1 = c4hexic⊛  image("../../data/parab5s.nrrd");
 field#4(3)[]F =  maxF(F0,F1);
 
-//field#4(3)[]F = c4hexic⊛  image("../data/parab13s.nrrd");
+//field#4(3)[]F = c4hexic⊛  image("../../data/parab13s.nrrd");
 
 
 
