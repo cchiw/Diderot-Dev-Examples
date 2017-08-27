@@ -188,7 +188,8 @@ ret = x +y- 1.0;
 
 } else if (13 == which) {
 ret = z +x- 1.0;
-
+} else if (14 == which) {
+ret = z;
    } else {
       // update "input int which" annotation above as cases are added
       print("Sorry, no function defined for which = ", which, "\n");

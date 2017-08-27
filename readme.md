@@ -26,3 +26,4 @@
 	- Max/Min/Abs  in  "maxmin/"
 * Writeup of implementation and bugs found by DATm (writeup/paper.pdf)
 * Nrrd files saved to ""data""
+* dev directory is not ready to be viewed
