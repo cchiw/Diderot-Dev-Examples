@@ -8,6 +8,7 @@
 * Define field with if/else statement
 * Radial Basis functions    ex. f (x_i, σ) = Σ_i ϕ{|x-xi|;σ}
 * Define field by shifting  ex. f = g(x+p(x))
+* Selection If 				ex. f = selection(i, [f0,f1,f2,f3])
 
 ## Organization of Directories
 *  Organized by topic (comp/concat/maxmin/polys/other)
