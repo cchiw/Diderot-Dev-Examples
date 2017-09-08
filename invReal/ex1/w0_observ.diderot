@@ -1,0 +1,44 @@
+
+field#4(2)[]F0 = c4hexic⊛  image("rst/data/inputfile0.nrrd");
+
+field#4(2)[]G = inv(-(F0));
+int length =7;
+strand f(int i) {
+
+	output tensor [] out = 0.0;
+	    update {
+
+		tensor [2] pos=[0,0];
+		if(i==0){
+			pos = ([0.16, 0.06]);
+		}
+		else if(i==1){
+			pos = ([0.16, 0.06]);
+		}
+		else if(i==2){
+			pos = ([0.28, 0.13]);
+		}
+		else if(i==3){
+			pos = ([-0.22, 0.15]);
+		}
+		else if(i==4){
+			pos = ([0.06, 0.24]);
+		}
+		else if(i==5){
+			pos = ([0.02, -0.27]);
+		}
+		else if(i==6){
+			pos = ([-0.32, 0.05]);
+		}
+		else if(i==7){
+			pos = ([-0.35, 0.06]);
+		}
+
+	if((inside(pos,F0)) && true){
+		out=G(pos);
+	}
+	 else{out = 7.2;}
+        stabilize;
+    }
+}
+initially [ f(i) | i in 0..length];
