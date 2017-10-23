@@ -1,5 +1,5 @@
 
-field#4(2)[]F0 = c4hexic⊛  image("rst/data/inputfile0.nrrd");
+field#4(2)[]F0 = c4hexic⊛  image("inputfile0.nrrd");
 
 field#4(2)[]G = inv(-(F0));
 int length =7;
