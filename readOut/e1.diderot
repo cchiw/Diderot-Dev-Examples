@@ -1,0 +1,28 @@
+
+int outSize = 10;
+
+real xx= 4;
+
+
+
+
+field#4(3)[3]V = c4hexic⊛  image("../data/vol_ccubic.nrrd");
+field#4(3)[] R= |V|;
+
+
+
+vec3 pos =[4,5,9];
+
+strand sample (int ui, int vi) {
+
+
+
+    //output tensor[] out = R(pos);
+    //output tensor[3] out = ∇ R(pos);
+    output tensor[3,3] out = ∇⊗∇R(pos);
+    update {
+             stabilize;
+    }
+}
+
+initially [ sample(ui, vi) | vi in 0..(outSize-1), ui in 0..(outSize-1) ];
