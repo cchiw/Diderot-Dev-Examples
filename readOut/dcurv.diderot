@@ -1,0 +1,29 @@
+//moe
+int outSize = 10;
+
+
+field#4(3)[] F = bspln5 ⊛ image("../data/parab4.nrrd");
+field#3(3)[3] N = -∇F/|∇F|;
+field#3(3)[3,3] P = identity[3] - N⊗N;
+field#2(3)[3,3] G = (∇⊗N)•P;
+field#2(3)[] disc = sqrt(2*G:G - trace(G)*trace(G));
+field#2(3)[] K1 = (trace(G) + disc)/2;
+field#2(3)[] K2 = (trace(G) - disc)/2;
+
+
+
+
+strand sample (int ui, int vi) {
+    vec3 x = [6,11,23];
+  //output  real val = K1(x);
+output     vec3 grad = -∇K1(x);
+    //tensor[2,2] hess = ∇⊗K1(x);
+
+
+    update {
+             stabilize;
+    }
+}
+
+initially [ sample(ui, vi) | vi in 0..(outSize-1), ui in 0..(outSize-1) ];
+

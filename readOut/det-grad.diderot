@@ -1,0 +1,23 @@
+
+int outSize = 10;
+
+real xx= 4;
+
+
+
+field#2(3)[3,3] V = c4hexic ⊛ image("../data/mat3.nrrd");
+field#0(3)[3] F=(∇(det(V)))•V;
+
+strand sample (int ui, int vi) {
+    vec3 pos = [5,6,1];
+
+
+output tensor[3] out = F(pos);
+//output tensor[3,3] out = ∇⊗∇F(pos);
+
+    update {
+             stabilize;
+    }
+}
+
+initially [ sample(ui, vi) | vi in 0..(outSize-1), ui in 0..(outSize-1) ];

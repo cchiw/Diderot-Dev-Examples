@@ -1,0 +1,25 @@
+//moe
+int outSize = 10;
+
+
+field#4(3)[] V = bspln5 ⊛ image("../data/parab4.nrrd");
+field#2(3)[] S = ∇V/|∇V| • ∇⊗∇(|∇V|) • ∇V/|∇V|;
+field#2(3)[] F = -∇(|∇V|) • ∇V/|∇V|;
+
+
+
+
+strand sample (int ui, int vi) {
+    vec3 x = [6,11,23];
+//    output real val = F(x);
+   // output real val = S(x)*F(x);
+//   output vec3 grad = -∇F(x);
+//   output vec3 grad = -∇(S*F)(x);
+   output tensor[3,3] hess = -∇⊗∇(S*F)(x);
+    update {
+             stabilize;
+    }
+}
+
+initially [ sample(ui, vi) | vi in 0..(outSize-1), ui in 0..(outSize-1) ];
+
