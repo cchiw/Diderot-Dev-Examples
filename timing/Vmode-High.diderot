@@ -1,0 +1,67 @@
+//probe a tensor field
+field#2(3)[3,3] V = c4hexic ⊛ image("../data/slab-c4h-ten9-small.nrrd");
+field#2(3)[3,3] F =V;
+// chiw17 mode-high usr=50.6731
+// ein16 mode-high usr=41.971681
+// vis15 mode-high usr=50.684629
+
+
+
+//trace of matrix
+//2.5 secs ein16
+//field#2(3)[3,3] V = c4hexic ⊛ image("../data/slab-c4h-ten9-small.nrrd");
+//field#2(3)[] F = trace(V);
+//chiw17 mode-high usr=20.4023
+//ein16 mode-high usr=16.232980
+//vis15 mode-high usr=20.5319672
+
+
+//just a scalar
+//vis15 is better by a .2
+//field#2(3)[] V = c4hexic ⊛ image("../data/canny.nrrd");
+//field#2(3)[] F = V;
+//usr=1.46881986,usr=1.52676
+
+
+//constants
+input vec3 camEye = [-139.415, 396.62, 451.98];
+input vec3 camAt = [128.432, 126.52, 219.103];
+input vec3 camUp = [-0.0213419, -0.0581629, 0.998079];
+input real camNearAtRel = -107.06;
+input real camFarAtRel = 125.56;
+input real camFOV = 17.16;
+input int iresU = 650;
+input int iresV = 330;
+input real rayStep = 0.4;
+real camDist = |camAt - camEye|;
+real camNear = camNearAtRel + camDist;
+real camFar = camFarAtRel + camDist;
+vec3 camN = normalize(camAt - camEye);  // away from eye
+vec3 camU = normalize(camN × camUp);    // right
+vec3 camV = camN × camU;                // down
+real camVmax = tan(camFOV*π/360)*camDist;
+real camUmax = camVmax*iresU/iresV;
+
+
+
+strand raycast(int ui, int vi) {
+  real rayU = lerp(-camUmax, camUmax, -0.5, ui, iresU-0.5);
+  real rayV = lerp(-camVmax, camVmax, -0.5, vi, iresV-0.5);
+  real rayN = camNear;
+  vec3 rayVec = (camDist*camN + rayU*camU + rayV*camV)/camDist;
+//  output real out = 0;
+  output tensor[3,3] out = [[0,0,0],[0,0,0],[0,0,0]];
+
+  update {
+
+    vec3 x = camEye + rayN*rayVec;
+    if (inside(x,V)) {
+        out = F(x);
+    }
+    if (rayN > camFar) {
+      stabilize;
+    }
+    rayN = rayN + rayStep;
+  }
+}
+initially [ raycast(ui, vi) | vi in 0..iresV-1, ui in 0..iresU-1 ];
