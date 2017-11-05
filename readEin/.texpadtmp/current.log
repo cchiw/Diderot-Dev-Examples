@@ -1,0 +1,378 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  5 NOV 2017 16:54
+entering extended mode
+ restricted \write18 enabled.
+ file:line:error style messages enabled.
+ %&-line parsing enabled.
+**current.tex
+(./current.tex
+LaTeX2e <2016/03/31>
+Babel <3.9r> and hyphenation patterns for 83 language(s) loaded.
+(/usr/local/texlive/2016/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
+(/usr/local/texlive/2016/texmf-dist/tex/latex/base/size10.clo
+File: size10.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@section=\count80
+\c@subsection=\count81
+\c@subsubsection=\count82
+\c@paragraph=\count83
+\c@subparagraph=\count84
+\c@figure=\count85
+\c@table=\count86
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+(/Users/chariseechiw/work/field_defs/readEin/.texpadtmp/current.aux)
+\openout1 = `current.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 5.
+LaTeX Font Info:    ... okay on input line 5.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 7.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 7.
+
+Underfull \hbox (badness 10000) in paragraph at lines 9--13
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 9--13
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 14--19
+
+ []
+
+
+Overfull \hbox (351.63617pt too wide) in paragraph at lines 14--19
+\OMS/cmsy/m/n/10 r 
+ \OML/cmm/m/it/10 C\OT1/cmr/m/n/10 ))) \OML/cmm/m/it/10 <\OT1/cmr/m/n/10 :\OML/
+cmm/m/it/10 ; \OT1/cmr/m/n/10 2\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 1 \OML/cmm/m/
+it/10 > \OT1/cmr/m/n/10 +\OML/cmm/m/it/10 Trav\OT1/cmr/m/n/10 (((\OML/cmm/m/it/
+10 C \OMS/cmsy/m/n/10 ^^C []\OT1/cmr/m/n/10 ))) \OML/cmm/m/it/10 <
+ []
+
+
+Overfull \hbox (3.43887pt too wide) in paragraph at lines 14--19
+\OT1/cmr/m/n/10 1\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 2\OML/cmm/m/it/10 ; \OT1/cm
+r/m/n/10 0 \OML/cmm/m/it/10 > \OT1/cmr/m/n/10 +\OML/cmm/m/it/10 Trav\OT1/cmr/m/
+n/10 (((((([] \OMS/cmsy/m/n/10 ^^C r 
+ \OML/cmm/m/it/10 C\OT1/cmr/m/n/10 ))[] + (((\OML/cmm/m/it/10 C \OMS/cmsy/m/n/1
+0 ^^C []\OT1/cmr/m/n/10 )))[]) \OMS/cmsy/m/n/10 ^^C []\OT1/cmr/m/n/10 ))) \OML/
+cmm/m/it/10 <\OT1/cmr/m/n/10 :
+ []
+
+
+Overfull \hbox (88.96822pt too wide) in paragraph at lines 14--19
+[]\OT1/cmr/m/n/10 ))) \OML/cmm/m/it/10 <
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 14--19
+
+ []
+
+
+Overfull \hbox (83.59486pt too wide) in paragraph at lines 14--19
+\OMS/cmsy/m/n/10 ![] \OT1/cmr/m/n/10 ([] + ([])[] +
+ []
+
+
+Overfull \hbox (18.23993pt too wide) in paragraph at lines 14--19
+[] \OT1/cmr/m/n/10 + ([])[] +
+ []
+
+
+Overfull \hbox (58.80933pt too wide) in paragraph at lines 14--19
+[] \OT1/cmr/m/n/10 + ([])[] +
+ []
+
+
+Overfull \hbox (46.05362pt too wide) in paragraph at lines 14--19
+\OT1/cmr/m/n/10 ([])[] + [] +
+ []
+
+
+Overfull \hbox (121.82826pt too wide) in paragraph at lines 14--19
+[] \OT1/cmr/m/n/10 + [] + [] +
+ []
+
+
+Overfull \hbox (55.46207pt too wide) in paragraph at lines 14--19
+[] \OT1/cmr/m/n/10 + [] + ([])[] +
+ []
+
+
+Overfull \hbox (92.56451pt too wide) in paragraph at lines 14--19
+\OT1/cmr/m/n/10 ([])[] + ([])[] + [] +
+ []
+
+
+Overfull \hbox (48.57869pt too wide) in paragraph at lines 14--19
+[] \OT1/cmr/m/n/10 + [] + ([])[] + [] +
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 14--19
+
+ []
+
+
+Overfull \hbox (26.67528pt too wide) in paragraph at lines 14--19
+\OMS/cmsy/m/n/10 ![] \OT1/cmr/m/n/10 (([])[] + ([])[] +
+ []
+
+
+Overfull \hbox (31.26338pt too wide) in paragraph at lines 14--19
+\OT1/cmr/m/n/10 ([])[] + ([])[] +
+ []
+
+
+Overfull \hbox (171.10246pt too wide) in paragraph at lines 14--19
+[] \OT1/cmr/m/n/10 + [] + [] +
+ []
+
+
+Overfull \hbox (159.45859pt too wide) in paragraph at lines 14--19
+[] \OT1/cmr/m/n/10 + ([])[] + [] +
+ []
+
+
+Overfull \hbox (171.08385pt too wide) in paragraph at lines 14--19
+[] \OT1/cmr/m/n/10 + [] + [] +
+ []
+
+
+Overfull \hbox (221.66194pt too wide) in paragraph at lines 14--19
+[] \OT1/cmr/m/n/10 + [] + [] +
+ []
+
+
+Overfull \hbox (128.01161pt too wide) in paragraph at lines 14--19
+[] \OT1/cmr/m/n/10 + [] +
+ []
+
+[1
+
+{/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+Underfull \hbox (badness 10000) in paragraph at lines 21--23
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 23--27
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 23--27
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 29--33
+
+ []
+
+
+Overfull \hbox (45.11542pt too wide) in paragraph at lines 29--33
+\OMS/cmsy/m/n/10 ![] \OT1/cmr/m/n/10 (([] \OMS/cmsy/m/n/10 ^^C \OT1/cmr/m/n/10 
+(\OMS/cmsy/m/n/10 r\OML/cmm/m/it/10 A \OMS/cmsy/m/n/10 ^^O \OT1/cmr/m/n/10 (\OM
+S/cmsy/m/n/10 ^^@[]\OT1/cmr/m/n/10 )[])) +
+ []
+
+
+Overfull \hbox (1.5051pt too wide) in paragraph at lines 29--33
+\OT1/cmr/m/n/10 (\OMS/cmsy/m/n/10 ^^@[] ^^O \OT1/cmr/m/n/10 (((([] \OMS/cmsy/m/
+n/10 ^^C r 
+ r\OML/cmm/m/it/10 A\OT1/cmr/m/n/10 ))[] + (((\OMS/cmsy/m/n/10 r\OML/cmm/m/it/1
+0 A \OMS/cmsy/m/n/10 ^^C []\OT1/cmr/m/n/10 )))[]))[]))$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 29--33
+
+ []
+
+
+Overfull \hbox (19.31393pt too wide) in paragraph at lines 29--33
+\OMS/cmsy/m/n/10 ![] \OT1/cmr/m/n/10 ([] + [] +
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 29--33
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 35--40
+
+ []
+
+
+Overfull \hbox (68.92683pt too wide) in paragraph at lines 35--40
+\OMS/cmsy/m/n/10 r 
+ r\OML/cmm/m/it/10 A\OT1/cmr/m/n/10 )) + (\OMS/cmsy/m/n/10 r\OML/cmm/m/it/10 A 
+\OMS/cmsy/m/n/10 ^^O \OML/cmm/m/it/10 Trav\OT1/cmr/m/n/10 ((\OML/cmm/m/it/10 Tr
+av\OT1/cmr/m/n/10 (((\OMS/cmsy/m/n/10 ^^@[] ^^C
+ []
+
+
+Overfull \hbox (766.10652pt too wide) in paragraph at lines 35--40
+[]\OT1/cmr/m/n/10 ))) \OML/cmm/m/it/10 <\OT1/cmr/m/n/10 :\OML/cmm/m/it/10 ; \OT
+1/cmr/m/n/10 2\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 1 \OML/cmm/m/it/10 > \OT1/cmr/
+m/n/10 +([] \OMS/cmsy/m/n/10 ^^C ^^@[]\OT1/cmr/m/n/10 ))) \OML/cmm/m/it/10 <
+ []
+
+
+Overfull \hbox (224.29277pt too wide) in paragraph at lines 35--40
+\OT1/cmr/m/n/10 1\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 2\OML/cmm/m/it/10 ; \OT1/cm
+r/m/n/10 0 \OML/cmm/m/it/10 >\OT1/cmr/m/n/10 ) + (((([] \OMS/cmsy/m/n/10 ^^C r 
+
+ r\OML/cmm/m/it/10 A\OT1/cmr/m/n/10 ))[] + (((\OMS/cmsy/m/n/10 r\OML/cmm/m/it/1
+0 A \OMS/cmsy/m/n/10 ^^C []\OT1/cmr/m/n/10 )))[]) \OMS/cmsy/m/n/10 ^^O \OT1/cmr
+/m/n/10 (\OMS/cmsy/m/n/10 ^^@[]\OT1/cmr/m/n/10 )[]) +
+ []
+
+
+Overfull \hbox (285.79pt too wide) in paragraph at lines 35--40
+\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 2\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 1 \OML/c
+mm/m/it/10 > \OT1/cmr/m/n/10 +\OML/cmm/m/it/10 Trav\OT1/cmr/m/n/10 (((\OMS/cmsy
+/m/n/10 r\OML/cmm/m/it/10 A \OMS/cmsy/m/n/10 ^^C []\OT1/cmr/m/n/10 ))) \OML/cmm
+/m/it/10 <
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 35--40
+
+ []
+
+
+Overfull \hbox (27.96695pt too wide) in paragraph at lines 35--40
+\OMS/cmsy/m/n/10 ![] \OT1/cmr/m/n/10 (([])[] + ([])[] +
+ []
+
+
+Overfull \hbox (31.26338pt too wide) in paragraph at lines 35--40
+\OT1/cmr/m/n/10 ([])[] + ([])[] +
+ []
+
+
+Overfull \hbox (171.10246pt too wide) in paragraph at lines 35--40
+[] \OT1/cmr/m/n/10 + [] + [] +
+ []
+
+
+Overfull \hbox (159.45859pt too wide) in paragraph at lines 35--40
+[] \OT1/cmr/m/n/10 + ([])[] + [] +
+ []
+
+
+Overfull \hbox (171.08385pt too wide) in paragraph at lines 35--40
+[] \OT1/cmr/m/n/10 + [] + [] +
+ []
+
+
+Overfull \hbox (221.66194pt too wide) in paragraph at lines 35--40
+[] \OT1/cmr/m/n/10 + [] + [] +
+ []
+
+
+Overfull \hbox (128.01161pt too wide) in paragraph at lines 35--40
+[] \OT1/cmr/m/n/10 + [] +
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 35--40
+
+ []
+
+
+Overfull \hbox (82.4929pt too wide) in paragraph at lines 35--40
+\OMS/cmsy/m/n/10 ![] \OT1/cmr/m/n/10 ([] + [] +
+ []
+
+
+Overfull \hbox (70.66505pt too wide) in paragraph at lines 35--40
+[] \OT1/cmr/m/n/10 + [] +
+ []
+
+
+Overfull \hbox (60.23466pt too wide) in paragraph at lines 35--40
+\OT1/cmr/m/n/10 ([])[] + ([])[] +
+ []
+
+
+Overfull \hbox (130.14836pt too wide) in paragraph at lines 35--40
+[] \OT1/cmr/m/n/10 + ([])[] +
+ []
+
+
+Overfull \hbox (57.93683pt too wide) in paragraph at lines 35--40
+\OT1/cmr/m/n/10 ([])[] + [] +
+ []
+
+
+Overfull \hbox (55.63899pt too wide) in paragraph at lines 35--40
+[] \OT1/cmr/m/n/10 + [] +
+ []
+
+
+Overfull \hbox (196.29504pt too wide) in paragraph at lines 35--40
+[] \OT1/cmr/m/n/10 + [] +
+ []
+
+
+Overfull \hbox (204.77066pt too wide) in paragraph at lines 35--40
+[] \OT1/cmr/m/n/10 + ([])[] +
+ []
+
+
+Overfull \hbox (165.50327pt too wide) in paragraph at lines 35--40
+[] \OT1/cmr/m/n/10 + [] +
+ []
+
+[2] [3] (/Users/chariseechiw/work/field_defs/readEin/.texpadtmp/current.aux) ) 
+Here is how much of TeX's memory you used:
+ 210 strings out of 493014
+ 2641 string characters out of 6133351
+ 68601 words of memory out of 5000000
+ 3836 multiletter control sequences out of 15000+600000
+ 4553 words of font info for 17 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 23i,4n,17p,4076b,109s stack positions out of 5000i,500n,10000p,200000b,80000s
+<
+/usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></
+usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></u
+sr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></us
+r/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/
+local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/lo
+cal/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/loca
+l/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/t
+exlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texl
+ive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texli
+ve/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive
+/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
+Output written on /Users/chariseechiw/work/field_defs/readEin/.texpadtmp/curren
+t.pdf (3 pages, 114077 bytes).
+PDF statistics:
+ 58 PDF objects out of 1000 (max. 8388607)
+ 41 compressed objects within 1 object stream
+ 0 named destinations out of 1000 (max. 500000)
+ 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+
