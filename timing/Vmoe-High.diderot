@@ -1,0 +1,67 @@
+
+//field#4(3)[] V = c4hexic ⊛ image("../data/moe-iso-b3i5-small.nrrd");
+//chiw17 moe-high usr=74.7956
+//ein16 moe-high usr=62.721955
+//chiw17 moe-high usr=76.5881
+//ein16 moe-high usr=63.019442
+//vis15 moe-high usr=73.9509981
+
+
+field#4(3)[] V = bspln5 ⊛ image("../data/moe-iso-b3i5-small.nrrd");
+//chiw17 moe-high usr=74.7956
+//ein16 moe-high usr=62.721955
+
+//field#0(3)[] V = tent ⊛ image("../data/moe-iso-b3i5-small.nrrd");
+//chiw17 moe-high usr=8.60742
+// ein16 moe-high usr=9.650308
+// vis15 moe-high usr=8.39919186
+
+
+//field#0(3)[] V = bspln3 ⊛ image("../data/moe-iso-b3i5-small.nrrd");
+//chiw17 moe-high usr=23.2189
+//ein16 moe-high usr=24.905322
+//vis15 moe-high usr=23.2463961
+
+
+// constants
+input vec3 camEye = [-194.602, -4.82922, 910.873];
+input vec3 camAt = [-2.36389, 93.121, 661.166];
+input vec3 camUp = [0.0745335, -0.946525, -0.313904];
+input real camNearAtRel = -50;
+input real camFarAtRel = 20;
+input real camFOV = 15.5;
+input int iresU = 410;
+input int iresV = 450;
+input real rayStep = 0.06;
+// (boilerplate) computation of camera and light info
+real camDist = |camAt - camEye|;
+real camNear = camNearAtRel + camDist;
+real camFar = camFarAtRel + camDist;
+vec3 camN = normalize(camAt - camEye);  // away
+vec3 camU = normalize(camN × camUp);    // right
+vec3 camV = camU × camN;                // up
+real camVmax = tan(camFOV*π/360)*camDist;
+real camUmax = camVmax*iresU/iresV;
+
+strand raycast(int ui, int vi) {
+  real rayU = lerp(-camUmax, camUmax, -0.5, ui, iresU-0.5);
+  real rayV = lerp(camVmax, -camVmax, -0.5, vi, iresV-0.5);
+  real rayN = camNear;
+  vec3 rayVec = camN + (rayU*camU + rayV*camV)/camDist;
+
+  output real rgba = 0;
+
+  update {
+    vec3 x = camEye + rayN*rayVec;
+    if (inside(x,V)) {
+      rgba = V(x);
+
+    }
+    if (rayN > camFar) {
+      stabilize;
+    }
+    rayN = rayN + rayStep;
+  }
+
+}
+initially [ raycast(ui, vi) | vi in 0..iresV-1, ui in 0..iresU-1 ];
