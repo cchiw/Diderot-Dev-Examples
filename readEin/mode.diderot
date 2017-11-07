@@ -4,10 +4,9 @@ int outSize = 10;
 real xx= 4;
 
 
-
-field#4(3)[] V = bspln5 ⊛ image("../data/canny.nrrd");
-field#3(3)[3] G = ∇V;
-field#2(3)[] A = -∇(G•G) • (G/|G|);
+field#2(3)[3,3] V = c4hexic ⊛ image("../data/slab-c4h-ten9-small.nrrd");
+field#2(3)[3,3] E = V - trace(V)*identity[3]/3;
+field#2(3)[] F = 3*sqrt(6)*det(E/|E|);
 
 
 
@@ -17,9 +16,9 @@ strand sample (int ui, int vi) {
 
 
 
-//output tensor[] out = A(pos);
+output tensor[] out = F(pos);
 //output tensor[3] out = ∇A(pos);
-output tensor[3,3] out = ∇⊗∇A(pos);
+//output tensor[3,3] out = ∇⊗∇A(pos);
     update {
              stabilize;
     }

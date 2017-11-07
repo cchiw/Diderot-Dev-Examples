@@ -6,8 +6,11 @@ real xx= 4;
 
 
 field#4(3)[] V = bspln5 ⊛ image("../data/canny.nrrd");
-field#3(3)[3] G = ∇V;
-field#2(3)[] A = -∇(G•G) • (G/|G|);
+field#3(3)[3] G = ∇ V;
+
+//field#2(3)[] S = G/|G| • ∇⊗∇(|G|) • G/|G|;
+field#2(3)[] A = -∇(|G|) • G/|G|;
+
 
 
 
@@ -17,9 +20,9 @@ strand sample (int ui, int vi) {
 
 
 
-output tensor[] out = A(pos);
+//output tensor[] out = A(pos);
 //output tensor[3] out = ∇A(pos);
-//output tensor[3,3] out = ∇⊗∇A(pos);
+output tensor[3,3] out = ∇⊗∇A(pos);
     update {
              stabilize;
     }
