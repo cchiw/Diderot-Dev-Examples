@@ -7,8 +7,6 @@ real xx= 4;
 
 field#4(3)[] V = bspln5 ⊛ image("../data/canny.nrrd");
 field#3(3)[3] G = ∇ V;
-
-//field#2(3)[] S = G/|G| • ∇⊗∇(|G|) • G/|G|;
 field#2(3)[] A = -∇(|G|) • G/|G|;
 
 

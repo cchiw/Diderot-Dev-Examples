@@ -7,8 +7,10 @@ field#4(3)[]G =  (V/|V|)•(U/|U|);
 int length =800;
 strand f(int i, int j) {
 
-//output tensor [3] out =  [0.0,0.0,0.0];
+
 tensor [3] t =  [0.0,0.0,0.0];
+//output tensor [] out =  0;
+//output tensor [3] out =  t;
 output tensor [3,3] out =  [t,t,t];
 
 update {
@@ -40,8 +42,9 @@ pos = ([0.31, -0.1, 0.08]);
 }
 
 if((inside(pos,U)) && (inside(pos,V))){
-out =  ∇⊗∇(G)(pos);
+//out =  (G)(pos);
 //out =  ∇(G)(pos);
+out =  ∇⊗∇(G)(pos);
 }
 else{}
 stabilize;
