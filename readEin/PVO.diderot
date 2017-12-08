@@ -1,53 +1,38 @@
+tensor[3] pos=[4,5,6];
+//data
+image(3)[3] u = image("../data/inputfile0.nrrd");
+image(3)[3] v = image("../data/inputfile1.nrrd");
+image(3)[] c = image("../data/out.nrrd");
+image(3)[] m = image("../data/out.nrrd");
+
+kernel#4 k= c4hexic;
+field#4(3)[3]U =k⊛ u;
+field#4(3)[3]V =k⊛ v;
+field#4(3)[]C =k⊛ c;
+field#4(3)[]M =k⊛ m;
 
 
-field#4(3)[3]U = c4hexic⊛  image("../data/inputfile0.nrrd");
-field#4(3)[3]V = c4hexic⊛  image("../data/inputfile1.nrrd");
 
-field#4(3)[]G =  (V/|V|)•(U/|U|);
-int length =800;
-strand f(int i, int j) {
+//PVO
+//field#4(3)[]G =  (V/|V|)•(U/|U|);
+//canny
+//field#2(3)[] G = -∇(∇C•∇C) • (∇C/|∇C|);
+//moe
+field#2(3)[] G = -∇(|∇M|) • ∇M/|∇M|;
 
 
-tensor [3] t =  [0.0,0.0,0.0];
-//output tensor [] out =  0;
-//output tensor [3] out =  t;
-output tensor [3,3] out =  [t,t,t];
 
-update {
+int length =1;
+strand f(int i) {
 
-tensor [3] pos=[0,0,0];
-if(i==0){
-pos = ([-0.15, 0.07, 0.01]);
-}
-else if(i==1){
-pos = ([-0.15, 0.07, 0.01]);
-}
-else if(i==2){
-pos = ([0.08, -0.09, 0.4]);
-}
-else if(i==3){
-pos = ([-0.26, 0.16, 0.08]);
-}
-else if(i==4){
-pos = ([0.15, -0.16, -0.26]);
-}
-else if(i==5){
-pos = ([0.27, -0.27, -0.04]);
-}
-else if(i==6){
-pos = ([-0.13, 0.27, 0.06]);
-}
-else if(i==7){
-pos = ([0.31, -0.1, 0.08]);
-}
 
-if((inside(pos,U)) && (inside(pos,V))){
-//out =  (G)(pos);
-//out =  ∇(G)(pos);
-out =  ∇⊗∇(G)(pos);
+  //output tensor[] out =  (G)(pos);
+ //output tensor[3] out =  ∇(G)(pos);
+    output tensor[3,3] out = ∇⊗ ∇(G)(pos);
+
+
+    update {
+        stabilize;
+    }
 }
-else{}
-stabilize;
-}
-}
-initially [ f(i,j) | i in 0..length,j in 0..length];
+initially [ f(i) | i in 0..length];

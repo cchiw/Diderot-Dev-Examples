@@ -1,14 +1,40 @@
+//tent-1, bspln3/ctmr-2, bspln5-3, c4hexic-4
+
+//field#0(3)[3,3] V = tent ⊛ image("../data/slab-c4h-ten9-small.nrrd");
+//field#0(3)[3,3] F =V;
+//chiw17 mode-high usr=5.60255
+// ein16 mode-high usr=6.638060
+// vis15 mode-high usr=5.65527511
+
+//field#0(3)[3,3] V =bspln3 ⊛ image("../data/slab-c4h-ten9-small.nrrd");
+//field#0(3)[3,3] F =V;
+//chiw17 mode-high usr=18.8349
+// ein16 mode-high usr=24.183267
+
+//field#0(3)[3,3] V =bspln5 ⊛ image("../data/slab-c4h-ten9-small.nrrd");
+//field#0(3)[3,3] F =V;
+// chiw17 mode-high usr=52.2632
+// ein16 mode-high usr=43.803248
+
 //probe a tensor field
+//ein16 faster by 8
 field#2(3)[3,3] V = c4hexic ⊛ image("../data/slab-c4h-ten9-small.nrrd");
 field#2(3)[3,3] F =V;
+// c4hexic
 // chiw17 mode-high usr=50.6731
 // ein16 mode-high usr=41.971681
 // vis15 mode-high usr=50.684629
 
 
+//field#1(3)[3,3] V = ctmr ⊛ image("../data/slab-c4h-ten9-small.nrrd");
+//field#1(3)[3,3] F =V;
+//chiw17 mode-high usr=18.9825
+//ein16 mode-high usr=24.484580
+//vis15 mode-high usr=19.107841
+
 
 //trace of matrix
-//2.5 secs ein16
+//ein16 faster by 2.5
 //field#2(3)[3,3] V = c4hexic ⊛ image("../data/slab-c4h-ten9-small.nrrd");
 //field#2(3)[] F = trace(V);
 //chiw17 mode-high usr=20.4023
@@ -16,11 +42,40 @@ field#2(3)[3,3] F =V;
 //vis15 mode-high usr=20.5319672
 
 
+//vis15 better by 10^-1
+//field#4(3)[3]V = c4hexic⊛  image("../data/v3a.nrrd");
+//field#4(3)[3]F =V;
+//chiw17 mode-high usr=1.46757
+//ein16 mode-high usr=2.032122
+//vis15 mode-high usr=1.5243711
+
+
 //just a scalar
-//vis15 is better by a .2
+//vis15 better by 10^-1
 //field#2(3)[] V = c4hexic ⊛ image("../data/canny.nrrd");
 //field#2(3)[] F = V;
 //usr=1.46881986,usr=1.52676
+
+/*
+//using original mode-vr program
+//5 secs ein 16 faster
+//field#2(3)[3,3] V = c4hexic ⊛ image("../data/slab-c4h-ten9-small.nrrd");
+//field#2(3)[3,3] E = V - trace(V)*identity[3]/3;
+//field#2(3)[] F = 3*sqrt(6)*det(E/|E|);
+//1 sec vis15 (note no trace)
+//field#2(3)[3,3] V = c4hexic ⊛ image("../data/slab-c4h-ten9-small.nrrd");
+//field#2(3)[] S = c4hexic ⊛ image("../data/canny.nrrd");
+//field#2(3)[3,3] E = V - S*identity[3]/3;
+//field#2(3)[] F = 3*sqrt(6)*det(E/|E|);
+//6 secs ein16 faster
+//field#2(3)[3,3] V = c4hexic ⊛ image("../data/slab-c4h-ten9-small.nrrd");
+//field#2(3)[3,3] E = V - V[0,0]*identity[3]/3;
+//field#2(3)[] F = 3*sqrt(6)*det(E/|E|);
+//10 seconds ein16
+//field#2(3)[3,3] V = c4hexic ⊛ image("../data/slab-c4h-ten9-small.nrrd");
+//field#2(3)[3,3] E = V - trace(V)*identity[3]/3;
+//field#2(3)[] F = det(E);
+*/
 
 
 //constants
@@ -50,13 +105,14 @@ strand raycast(int ui, int vi) {
   real rayN = camNear;
   vec3 rayVec = (camDist*camN + rayU*camU + rayV*camV)/camDist;
 //  output real out = 0;
-  output tensor[3,3] out = [[0,0,0],[0,0,0],[0,0,0]];
+  output tensor[3,3] rgba = [[0,0,0],[0,0,0],[0,0,0]];
+//  output tensor[3] out = [0,0,0];
 
   update {
 
     vec3 x = camEye + rayN*rayVec;
     if (inside(x,V)) {
-        out = F(x);
+        rgba = F(x);
     }
     if (rayN > camFar) {
       stabilize;

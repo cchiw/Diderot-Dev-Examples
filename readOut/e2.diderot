@@ -19,8 +19,8 @@ strand sample (int ui, int vi) {
 
 
 //output tensor[] flower = A(pos);
-//output tensor[3] out = ∇A(pos);
-output tensor[3,3] out = ∇⊗∇A(pos);
+output tensor[3] out = ∇A(pos);
+//output tensor[3,3] out = ∇⊗∇A(pos);
     update {
              stabilize;
     }
