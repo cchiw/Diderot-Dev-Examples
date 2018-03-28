@@ -12,12 +12,17 @@ The scope of the composition indices were handled incorrectly.
 The following is the expected and observed representation of the computation in the \name{} IR.\\
 Expected: $e=\sum_{\hat{j}} \expComp{A_{ij}}{B_i}{\beta} *C_j $\\
 Observed: $e=\sum_{\hat{k}} \expComp{A_{ik}}{B_i}{\beta} *C_j$\\
-in $\lambda(A,B,C)\EinExp{e}{\beta}$(F0,F1,F2). 
+in $\lambda(A,B,C)\EinExp{e}{\beta}$(F0,F1,F2). \\
+\\
+DATm Command: python3 cte.py 4  36 17 10 13
+
+
 \item[Comp-B2] Missing cases in split method.\\
 Probes of a composition are handled differently before reconstruction.\\
 $\sum F(x)$ and $\sum (\text{Comp} (F,G,-))(x)$.\\
 Missing case in method leads to a compile time error.
-Additionally (Comp(Comp -)-)
+Additionally (Comp(Comp -)-)\\
+label:-%$p\_o36\_o6\_t17\_tN_\tN\_\_l2 trace(compose)| F\_m3x3\_d3,F\_v3\_d3| $Rst: V-0 RA
 \item[Comp-B3]  Differentiate a composition\\
 The jacobian of a field composition:
 \begin{lstlisting}

@@ -2,13 +2,26 @@
 \newtheorem{mydef}{Definition}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\doc}[0]{\textit{Doc}}
+\newcommand{\branch}[0]{\textit{Diderot\_Dev}}
+\newcommand{\exs}[0]{\textit{Exs}}
+
+\newcommand{\details}[5]{
+\textbf{Functionality}: {#1}\\
+{Syntax}: {#2}\\
+{Branch}: {#3}\\
+{Text}:{#4}\\
+{Issues}: {#5}\\
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Counters
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcounter{bugs}
 \newcounter{substInf}
-
+\usepackage{enumerate}
 \newcommand{\varMathFont}[1]{\text{\ttfamily{#1}}}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Various Fonts 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

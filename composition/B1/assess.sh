@@ -9,12 +9,12 @@ fi
 DOUBLE="--double"
 if [ "$1" == "$DOUBLE" ]; then
 unu 2op - out.nrrd correct_dbl.nrrd \
-| unu reshape -s 1 48 \
+| unu reshape -s 1 16 \
 | unu project -a 1 -m l1 \
 | unu save -f text
 else
 unu 2op - out.nrrd correct_sng.nrrd \
-| unu reshape -s 1 48 \
+| unu reshape -s 1 16 \
 | unu project -a 1 -m l1 \
 | unu save -f text
 fi
