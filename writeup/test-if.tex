@@ -1,0 +1,13 @@
+\begin{description}
+\item[XT6]
+Using If Wrapper with other field operators
+\begin{lstlisting}[mathescape=true]
+field#4(2)[]G = compose(minF((F0),(F1)),(F2*0.1));
+\end{lstlisting}
+Field operators need to be applied to the leaves in if wrapper. 
+The composition is a field operator so it needed to be pushed to the leaves.
+$$(\text{If}(c, e3,e4)) \circ es  
+\rightarrow
+\text{If}(c, e3  \circ es ,e4 \circ es) $$
+%:t__p_o32_o26_t1_t13__l2 
+\end{description}

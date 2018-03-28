@@ -1,0 +1,16 @@
+\begin{description}
+\item[XT1]
+One was in the creation of the \name{}  operator for the concat operator.
+The indices on the terms in the concat \name{} operator were switched.
+\item[XT2]
+The bug arose when computing the determinant of the concatenation of a field.
+\begin{lstlisting}[mathescape=true]
+  field#k(d)[2]F,G;
+  field#k(d)[]H = det(concat(F,G));
+\end{lstlisting}
+The bug was caused by the rewriting system.
+Our rewriting system applies index-based rewrites to reduce \name{} expressions. 
+A specific index rewrite is applied when the index in the delta term matches an index in tensor (or field)  term.
+The rewrite checked if two indices were equal and did not distinguish between variable and constant indices.
+It is mathematically incorrect to reduce constant indices, because they are not equivalent to variable indices.
+\end{description}
