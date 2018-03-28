@@ -1,0 +1,13 @@
+\details{Field assignment based on integer selector}{``swap()" \\ \tab 
+fty =  field\#k(d)[$\alpha$] \\ \tab 
+int $\times$ fty $\times$ fty $\rightarrow$ fty \\ \tab 
+int $\times$ fty $\times$ fty$\times$ .... $\rightarrow$ fty \\ \tab  
+int $\times$ fty $\times$ fty $\times$ fty $\times$ fty $\times$ fty $\times$ fty $\rightarrow$ fty 
+}{}{none}{eh, see Notes}{Check out programs in \exs{}/selection}
+{Notes}:
+\begin{itemize}[noitemsep]
+\item \textit{Selection-id} The first argument is an integer that serves to select a field. \ie{} id=1 chooses the first field argument
+\item \textit{Field Arguments} The function accepts 2-6 field arguments
+\item \textit{Set Selection id}  Anywhere. Update method (\exs{}/selection/ex2) and  Global Initialization (\exs{}/selection/ex1) included.
+\item \textit{Possible Issue} Selection id is clamped when outside range (\ie{} id=-6 $\rightarrow$ id=1)  instead of returning an error
+\end{itemize}

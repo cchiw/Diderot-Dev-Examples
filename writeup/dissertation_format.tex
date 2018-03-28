@@ -6,14 +6,17 @@
 \newcommand{\doc}[0]{\textit{Doc}}
 \newcommand{\branch}[0]{\textit{Diderot\_Dev}}
 \newcommand{\exs}[0]{\textit{Exs}}
+\newcommand{\diss}[0]{\textit{dissertation}}
 
-\newcommand{\details}[5]{
-\textbf{Functionality}: {#1}\\
+\newcommand{\details}[6]{
+Functionality: \textbf{{#1}}\\
 {Syntax}: {#2}\\
-{Branch}: {#3}\\
-{Text}:{#4}\\
+{Branch}: \branch{} {#3}\\
+{Text}: {#4}\\
 {Issues}: {#5}\\
+{Examples}: {#6}\\
 }
+\newcommand\tab[1][1cm]{\hspace*{#1}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Counters

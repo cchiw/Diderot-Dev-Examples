@@ -1,15 +1,9 @@
-\details{Field Composition}{compose(F,G) \& F $\circ$ G}{\branch{}}{EIN IR design, rewriting rules, and resolved bugs listed in \doc{}}{none}
-\textit{Path}: \exs{}/composition\\
-{Examples}:
+\details{Field Composition}{``compose" and  ``$\circ$" \\ \tab field\#k($d_1$)[$\alpha$]$\times$    field\#k($d_0$)[$d_1$]  $\rightarrow$ field\#k($d_1$)[$\alpha$]  }{}{EIN IR design, rewriting rules, and resolved bugs listed in \doc{}}{none}{Check out programs in \exs{}/composition}
+{Notes}:
 \begin{itemize}[noitemsep]
-\item uses ``compose"-\textit{Path}/B*/observ.diderot 
-\item uses ``$\circ$"-\textit{Path}/X1/observ.diderot,\textit{Path}/X2/t.diderot
-\item chains composition operator \textit{Path}/X2/*.diderot
-\end{itemize}
-{Notes}
-\begin{itemize}[noitemsep]
-\item  Q: Can you chain composition operators  A: Yes
-\item Q: How do we test this operator with DATm A: python3 cte.py 1  36
-\item Q: Did we find bugs? \\
-A:Yes, copies of the programs are in \textit{Path}/B*. You can recreate a solved bug with DATm command ``python3 cte.py 4  36 17 10 13"\\
+\item \textit{function name syntax} can use ``compose" (\textit{Path}/B*/observ.diderot) 
+\item \textit{unicode syntax} can use ``$\circ$"(\textit{Path}/X1/observ.diderot,\textit{Path}/X2/t.diderot)
+\item \textit{chains composition operator}  can apply composition operator to other operators and to itself (\textit{Path}/X2/*.diderot)
+\item \textit{Create test programs} DATm command: python3 cte.py 1  36
+\item \textit{solved bugs} Copies of the programs with solved bugs are in \textit{Path}/B*. You can recreate a solved bug with DATm command ``python3 cte.py 4  36 17 10 13"
 \end{itemize}
