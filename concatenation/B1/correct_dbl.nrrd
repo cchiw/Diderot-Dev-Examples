@@ -1,15 +1,0 @@
-NRRD0003
-# Complete NRRD file format specification at:
-# http://teem.sourceforge.net/nrrd/format.html
-type: double
-dimension: 2
-sizes: 8 8
-kinds: list space
-endian: little
-encoding: raw
-
-|\6MâÀg´¡CÛÀwôã±N;¬?”×'ã{
-@¬½—M#ë?FˆPƒÀ)\+Í03À›V—®2®	@|\6MâÀg´¡CÛÀwôã±N;¬?”×'ã{
-@¬½—M#ë?FˆPƒÀ)\+Í03À›V—®2®	@ÙŽ2íÀ|L)˜­ÚÀ³tú3XÅ¿Á›tÊ_>@	vŠ@ÓUð?Š™~ñQ¢ÿ¿[˜Ž@13Àâîì
-‘q
-@ôŒì:Ý‡À%6Ñ¬CÀGËX¡ÿ?Ñ¾ªì6*ð?GbÀ1èò¿<zÒ´ÉZÀgß¸ýbfÀRê1váá@”*>œ1ÒÀ~ñî÷nÂÀÂ\ÒwëðÕ¿q$>áo‡@òÓ>Íùhò?R%’Màü¿š‘B˜™À`‡üã!@ìt›Ü)ÌÀñHÒ³ßÀgÇ/ì¶õå¿æ$6­S!@øvy$Úö?$½ßËŒW÷¿¿#ýsefÀ&¡»©@ ¥$VPÀ½FÌ)/ÆÀoø);=få?$ã	›q@mÐÃÌaÔ?Z ûd<äÀ-Òñ®dfÀ¥uhd>@¹šëÛK)Àz.w7TÀ)-b©ÿèÿ?€Q™Ay	ð?&7¾üeó¿‡µ{IÀÀ¾é1–™ÀzÆéè7@
