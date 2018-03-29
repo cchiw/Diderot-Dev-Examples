@@ -1,11 +1,11 @@
 NRRD0003
 # Complete NRRD file format specification at:
 # http://teem.sourceforge.net/nrrd/format.html
-type: float
-dimension: 2
-sizes: 2 8
-kinds: 2-vector space
+type: double
+dimension: 1
+sizes: 8
+kinds: space
 endian: little
 encoding: raw
 
-$ŒÍ?:Ó¹À$ŒÍ?:Ó¹Àffæ@ffæ@ffæ@ffæ@»(é?ñ±Àhc@¯Ë­Àffæ@ffæ@ffæ@ffæ@
+‹’¯tÀ‹’¯tÀì„±vn½Ğ¿ÄMö\ èÀ2ènEÈÄ¿èñ‰×8,@’Ú\V@	S=yÀ@
