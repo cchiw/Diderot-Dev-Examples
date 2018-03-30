@@ -1,8 +1,9 @@
-#clerp, clamp, lerp
+# clerp, clamp, lerp
+* Branch: Diderot Dev & Vis15
 * Functionality: Clerp. Clamp and Lerp all in one
 * Syntax: “clerp()”
     - tensor[i] × tensor[i] × real → tensor[i]
-    - tensor[i] × tensor[i] × real× real× real → tensor[i] Branch: Diderot Dev & Vis15
+    - tensor[i] × tensor[i] × real × real × real → tensor[i] 
 * Text: none
 * Issues: none
 * Example 
