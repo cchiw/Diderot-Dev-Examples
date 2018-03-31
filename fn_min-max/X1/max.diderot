@@ -1,0 +1,36 @@
+field#2(2)[] a = c4hexic⊛  image("../../data/const7.nrrd");
+field#2(2)[] x = c4hexic⊛  image("../../data/x7.nrrd");
+field#2(2)[] y = c4hexic⊛  image("../../data/y7.nrrd");
+field#2(2)[] xy = c4hexic⊛  image("../../data/xy7.nrrd");
+
+field#2(2)[] m1 = maxF(a, x);
+field#2(2)[] m2 = maxF(y, xy);
+
+int outSize = 5;
+
+int ex =2;
+
+strand sample (int i) {
+    tensor[2] pos = [i,i];
+
+    output tensor[3] out = [-77,-77,-77];
+    update {
+        if(i==0){pos=[0.1,0.1];}
+        else if(i==1){pos=[0.2,0.2];}
+        else if(i==2){pos=[-0.2,-0.2];}
+        else if(i==3){pos=[-0.4,-0.4];}
+        else if(i==4){pos=[0.4,0.4];}
+
+        if(ex==1){
+            if(inside(pos, m1)){
+                out = [(a)(pos), (x)(pos), m1(pos)];
+            }
+        }
+        else {
+            if(inside(pos, m2)){
+                out = [(y)(pos), (xy)(pos), m2(pos)];
+            }
+        }
+        stabilize;
+    }
+}  initially [ sample(i) | i in 0..(outSize-1)];
