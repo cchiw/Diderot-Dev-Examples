@@ -1,13 +1,19 @@
 ﻿# Tool: DATm: Diderot's Automated testing 
-
+## Details
+* Branch:   [Diderot-Dev](https://github.com/cchiw/Diderot-Dev) 
+* Use: Test operators on and between tensors/image data based on correctness
+* Tool: DATm:Diderot’s Automated Testing tool  
+* Text:  [ICSE-AST paper](https://www.researchgate.net/publication/317836930_DATm_Diderot%27s_Automated_Testing_Model) and Testing chapter in [Dissertation](http://pl.cs.uchicago.edu/documents/chiw_dissertation.pdf)
+	 > Testing environment variables in Pg 102 
+	> Adding a new operator in Pg 113 
 ## User Guide
 ### Getting Started
 Quick instructions
  1. Checkout github directory for [DATm](https://github.com/cchiw/DATm.git)
- > git clone https://github.com/cchiw/DATm.git
+	 > git clone https://github.com/cchiw/DATm.git
  2.  Change cpath in Frame to your absolute path to diderot branches. See *Set Up* about other variables you might want to change.
     3.  Starting Testing with command line arguments. See Section on *Running DATm*.
-   > python3 cte.py 1 0 
+		> python3 cte.py 1 0 
 
 ### Set Up:  variables and testing frame settings
 * **Change branch** being tested : 
@@ -39,7 +45,7 @@ Great, everything is running now, but how do I look at the results? In the direc
 * *results_final.txt*:Testing frame and the results of each test case 	
  * *results_terrible.txt:* Reports test cases with errors  
  * *results_ty.txt*:Test labels and Types
->*Note* that each test case has a label of the form "p_o...l2"
+	>*Note* that each test case has a label of the form "p_o...l2"
 ###    Targeted testing           
 Rerun tests (group of tests) that failed.
 For instance, the test case(s) with   label 
@@ -56,13 +62,29 @@ where “3” is the number of arguments and "27 0 0” refer to the integers in
     3. Add way to evaluate that operator applied to polynomials: *nc/nc_eval.py*
    > More details in Pg 113 in  [Dissertation](http://pl.cs.uchicago.edu/documents/chiw_dissertation.pdf)
 
-## Details
-* Branch:   [Diderot-Dev](https://github.com/cchiw/Diderot-Dev) 
-* Use: Test operators on and between tensors/image data based on correctness
-* Tool: DATm:Diderot’s Automated Testing tool  
-* Text:  [ICSE-AST paper](https://www.researchgate.net/publication/317836930_DATm_Diderot%27s_Automated_Testing_Model) and Testing chapter in [Dissertation](http://pl.cs.uchicago.edu/documents/chiw_dissertation.pdf), 
-	 > Testing environment variables in Pg 102 
-	> Adding a new operator in Pg 113 
--   arguments and “27 0 0” refer to the integers in the label before “tN”
-    
+
+## Organization and flow
+### Directory dependence
+```mermaid
+graph LR
+C{cte} --> NC
+f{fem} -->NC{nc} 
+NC --> S{Shared}
+```
+### Command line arguments
+```mermaid
+graph LR
+L[command line] -- cte.py --> C{cte}
+L[command line] -- fem.py --> f{fem}
+```
+### Flow 
+```mermaid
+graph LR
+CC(cte_core.py) -- creates arguments -->NF(nc_createField.py)
+CC-- writing Diderot program --> CW(cte_writeDiderot.py)
+CC -- observed data --> BO(base_observed.py)
+
+CC-- correct  output --> CE(cte_eval.py)
+CC-- compare  output --> NC(nc_compare.py)
+```
 
