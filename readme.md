@@ -1,17 +1,17 @@
 ﻿
 # Overview of Repo
  - A. Functions and Operators
-	 - A1. Function composition : [fn_composition](https://github.com/cchiw/latte/tree/master/fn_composition "fn_composition")
-	 - A2. Function concatenation :[fn_concatenation](https://github.com/cchiw/latte/tree/master/fn_concatenation "fn_concatenation")
+	 - A1. Function composition: [fn_composition](https://github.com/cchiw/latte/tree/master/fn_composition "fn_composition")
+	 - A2. Function concatenation: [fn_concatenation](https://github.com/cchiw/latte/tree/master/fn_concatenation "fn_concatenation")
 	 - A3. Matrix Inverse: [fn_matrixInverse](https://github.com/cchiw/latte/tree/master/fn_matrixInverse "fn_matrixInverse")
-	 - A4. Min and Max :[fn_min-max](https://github.com/cchiw/latte/tree/master/fn_min-max "fn_min-max")
-	 - A5. Clerp and Clamp:[fn_clerp](https://github.com/cchiw/latte/tree/master/fn_clerp "fn_clerp")
-	 - A6. Field Selection:[fn_selection](https://github.com/cchiw/latte/tree/master/fn_selection "fn_selection")
+	 - A4. Min and Max: [fn_min-max](https://github.com/cchiw/latte/tree/master/fn_min-max "fn_min-max")
+	 - A5. Clerp and Clamp: [fn_clerp](https://github.com/cchiw/latte/tree/master/fn_clerp "fn_clerp")
+	 - A6. Field Selection: [fn_selection](https://github.com/cchiw/latte/tree/master/fn_selection "fn_selection")
 - B. Tools
-	- B1. DATm: Diderot’s Automated Testing:[tool_DATm](https://github.com/cchiw/latte/tree/master/tool_DATm "tool_DATm")
+	- B1. DATm: Diderot’s Automated Testing: [tool_DATm](https://github.com/cchiw/latte/tree/master/tool_DATm "tool_DATm")
 	- B2. Printing the intermediate representation: [tool_printIR](https://github.com/cchiw/latte/tree/master/tool_printIR "tool_printIR")
 - C. Field Definitions
-	- C1. Closed Form expressions:[dfn_cfe](https://github.com/cchiw/latte/tree/master/dfn_cfe "dfn_cfe")
+	- C1. Closed Form expressions: [dfn_cfe](https://github.com/cchiw/latte/tree/master/dfn_cfe "dfn_cfe")
 
 # A.Functions and Operators
 ## A1. Function composition
@@ -249,9 +249,9 @@ The testing environment is indicated by the frame. The scope helps target a spec
 
 ###  Results passes/fails
 Great, everything is running now, but how do I look at the results? In the directory rst/stash are several text files that record the test cases.
-* *results_final.txt*:Testing frame and the results of each test case
-* *results_terrible.txt:* Reports test cases with errors
-* *results_ty.txt*:Test labels and Types
+* *results_final.txt*: Testing frame and the results of each test case
+* *results_terrible.txt*: Reports test cases with errors
+* *results_ty.txt*: Test labels and Types
 	>*Note* that each test case has a label of the form "p_o...l2"
 
 ###  Targeted testing
@@ -272,61 +272,8 @@ Adding a new operator to DATm:
 3. Add way to evaluate that operator applied to polynomials: *nc/nc_eval.py*
 	> More details in Pg 113 in  [Dissertation](http://pl.cs.uchicago.edu/documents/chiw_dissertation.pdf)
 
-  
-
-  
-
 ## Organization and flow
-
-### Command line arguments
-
-```mermaid
-
-graph LR
-
-L(frame.py) -- python3 cte.py ... --> C{cte}
-
-L(frame.py)  -- python3 fem.py ... --> f{fem}
-
-C --> R{rst}
-
-f --> R{rst}
-
-```
-
-### Iterate over test cases
-
-```mermaid
-
-graph LR
-
-C(cte.py) -- Handler --> ICC(cte_iter_cmd.py)
-
-ICC-- Iterates  -->IC(cte_iter.py)
-
-IC -- Typechecks --> OTY(obj_typechecker.py)
-
-IC-- Runs single test  -->CC(cte_core.py)
-
-```
-
-###  Single Test case
-
-```mermaid
-
-graph LR
-
-CC(cte_core.py) -- Creates arguments -->NF(nc_createField.py)
-
-CC-- Writes Diderot program --> CW(cte_writeDiderot.py)
-
-CC -- Observed data --> BO(base_observed.py)
-
-CC-- Correct  output --> CE(cte_eval.py)
-
-CC-- Compare  output --> NC(nc_compare.py)
-
-```
+See Figures for DATm repo in [DATm-pdf](https://github.com/cchiw/latte/blob/master/tool_DATm/readme.pdf)
 
 ## B2. Printing the intermediate representation
 Translate our compiler's intermediate representation (EIN) into a readable latex or unicode format.
@@ -345,11 +292,11 @@ The differentiation operations ∇⊗∇ are distributed across the tensor opera
 
 >Diderot-Dev/bin/diderotc --readEin3 T.diderot
 
-$$\rightarrow_{refactor}(\frac{((a* \nabla  \otimes v)+((v \otimes  \nabla a)))}{b}-\frac{(a*(v \otimes  \nabla b))}{((b)^2)})$$
+>*Note* See closed-form expression example in [CFE-readme](https://github.com/cchiw/latte/blob/master/dfn_cfe/readme.pdf)
+
 To see multiple rewriting options we can use command --readEinRewrite:
 >Diderot-Dev/bin/diderotc --readEinRewrite T.diderot
 
-$$\rightarrow_{flat} (\frac{-((a*(v \otimes  \nabla b)))}{((b)^2)}+\frac{(a* \nabla  \otimes v)}{b}+\frac{((v \otimes  \nabla a))}{b})$$$$\rightarrow_{match}(\frac{-((a*(v \otimes  \nabla b)))}{((b)^2)}+\frac{(a* \nabla  \otimes v)}{b}+\frac{((v \otimes  \nabla a))}{b})$$$$\rightarrow_{refactor}(\frac{((a* \nabla  \otimes v)+((v \otimes  \nabla a)))}{b}-\frac{(a*(v \otimes  \nabla b))}{((b)^2)})$$$$\rightarrow_{pull-division }(((a* \nabla  \otimes v)+((v \otimes  \nabla a)))*\frac{1}{b}-(a*(v \otimes  \nabla b))*\frac{1}{((b)^2)})$$
   
 >*Note* There are four rewriting options listed above. The best output can vary by computation. The user can compile the program again and specify a particular rewrite with the command "--readEin" followed by the rewrite number. Thus the command "--readEin3" printed the third rewrite.
 
@@ -371,12 +318,13 @@ By default we print out the latex format. However you can use unicode as well.
 * Issues/Future Work
 	*  pull out of strands
 	* image types needs to be defined separately so we have a unique variable to refer to
-
+*  Examples are in directory [tool_printIR](https://github.com/cchiw/latte/tree/master/tool_printIR "tool_printIR")
 # C. Field Definitions
 Users can define closed form expressions. The expression can include tensor operators and variables.  Differentiation is applied by differentiating in respect to some variable(s).
 
 ## C1. Closed Form expressions 
- It is natural to define a function with an expression: F(x) = $x^2$
+ It is natural to define a function with an expression: 
+ 			F(x) = x^2
 In the surface language we added function cfexp() where the first argument exp is an expression and the second x is a variable.
 ```
 tensor [] exp = x*x;
@@ -384,8 +332,8 @@ ofield#2(2)[] F = cfexp(exp,x);//define F with variable x
 tensor[2] v = [3,7];
 tensor[] outF = inst(F,v);//evaluate F with argument v
 ```
-We commonly refer to the right-hand-side to variable F as a cfexp (closed-form expression). The cfe is created with variable x, but is actually evaluated with v.
-$$outF= F(v)=  v_0 ^2+  v_1^2$$
+We commonly refer to the right-hand-side to variable F as a cfexp (closed-form expression). The cfe is created with variable x, but is actually evaluated with v.	
+	outF= F(v)=  v_0 ^2+  v_1^2
 
 The cfexp is a Diderot “ofield” type, but is treated the same as a Diderot "field type". The user can apply other tensor and field operators on the cfexp including differentiation.
 
@@ -397,7 +345,7 @@ The differentiation of the cfexp is computed in respect to the variable v. We il
 
   
 
-$$ outGF=  ∇F(v)= \left[ \begin{array}{ll} 2*v_0\\2*v_1  \end{array}\right] $$
+ outGF=  ∇F(v)= [2*v0,2*v1]
 A function can be defined with multiple variables, such as
 $$F (a, b) = a + b$$
 and similarly a cfexp can be defined with multiple variables
@@ -410,7 +358,9 @@ ofield#k(d)[] I = cfexp(exp,b);
 ```
 The distinction between G, H, and I is that differentiation is applied in respect to either one or two variables.
 
-$$∇ G_{a}= ∇ a +b $$$$ ∇ H_{ab}= ∇ a +∇ b  $$$$ ∇  I_{b}= a +∇ b$$
+∇ G_{a}= ∇ a + b 
+∇ H_{ab}= ∇ a + ∇ b  
+∇ I_{b}= a + ∇ b
 
   
 
@@ -430,5 +380,5 @@ $$∇ G_{a}= ∇ a +b $$$$ ∇ H_{ab}= ∇ a +∇ b  $$$$ ∇  I_{b}= a +∇ b$$
 	* OField type doesn’t describe types for multiple inputs, need to change typechecker
 	* Remove k-continuity
 	*  Needs more extensive testing
-
+* Examples in directory [dfn_cfe](https://github.com/cchiw/latte/tree/master/dfn_cfe "dfn_cfe")
 
