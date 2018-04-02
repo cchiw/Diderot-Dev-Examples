@@ -14,13 +14,13 @@ field#k(d)[d,d] FI = inv(F)
 ## Details
 * Branch:   [Diderot-Dev](https://github.com/cchiw/Diderot-Dev) 
 * Syntax: “inv()”
-- field#k(d)[d,d] → field#k(d)[d,d]
-- tensor[n,n] → tensor[n,n]
+    - field#k(d)[d,d] → field#k(d)[d,d]
+    - tensor[n,n] → tensor[n,n]
 * Text: Mentioned in dissertation-Design
 
 ## Directory Organization
 * Examples
-- Inverse of Negation  : X1
-- Hessian of Inverse  : X2
-- Inverse of Hessian Times another field  : X3
+    - Inverse of Negation  : X1
+    - Hessian of Inverse  : X2
+    - Inverse of Hessian Times another field  : X3
 

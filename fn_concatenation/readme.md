@@ -12,10 +12,9 @@ field#k(d)[2,i] M = concat(A,B)
 ## Details
 * Branch:   [Diderot-Dev](https://github.com/cchiw/Diderot-Dev) 
 * Syntax: "concat"
-- field#k(d)[α] × field#k(d)[α] → field#k(d)[2,α]
+    - field#k(d)[α] × field#k(d)[α] → field#k(d)[2,α]
 * Text: Mentioned in dissertation-FW. Details provided in Doc
 * Future work Use syntax “[”,“]”
 
 ## Directory Organization
-* Examples
-- Test programs that created bugs (now solved)  : B*.diderot
+* Test programs that created bugs (now solved)  : B*.diderot

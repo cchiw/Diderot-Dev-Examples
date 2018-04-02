@@ -36,12 +36,12 @@ field#k(d0)[α]G = F0 ∘ F1∘ F2;
 ## Details
 * Branch:   [Diderot-Dev](https://github.com/cchiw/Diderot-Dev) 
 * Syntax: "compose"  and "◦"
-- field#k(d1)[α]× field#k(d0)[d1] → field#k(d1)[α]
+    - field#k(d1)[α]× field#k(d0)[d1] → field#k(d1)[α]
 * Text: EIN IR design, rewriting rules, and resolved bugs listed in Doc
 
 ## Directory Organization
 * Examples
-- Chaining composition  : X2
-- Test programs that created bugs (now solved)  : B*.diderot
-- Unicode syntax  : X1/observ.diderot and X2/t.diderot
+    - Chaining composition  : X2
+    - Test programs that created bugs (now solved)  : B*.diderot
+    - Unicode syntax  : X1/observ.diderot and X2/t.diderot
 

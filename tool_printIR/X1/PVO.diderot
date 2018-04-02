@@ -1,0 +1,25 @@
+tensor[3] pos=[4,5,6];
+//data
+image(3)[3] u = image("inputfile0.nrrd");
+image(3)[3] v = image("inputfile1.nrrd");
+kernel#4 k= c4hexic;
+field#4(3)[3]U =k⊛ u;
+field#4(3)[3]V =k⊛ v;
+
+//PVO
+field#4(3)[]G =  (V/|V|)•(U/|U|);
+
+int length =1;
+strand f(int i) {
+
+
+output tensor[] out =  (G)(pos);
+//output tensor[3] out =  ∇(G)(pos);
+//output tensor[3,3] out = ∇⊗ ∇(G)(pos);
+
+
+    update {
+        stabilize;
+    }
+}
+initially [ f(i) | i in 0..length];

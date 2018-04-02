@@ -20,11 +20,11 @@ which will apply clamp and lerp as expected.
 
 * Branch:  [Vis15](http://smlnj-gforge.cs.uchicago.edu/scm/viewvc.php/branches/vis15/?root=diderot) & [Diderot-Dev](https://github.com/cchiw/Diderot-Dev) 
 * Syntax: “clerp()” New Clerp function 
-- tensor[i] × tensor[i] × real → tensor[i]
-- tensor[i] × tensor[i] × real × real × real → tensor[i]
+    - tensor[i] × tensor[i] × real → tensor[i]
+    - tensor[i] × tensor[i] × real × real × real → tensor[i]
 * Syntax: “clamp()” Clamp function can be applied to general tensors
-- tty = tensor[α]
-- tty × tty × tty → tty
+    - tty = tensor[α]
+    - tty × tty × tty → tty
 
 ## Directory Organization
 * new function clerp()  : clerp3.diderot 

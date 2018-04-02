@@ -16,16 +16,16 @@ input int selection_id;
 ## Details
 * Branch:   [Diderot-Dev](https://github.com/cchiw/Diderot-Dev) 
 * Syntax: “swap()"
-- fty = field#k(d)[α]
-- int × fty × fty → fty
-- int × fty × fty× .... → fty
-- int × fty × fty × fty × fty × fty × fty → fty
+    - fty = field#k(d)[α]
+    - int × fty × fty → fty
+    - int × fty × fty× .... → fty
+    - int × fty × fty × fty × fty × fty × fty → fty
 * Arguments
--  *Selection id* The first argument  is an integer that serves to select a field. i.e. id=2 chooses the second field argument
-- *Field arguments* The function accepts 2-6 field arguments.
+    - *Selection id* The first argument  is an integer that serves to select a field. i.e. id=2 chooses the second field argument
+    - *Field arguments* The function accepts 2-6 field arguments.
 * Potential issue:  The value of the *Selection id* is clamped. If the first argument is id=-7 the id is set to 1 instead of throwing an error 
 ## Directory Organization
-* Examples:
-- Global Initialization of the *selection id* in a shaded v.r. program (dvr)  : X1
-- The *selection id* is set in the update method  : X2
+Examples:
+    - Global Initialization of the *selection id* in a shaded v.r. program (dvr)  : X1
+    - The *selection id* is set in the update method  : X2
 
