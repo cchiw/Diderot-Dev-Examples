@@ -1,23 +1,36 @@
 \usepackage{mathtools}
 \newtheorem{mydef}{Definition}
-
+% CLERP- only works in vis15
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\doc}[0]{\textit{Doc}}
+\newcommand{\doc}[0]{[Doc]}
 \newcommand{\branch}[0]{\textit{Diderot\_Dev}}
+\newcommand{\branchV}[0]{\textit{Vis15}}
 \newcommand{\exs}[0]{\textit{Exs}}
-\newcommand{\diss}[0]{\textit{dissertation}}
-
-\newcommand{\details}[6]{
-Functionality: \textbf{{#1}}\\
+\newcommand{\diss}[0]{[dissertation]}
+\newcommand{\cpc}[0]{[CPC paper]}
+\newcommand{\paperAst}[0]{[AST paper]}
+\newcommand{\datm}[0]{\textit{DATm}}
+\newcommand{\details}[5]{
+\noindent
+Functionality: {#1}\\
 {Syntax}: {#2}\\
-{Branch}: \branch{} {#3}\\
+{Branch}: {#3}\\
+{Text}: {#4}\\
+{Issues}: {#5} \\
+}
+\newcommand{\tooldetails}[6]{
+\noindent
+{Use}: \textbf{#1}\\
+Tool: {#2}\\
+{Branch}: {#3}\\
 {Text}: {#4}\\
 {Issues}: {#5}\\
-{Examples}: {#6}\\
+{Q \& A}: {#6}
 }
 \newcommand\tab[1][1cm]{\hspace*{#1}}
-
+\usepackage{color}
+ 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Counters
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -1,0 +1,37 @@
+int outSize = 10;
+//define variable
+vec2 x=[1,1];
+//define cfexpnomial ofield
+ofield#2(2)[2] V = cfexp(x, x);
+//apply computations to ofield
+ofield#1(2)[2,2] GV = ∇⊗V;
+
+strand sample (int ui, int vi) {
+    real uu = lerp(0.0, 1.0, -0.5, real(ui), real(outSize)-0.5);
+    real vv = lerp(0.0, 1.0, -0.5, real(vi), real(outSize)-0.5);
+    vec2 pos = [uu,vv];
+    real x =uu;
+    real y=vv;
+
+    // ************************ Example V **********************
+
+    //output tensor[2] out=      [pos[0],pos[1]];
+    //output tensor[2] out = inst(V,pos);
+    //Expected solution: 0.050000001 0.050000001 0.15000001 0.050000001 0.25 0.050000001 0.34999999
+
+    //output tensor[2] out = inst(V,pos)-[pos[0],pos[1]] ;
+    //output tensor[2] out = [pos[0],pos[1]]-inst(V,pos) ;//Expected solution: 0
+    //output tensor[2] out = pos-inst(V,pos) ;
+
+      // ************************ Example GV*********************
+
+     output tensor[2,2] out = inst(GV,pos);
+    //Expected solution:1 0 0 1 1 0 0 1 1 0 0 1 1 0 0 1 1 0 0 1 1 0 0 1 1 0 0 1 1 0 0 1 1 0 0 1 1 0
+
+
+    update {
+             stabilize;
+    }
+}
+
+initially [ sample(ui, vi) | vi in 0..(outSize-1), ui in 0..(outSize-1) ];

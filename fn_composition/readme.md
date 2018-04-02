@@ -1,9 +1,4 @@
 # Math functions: Function composition
-## Overview
-* Branch:   [Diderot-Dev](https://github.com/cchiw/Diderot-Dev) 
-* Syntax: "compose"  and "◦"
-- field#k(d1)[α]× field#k(d0)[d1] → field#k(d1)[α]
-* Text: EIN IR design, rewriting rules, and resolved bugs listed in Doc
 ## In Action
 Given two fields
 ```
@@ -19,8 +14,9 @@ The problem with ^ is that the result is a tensor (and no longer differentiable)
 field#k(d0)[α]G = F0 ∘ F1;
 ```
 There is a type restriction on this type of operation:
-field#k(d1)[α]× field#k(d0)[d1] → field#k(d1)[α]
+>         field#k(d1)[α]× field#k(d0)[d1] → field#k(d1)[α]
 >The second argument is a vector field, whose length is the dimension of the first argument. 
+
 
 The function name  "compose" can also be used
 ```
@@ -37,7 +33,11 @@ The user might want to chain multiple composition operators:
 field#k(d0)[α]G = F0 ∘ F1∘ F2;
 ```
 > **Note:** The new field variable F2 will have to meet the same type  requirements mentioned earlier
-
+## Details
+* Branch:   [Diderot-Dev](https://github.com/cchiw/Diderot-Dev) 
+* Syntax: "compose"  and "◦"
+- field#k(d1)[α]× field#k(d0)[d1] → field#k(d1)[α]
+* Text: EIN IR design, rewriting rules, and resolved bugs listed in Doc
 
 ## Directory Organization
 * Examples

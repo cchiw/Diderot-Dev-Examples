@@ -1,48 +1,67 @@
 
-It is natural to define a field with a polynomial expression. $$F = x^3$$
-In the surface language we added function \lstinline[mathescape=true]!poly()!.
-The first argument is a variable and the second argument is a field definition.
-\begin{lstlisting}[mathescape=true]
-vec2 x;
-ofield#2(2)[2] V = poly(x, x);
-ofield#2(2)[] S = poly(x, x$^2$);
+\subsubsection{Mini-Tutorial}
+It is natural to define a function with an expression. $$F(x) = x^2$$
+In the surface language we added function \lstinline[mathescape=true]!cfexp()!
+where the first argument \lstinline[mathescape=true]!exp!  is an expression and the second \lstinline[mathescape=true]!x! is an input variable.
+\begin{lstlisting}[mathescape=true],
+tensor [] exp = x$^2$;
+ofield#2(2)[] F = cfexp(exp,x);//define F with variable $x$
+tensor[2] v = [3,7];    
+tensor[] outF  = inst(F,v);//evaluate F with argument $v$
 \end{lstlisting}
-This allows the programmer to differentiate this type of field.
+We commonly refer to the right-hand-side to variable $F$ as a cfexp (closed-form expression). The cfe is created with variable \lstinline[mathescape=true]!x!, but is actually evaluated with \lstinline[mathescape=true]!v!. The cfexp is a Diderot ``ofield" type. The user can apply other operators on the cfexp including differentiation.
 \begin{lstlisting}[mathescape=true]
-ofield#1(2)[2] GS = $\nabla$S;
+ofield#1(2)[2] GF = $\nabla$F;
+tensor[] outGF  = inst(GF,v);
 \end{lstlisting}
+The differentiation of the cfexp is computed in respect to the variable $v$.
 We illustrate the expected structure below:
 \begin{displaymath}
-  V=\left[ \begin{array}{ll}
-  V_0 \\  V_1  \\
-  \end{array}
- \right]   \indent\indent 
-  \nabla \otimes V=\left[ \begin{array}{ll}
- 1&   0 \\  0  &  1  \\
-  \end{array}
- \right]   \indent\indent 
-   S=  V_0 ^2+  V_1^2  \\
+  outF= F(v)= \begin{array}{ll}
+   v_0 ^2+  v_1^2  \\
+     \end{array}
   \indent\indent
-    \nabla S=\left[ \begin{array}{ll}
-  2*V_0 \\  2*V_1  \\
+    outGF=   \nabla F(v)=\left[ \begin{array}{ll}
+  2*v_0 \\  2*v_1  \\
   \end{array}
  \right] 
  \end{displaymath}
+A function can be defined with multiple variables. 
+$$F(a,b) =a+b$$
+and similarly a cfexp can be defined with multiple variables
+\begin{lstlisting}[mathescape=true]
+real[] a = 1; real b = 7; 
+tensor [] exp = a+b;
+ofield#k(d)[] G = cfexp(exp,a);
+ofield#k(d)[] H = cfexp(exp,a,b);
+ofield#k(d)[] I = cfexp(exp,b);
+\end{lstlisting}
+The distinction between  \lstinline[mathescape=true]!G! and  \lstinline[mathescape=true]!H! is that differentiation is applied in respect to either one or two variable, respectively.
+ \begin{displaymath}
+\nabla G_{a}= \nabla a +b     \indent\indent \text{    and    }   
+\indent\indent\nabla  H_{ab}= \nabla a +\nabla b  \indent\indent \text{    and    }   
+\indent\indent\nabla  I_{b}=   a +\nabla b
+ \end{displaymath}
 
-\paragraph{Representation}.\\
-As an ongoing example:
-A field F is defined by taking the cube of the input variable.\begin{lstlisting}[mathescape=true]
+ 
+
+\subsubsection{Implementation}
+\paragraph{Representation}
+As an ongoing example, consider the function $F(x) = x^3$.
+We can define this function with the following syntax:\begin{lstlisting}[mathescape=true]
 real p; 
-ofield#1(2)[] F = poly(p, $p^3$);
+ofield#1(2)[] F = cfexp($p^3$,p);
 tensor[] out = F(pos);
 \end{lstlisting}
-
-$\rewriteInitA \begin{array}{ll} \lstinline[mathescape=true]!F!=\lambda ()\EinExp{\expPolyWrap{p}{{p}^3}}{}()\\
-\lstinline[mathescape=true]!out!=\lambda(F,x) \EinExp{F(x)}{}\lstinline[mathescape=true]!(F,x)!\end{array}$\\
-\\
-Substitution creates:\\
-$\rewriteSubst{}$ \lstinline[mathescape=true]!out!=$\lambda(x) \EinExp{\expPolyWrap{p}{p^3}(x)}{}$
+The language is translated inside the compiler as:
+\begin{displaymath}
+\rewriteInitA \begin{array}{ll} \lstinline[mathescape=true]!F!=\lambda ()\EinExp{\expPolyWrap{p}{{p}^3}}{}() \\
+\lstinline[mathescape=true]!out!=\lambda(F,x) \EinExp{F(x)}{}\lstinline[mathescape=true]!(F,x)!\end{array}
+\indent \indent
+\rewriteSubst{} \lstinline[mathescape=true]!out!=\lambda(x) \EinExp{\expPolyWrap{p}{p^3}(x)}{}
 \lstinline[mathescape=true]!(x)!
+\end{displaymath}
+
 \paragraph{Replace polynomial variable}.\\
 The variable $p$ represents a vector of length 2, where p= [X,Y].\\
 The term $P_0$ represents the 0th component of the vector, or X.

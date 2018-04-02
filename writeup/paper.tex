@@ -28,30 +28,64 @@
 
 \begin{document}
 \maketitle 
-\input{../writeup/overview-shorthand}
 \section{Overview}
+\input{../writeup/overview-shorthand}\\
+
+\section{New and extended syntax}
+\subsection{{\color{blue} Matrix Inverse}}
+\input{../writeup/overview-inverse}
+
+
+\subsection{{\color{blue} Composition}}
+\subsubsection{Overview}
 \input{../writeup/overview-comp}
-\input{../writeup/overview-concat}
-\noindent\input{../writeup/overview-inverse}\\
-\\
-\input{../writeup/overview-selection}
-%\input{../writeup/overview-maxmin}
-%\input{../writeup/overview-poly}
-
-\section{Design and Implementation}
-\subsection{Composition}
+\subsubsection{Design and Implementation}
 \input{../writeup/design-comp}
-\subsection{Concatenation}
-\input{../writeup/design-concat}
-%\subsection{Abs, Max, and Min}
-%\input{../writeup/design-maxmin}
-%\subsection{Defining fields with Polynomial expressions}
-%\input{../writeup/design-poly}
-
-\section{Testing results}
+\subsubsection{Testing results}
 \input{../writeup/test-comp}
+
+\subsection{{\color{blue} Clerp and Clamp}}
+\input{../writeup/overview-clamp}
+
+\subsection{{\color{blue} Swap and Selection}}
+\input{../writeup/overview-selection}
+
+\subsection{{\color{blue} Concatenation}}
+\subsubsection{Overview}
+\input{../writeup/overview-concat}
+\subsubsection{Design and Implementation}
+\input{../writeup/design-concat}
+\subsubsection{Testing results}
 \input{../writeup/test-concat}
-%\input{../writeup/test-maxmin}
+
+
+\subsection{{\color{blue} Max and Min}} 
+\subsubsection{Overview}
+\input{../writeup/overview-maxmin}
+\subsubsection{Design and Implementation}
+\input{../writeup/design-maxmin}
+\subsubsection{Testing results}
+\input{../writeup/test-maxmin}
+
+
+\subsection{{\color{blue} Other}}
+\input{../writeup/overview-none}
+
+%\section{Tools}
+%
+%\subsection{{\color{blue} DATm}} 
+%\subsubsection{Overview}
+%\input{../writeup/overview-datm}
+%\subsubsection{User-guide}
+%\input{../writeup/tut-datm}
+
+\section{Alternate field definitions}
+\subsection{{\color{blue}Closed form expression}}
+\subsubsection{Overview}
+\input{../writeup/overview-poly}
+\input{../writeup/design-poly}
+\input{../writeup/tut-poly}
+
 
  \end{document}
 

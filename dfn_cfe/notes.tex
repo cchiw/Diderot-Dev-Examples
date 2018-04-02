@@ -1,0 +1,42 @@
+% ---- ETD Document Class and Useful Packages ---- %
+\documentclass{article}
+\usepackage[margin=0.5in]{geometry}
+\usepackage{subfigure,epsfig,amsfonts}
+\usepackage{natbib}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{listings} % for code 
+\usepackage{enumitem} % for creating lists
+\usepackage{lineno, blindtext} % line numbers
+\usepackage{xstring} %support if/else inside commands
+\usepackage{longtable}
+\usepackage{color}
+\usepackage{multicol}
+\usepackage{url}
+
+\input{../writeup/dissertation_format}
+\input{../writeup/def2} %generic input
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Use these commands to set biographic information for the title page:
+\title{Implementing Tensor Calc functions in Diderot}
+\author{Charisee Chiw}
+
+
+\begin{document}
+\maketitle 
+\section{Overview}
+\input{../writeup/overview-shorthand}\\
+
+\section{New and extended syntax}
+
+\input{../writeup/overview-poly}
+\input{../writeup/design-poly}
+\input{../writeup/tut-poly}
+
+
+ \end{document}
+

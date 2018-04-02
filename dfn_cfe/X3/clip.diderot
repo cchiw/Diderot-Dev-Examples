@@ -1,0 +1,60 @@
+input vec3 cutPos=[5,1,6];
+input vec3 cutNorm=[4,2,9];
+vec3 x=[1,1,1];
+real exp= (x- cutPos)•cutNorm;
+ofield#1(3)[]cut = cfexp(exp,x);
+vec2 v=[1,3];
+
+// takes the derivative
+ofield#0(3)[3]Dcut = ∇cut;
+
+int outSize = 10;
+strand sample (int ui, int vi) {
+
+    //get the x,y,z, coordinate of every tensor
+    real cutPosx=cutPos[0];
+    real cutNormx=cutNorm[0];
+    real vx=v[0];
+    real cutPosy=cutPos[1];
+    real cutNormy=cutNorm[1];
+    real vy=v[1];
+    real cutPosz=cutPos[2];
+    real cutNormz=cutNorm[2];
+    real vz=v[2];
+    //the partial derivative of vx by dx
+    real dxvx = 1;
+    real dyvx = 0;
+    real dzvx = 0;
+    real dxvy = 0;
+    real dyvy = 1;
+    real dzvy = 0;
+    real dxvz = 0;
+    real dyvz = 0;
+    real dzvz = 1;
+
+    // ************************ Evaluates and tests field **********************
+
+    //evaluates the other field "cut"  and uses vector v as input.
+    vec3 v = [ui,vi,2];//input tensor
+    //output real out = inst(cut, v);
+    //output real out = (v- cutPos)•cutNorm;
+    //Expected Solution -58 -54 -50 -46 -42
+
+    //output real out = (v- cutPos)•cutNorm-inst(cut, v); //Expected Solution:0
+    //output real out = inst(cut, v)-((v- cutPos)•cutNorm);
+
+    // ************************ Evaluates and tests derivative  **********************
+
+    //evaluates the derivative of the other fields and uses vector v as input.
+    //output tensor[3] out = inst(Dcut, v);
+    real a = (dxvx*cutNormx)+(dxvy*cutNormy)+(dxvz*cutNormz);
+    real b = (dyvx*cutNormx)+(dyvy*cutNormy)+(dyvz*cutNormz);
+    real c = (dzvx*cutNormx)+(dzvy*cutNormy)+(dzvz*cutNormz);
+    output tensor[3] out = [a,b,c];// Expected Solution: 4 2 9
+
+    //output tensor[3] out = [a,b,c]-inst(Dcut, v);//Expected Solution:0
+
+    update { stabilize;}
+}
+
+initially [ sample(ui, vi) | vi in 0..(outSize-1), ui in 0..(outSize-1) ];

@@ -1,0 +1,53 @@
+
+int outSize = 10;
+
+real y= 7;
+real exp = y*y*y;
+ofield#3(1)[] A = cfexp(exp,y);
+ofield#2(1)[] GA =  ∇A;
+ofield#1(1)[] GGA =  ∇GA;
+ofield#0(1)[] GGGA =  ∇GGA;
+
+strand sample (int ui, int vi) {
+    real uu = lerp(0.0, 1.0, -0.5, real(ui), real(outSize)-0.5);
+    real vv = lerp(0.0, 1.0, -0.5, real(vi), real(outSize)-0.5);
+    vec2 pos = [uu,vv];
+    real x =uu;
+    real y=vv;
+
+    // ************************ Example A *********************
+
+    //output tensor [] out = x*x*x;
+    //output tensor[] out = inst(A,x);
+    //Expected Solution: 0.00012500001 0.0033750003 0.015625 0.042874999 0.091124989 0.16637501
+
+    //output tensor [] out = x*x*x- inst(A,x); //Expected Solution:0
+
+    // ************************ Example GA *********************
+
+    //first derivative
+    //output tensor [] out = 3*x*x;
+    // output tensor[] out = inst(GA,x);
+    //Expected Solution:0.0075000003 0.067500003 0.1875 0.36749998 0.60749996 0.90750009 1.2674999
+
+    //output tensor [] out = 3*x*x - inst(GA,x); //Expected Solution:0
+
+    // ************************ Example GGA*********************
+
+    //second    derivative
+    //output tensor [] out = 6*x;
+    //output tensor[] out = inst(GGA,x);
+    //Expected Solution:0.30000001 0.90000004 1.5 2.0999999 2.6999998 3.3000002 3.8999999 4.5
+
+    output tensor[] out = 6*x-inst(GGA,x);//Expected Solution:0
+
+    // ************************ Example GGGA*********************
+
+    //output tensor[] out = inst(GGGA,x);
+
+    update {
+             stabilize;
+    }
+}
+
+initially [ sample(ui, vi) | vi in 0..(outSize-1), ui in 0..(outSize-1) ];
