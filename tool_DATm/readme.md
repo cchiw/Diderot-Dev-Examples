@@ -64,27 +64,29 @@ where “3” is the number of arguments and "27 0 0” refer to the integers in
 
 
 ## Organization and flow
-### Directory dependence
-```mermaid
-graph LR
-C{cte} --> NC
-f{fem} -->NC{nc} 
-NC --> S{Shared}
-```
 ### Command line arguments
 ```mermaid
 graph LR
-L[command line] -- cte.py --> C{cte}
-L[command line] -- fem.py --> f{fem}
+L(frame.py) -- python3 cte.py ... --> C{cte}
+L(frame.py)  -- python3 fem.py ... --> f{fem}
+C --> R{rst}
+f --> R{rst}
 ```
-### Flow 
+### Iterate over test cases
 ```mermaid
 graph LR
-CC(cte_core.py) -- creates arguments -->NF(nc_createField.py)
-CC-- writing Diderot program --> CW(cte_writeDiderot.py)
-CC -- observed data --> BO(base_observed.py)
-
-CC-- correct  output --> CE(cte_eval.py)
-CC-- compare  output --> NC(nc_compare.py)
+C(cte.py) -- Handler --> ICC(cte_iter_cmd.py) 
+ICC-- Iterates  -->IC(cte_iter.py)
+IC -- Typechecks --> OTY(obj_typechecker.py)
+IC-- Runs single test  -->CC(cte_core.py)
+```
+###  Single Test case
+```mermaid
+graph LR
+CC(cte_core.py) -- Creates arguments -->NF(nc_createField.py)
+CC-- Writes Diderot program --> CW(cte_writeDiderot.py)
+CC -- Observed data --> BO(base_observed.py)
+CC-- Correct  output --> CE(cte_eval.py)
+CC-- Compare  output --> NC(nc_compare.py)
 ```
 

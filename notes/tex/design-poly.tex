@@ -1,49 +1,4 @@
 
-\subsubsection{Mini-Tutorial}
-It is natural to define a function with an expression. $$F(x) = x^2$$
-In the surface language we added function \lstinline[mathescape=true]!cfexp()!
-where the first argument \lstinline[mathescape=true]!exp!  is an expression and the second \lstinline[mathescape=true]!x! is an input variable.
-\begin{lstlisting}[mathescape=true],
-tensor [] exp = x$^2$;
-ofield#2(2)[] F = cfexp(exp,x);//define F with variable $x$
-tensor[2] v = [3,7];    
-tensor[] outF  = inst(F,v);//evaluate F with argument $v$
-\end{lstlisting}
-We commonly refer to the right-hand-side to variable $F$ as a cfexp (closed-form expression). The cfe is created with variable \lstinline[mathescape=true]!x!, but is actually evaluated with \lstinline[mathescape=true]!v!. The cfexp is a Diderot ``ofield" type. The user can apply other operators on the cfexp including differentiation.
-\begin{lstlisting}[mathescape=true]
-ofield#1(2)[2] GF = $\nabla$F;
-tensor[] outGF  = inst(GF,v);
-\end{lstlisting}
-The differentiation of the cfexp is computed in respect to the variable $v$.
-We illustrate the expected structure below:
-\begin{displaymath}
-  outF= F(v)= \begin{array}{ll}
-   v_0 ^2+  v_1^2  \\
-     \end{array}
-  \indent\indent
-    outGF=   \nabla F(v)=\left[ \begin{array}{ll}
-  2*v_0 \\  2*v_1  \\
-  \end{array}
- \right] 
- \end{displaymath}
-A function can be defined with multiple variables. 
-$$F(a,b) =a+b$$
-and similarly a cfexp can be defined with multiple variables
-\begin{lstlisting}[mathescape=true]
-real[] a = 1; real b = 7; 
-tensor [] exp = a+b;
-ofield#k(d)[] G = cfexp(exp,a);
-ofield#k(d)[] H = cfexp(exp,a,b);
-ofield#k(d)[] I = cfexp(exp,b);
-\end{lstlisting}
-The distinction between  \lstinline[mathescape=true]!G! and  \lstinline[mathescape=true]!H! is that differentiation is applied in respect to either one or two variable, respectively.
- \begin{displaymath}
-\nabla G_{a}= \nabla a +b     \indent\indent \text{    and    }   
-\indent\indent\nabla  H_{ab}= \nabla a +\nabla b  \indent\indent \text{    and    }   
-\indent\indent\nabla  I_{b}=   a +\nabla b
- \end{displaymath}
-
- 
 
 \subsubsection{Implementation}
 \paragraph{Representation}
