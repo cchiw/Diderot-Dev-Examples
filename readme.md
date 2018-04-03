@@ -13,6 +13,8 @@
 - C. Field Definitions
 	- C1. Closed Form expressions: [dfn_cfe](https://github.com/cchiw/latte/tree/master/dfn_cfe "dfn_cfe")
 
+Please see individual directory for full details. They are summarized (or fully copied) below.
+
 # A.Functions and Operators
 ## A1. Function composition
 Given two fields
@@ -276,45 +278,56 @@ Adding a new operator to DATm:
 See Figures for DATm repo in [DATm-pdf](https://github.com/cchiw/latte/blob/master/tool_DATm/readme.pdf)
 
 ## B2. Printing the intermediate representation
-Translate our compiler's intermediate representation (EIN) into a readable latex or unicode format.
-
+Translate our compiler's intermediate representation (EIN) into a readable latex or unicode format.	
+## In Action
 Derivations by hand can be tedious and error-prone. To address that issue we support a higher-order notation.  For instance, consider the following Diderot code
-
+ ```  
+image(2)[] a;				image(2)[] b;
+field#4(3)[]A =k⊛ a; 			field#4(3)[]B =k⊛ b;f		field#4(3)[3]V =k⊛v;
+field#3(3)[3]G =  (A*V)/B;
+tensor[3,3] T =  (∇⊗G)(pos);
 ```
-image(2)[] a;  image(2)[] b;
-field#4(2)[]A = a⊛u;  field#4(2)[]B = b⊛v;
-field#4(2)[]G = (A*V)/B;
-output tensor[3] out =  ∇⊗(G)(pos);
+ > *Note* that that the image type is defined separately. These are the variable names that will be used when printing out the IR.
+ 
+The differentiation operations ∇⊗∇ are distributed across the tensor operations defined in filed type G. Internally, Diderot's rewriting system applies tensor calculus based rewrites that will distribute the differentiation operation. 
+There are two ways to print out the intermediate representation: a surface level operator and with a command line argument.
+In both cases the user can use command line arguments to make specific formatting and rewriting choices.
+
+### Specify a single computation to print
+We can use the operation ```printIR()``` to print a specific computation on the command line
 ```
-> *Note* that that the image type is defined separately. These are the variable names that will be used when printing out the IR.
+output int out =  printIR(T);
+```
+or save the output to a text file "tmpRead"
+```
+output int out =  printIR(T,"tmpRead");
+```
+By default the tool will save one version of the IR in two files: Unicode in "tmpRead.txt" and latex version in tmpRead.latex. 
 
-The differentiation operations ∇⊗∇ are distributed across the tensor operations defined in filed type G. Internally, Diderot's rewriting system applies tensor calculus based rewrites that will distribute the differentiation operation. The user can print out the intermediate representation after the rewriting stage with command line arguments:
+### Print whatever we can
+In leui of using the ```printIR()``` operation the user can use command line arguments.  The (optional) commands "--readEin" and "--readEinRewrite" described below, are required. It will print a larger portion of the computations in the program (every EIN operator in the high-to-mid stage of the compiler).
 
->Diderot-Dev/bin/diderotc --readEin3 T.diderot
+### Command Line Arguments
+	* Rewrite calls(optional)
+		* --readEinRewrite : print four steps of rewriting : 
+		* --readEin1, --readEin2, --readEin3, --readEin4: specify a single step of rewriting
+	* Format(optional)
+		* --readEinLatex : latex output 
+		* --readEinUni : unicode output
+		* By default both are used
+	* Output Stream(optional)
+		* --readEinPDF:  Save to file "output_tmp"
+		* By default prints to terminal
+		
+**Optional Commands** The user can specificy a format latex and unicode, respectively. 
+> --readEinLatex
+> --readEinUni 
 
->*Note* See closed-form expression example in [CFE-readme](https://github.com/cchiw/latte/blob/master/dfn_cfe/readme.pdf)
-
-To see multiple rewriting options we can use command --readEinRewrite:
->Diderot-Dev/bin/diderotc --readEinRewrite T.diderot
-
-  
->*Note* There are four rewriting options listed above. The best output can vary by computation. The user can compile the program again and specify a particular rewrite with the command "--readEin" followed by the rewrite number. Thus the command "--readEin3" printed the third rewrite.
-
->
-
-By default we print out the latex format. However you can use unicode as well.
-
->Diderot-Dev/bin/diderotc --readEinUni --readEinRewrite T.diderot
 
 ## Details
-* Branch: [Diderot-Dev](https://github.com/cchiw/Diderot-Dev)
-* Run: runs with command line flags
-* Format
-	* -readEinLatex : latex output (default)
-	* -readEinUni : unicode output
-* Rewrite call
-	* -readEinRewrite : print four steps of rewriting
-	* -readEin1, -readEin2, -readEin3, -readEin4: specify a single step of rewriting
+* Branch:   [Diderot-Dev](https://github.com/cchiw/Diderot-Dev)
+* Syntax: printIR
+* Run: runs with command line flags and surface level operator 
 * Issues/Future Work
 	*  pull out of strands
 	* image types needs to be defined separately so we have a unique variable to refer to
