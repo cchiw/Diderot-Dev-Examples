@@ -40,11 +40,6 @@ In leui of using the ```printIR()``` operation the user can use command line arg
 		* --readEinPDF:  Save to file "output_tmp"
 		* By default prints to terminal
 		
-**Optional Commands** The user can specificy a format latex and unicode, respectively. 
-> --readEinLatex
-> --readEinUni 
-
-
 ## Details
 * Branch:   [Diderot-Dev](https://github.com/cchiw/Diderot-Dev)
 * Syntax: printIR
