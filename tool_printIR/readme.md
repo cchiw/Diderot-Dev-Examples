@@ -26,7 +26,7 @@ output int out =  printIR(T,"tmpRead");
 By default the tool will save one version of the IR in two files: Unicode in "tmpRead.txt" and latex version in tmpRead.latex. 
 
 ### Print whatever we can
-In leui of using the ```printIR()``` operation the user can use command line argument "--readEin". It will print a larger portion of the computations in the program (every EIN operator in the high-to-mid stage of the compiler).
+In lieu of using the ```printIR()``` operation the user can use command line argument "--readEin". It will print a larger portion of the computations in the program (every EIN operator in the high-to-mid stage of the compiler).
 
 ### Command Line Arguments
 * *Format*
