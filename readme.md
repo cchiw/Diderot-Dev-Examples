@@ -279,7 +279,7 @@ See Figures for DATm repo in [DATm-pdf](https://github.com/cchiw/latte/blob/mast
 
 ## B2. Printing the intermediate representation
 Translate our compiler's intermediate representation (EIN) into a readable latex or unicode format.	
-## In Action
+
 Derivations by hand can be tedious and error-prone. To address that issue we support a higher-order notation.  For instance, consider the following Diderot code
  ```  
 image(2)[] a;				image(2)[] b;
@@ -305,28 +305,32 @@ output int out =  printIR(T,"tmpRead");
 By default the tool will save one version of the IR in two files: Unicode in "tmpRead.txt" and latex version in tmpRead.latex. 
 
 ### Print whatever we can
-In leui of using the ```printIR()``` operation the user can use command line arguments.  The (optional) commands "--readEin" and "--readEinRewrite" described below, are required. It will print a larger portion of the computations in the program (every EIN operator in the high-to-mid stage of the compiler).
+In lieu of using the ```printIR()``` operation the user can use command line argument "--readEin". It will print a larger portion of the computations in the program (every EIN operator in the high-to-mid stage of the compiler).
 
 ### Command Line Arguments
-	* Rewrite calls(optional)
-		* --readEinRewrite : print four steps of rewriting : 
-		* --readEin1, --readEin2, --readEin3, --readEin4: specify a single step of rewriting
-	* Format(optional)
-		* --readEinLatex : latex output 
-		* --readEinUni : unicode output
-		* By default both are used
-	* Output Stream(optional)
-		* --readEinPDF:  Save to file "output_tmp"
-		* By default prints to terminal
-		
-## Details
+* *Format*
+	* (default)		: both latex and unicode output
+	* --formatTex	        : latex output only
+	* --formatUni 		: unicode output only
+* *Representation*
+	* (default)		: surface level representation (without indices)
+	* --repEin	        : EIN notation only
+	* --repMultiple           : Four variations of the computations in surface level representation
+* *Output*
+	* (default)		: print to terminal
+	* --savePDF		: Save to file "output_tmp" 
+	
+### Details
 * Branch:   [Diderot-Dev](https://github.com/cchiw/Diderot-Dev)
 * Syntax: printIR
 * Run: runs with command line flags and surface level operator 
 * Issues/Future Work
 	*  pull out of strands
 	* image types needs to be defined separately so we have a unique variable to refer to
-*  Examples are in directory [tool_printIR](https://github.com/cchiw/latte/tree/master/tool_printIR "tool_printIR")
+	
+	
+	
+	
 # C. Field Definitions
 Users can define closed form expressions. The expression can include tensor operators and variables.  Differentiation is applied by differentiating in respect to some variable(s).
 
