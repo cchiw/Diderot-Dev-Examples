@@ -16,25 +16,36 @@ Quick instructions
 		> python3 datm.py 
 
 ### Set Up:  variables and testing frame settings
-We refer to the *Frame* as input.py
-* **Change branch** being tested : 
-Comment in the right ```s_branch``` variable in Frame 
+Settings in the testing process can be changed by commenting in/out variables in the *Frame* (input.py).
+* **Change branch**(s_branch) : 
+Tell DATm the name of branch being tested. Some branch names are built in(vis15,Diderot-Dev, Chiw17). Comment in the right ```s_branch``` variable in Frame 
 	```
-	#s_branch  = branch_vis15;
-	s_branch = branch_dev;
+	#s_branch  = branch_vis15
+	s_branch = branch_dev 
 	#s_branch = branch_chiw17
+	#s_branch  = branch_other
 	```
-	or add a new branch name in ```branch_other = "*/"``` in *shared/base_constants.py*
+or comment in ``branch_other`` and set the variable to a string in *shared/base_constants.py*
     
-* Change **type of search** for test cases:
-For an **exhaustive testing** approach, set variable  ```s_random_range = 0   ```  in *Frame*. For **randomized testing** set the variable to x  ``s_random_range= x``, where the probability of a single test case being generated is  1  in x+1.
- 
-* Change **type of field** created:
-For an original Diderot Field types created with **nrrd**, set variable  ```c_pde_test = False   ```  in *Frame*. For **PDE** solutions set the variable to true  ``c_pde_test = True`` and change the path in fem/makedefs.gmk.
-  
+* **Complexity** (s_layer):
+The core computation in a Diderot test program can be simple or more complicated. s_layer indicates the number of operators to apply in a core computation. That number can be 1, 2, or 3.
 
-*  Change variables in the **testing environment:**
-You can comment in and out variables in *Frame*. This includes variables to change the coefficient order, number of samples, number of operators, type of arguments,..
+*  **type of field**(c_pde_test) :
+DATm test tensors and fields. The fields can either be made by **nrrd** files or by Firedrake (outside tool to solve **PDE** solutions). For an original Diderot Field types created with nrrd, set variable  ```c_pde_test``` to False in *Frame*. For PDE solutions set the variable to true and change the path in fem/makedefs.gmk.
+
+**type of search** (s_random_range)
+For an **exhaustive testing** approach, set variable  ```s_random_range```  to 0 in *Frame*. For **randomized testing** set the variable to x  where the probability of a single test case being generated is  1  in x+1.
+
+* **order of coefficients**(s_coeff_style) :
+The order of coefficients for the polynomial creating synthetic data. The data can either be linear, quadratic or cubic.
+	```
+	#s_coeff_style = coeff_linear
+	s_coeff_style = coeff_quadratic
+	#s_coeff_style = coeff_cubic
+	```
+
+*  **testing environment:**
+You can comment in and out variables in *Frame*. This includes variables to change the number of samples, type of arguments,..
 	> More details in Pg 102 in [Dissertation](http://pl.cs.uchicago.edu/documents/chiw_dissertation.pdf),
 
 ### Labels
@@ -79,16 +90,17 @@ Great, everything is running now, but how do I look at the results? In the direc
 ### Command line arguments
 ```mermaid
 graph LR
-L(frame.py) -- python3 cte.py ... --> C{cte}
-L(frame.py)  -- python3 fem.py ... --> f{fem}
+L(input.py) -- python3 datm.py ... --> Cr{core}
+Cr --> C{Cte}
+Cr --> f{fem}
 C --> R{rst}
 f --> R{rst}
 ```
 ### Iterate over test cases
 ```mermaid
 graph LR
-C(cte.py) -- Handler --> ICC(cte_iter_cmd.py) 
-ICC-- Iterates  -->IC(cte_iter.py)
+C(datm.py) -- Handler --> ICC(core_iter_cmd.py) 
+ICC-- Iterates  -->IC(core_iter.py)
 IC -- Typechecks --> OTY(obj_typechecker.py)
 IC-- Runs single test  -->CC(cte_core.py)
 ```
