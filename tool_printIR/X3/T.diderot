@@ -1,0 +1,28 @@
+tensor[3] pos=[5,8,6];
+//data
+image(3)[] a = image("../../data/parab1s.nrrd");
+image(3)[] b = image("../../data/parab14s.nrrd");
+image(3)[3] v = image("../X1/inputfile1.nrrd");
+kernel#4 k= c4hexic;
+field#4(3)[] A =k⊛ a;
+field#4(3)[] B =k⊛ b;
+field#4(3)[3] V =k⊛ v;
+
+field#3(3)[3]G =  (A*V)/B;
+
+int length =1;
+strand f(int i) {
+
+
+    // output int out =  printIR((G)(pos));
+
+    output int out =  printIR((G)(pos),"cupcake");
+    //output int out =  printIR(∇⊗(G)(pos),"kitten");
+
+
+
+    update {
+        stabilize;
+    }
+}
+initially [ f(i) | i in 0..length];
