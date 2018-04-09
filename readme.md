@@ -231,7 +231,7 @@ The core computation in a Diderot test program can be simple or more complicated
 *  **type of field**(c_pde_test) :
 DATm test tensors and fields. The fields can either be made by **nrrd** files or by Firedrake (outside tool to solve **PDE** solutions). For an original Diderot Field types created with nrrd, set variable  ```c_pde_test``` to False in *Frame*. For PDE solutions set the variable to true and change the path in fem/makedefs.gmk.
 
-**type of search** (s_random_range)
+* **type of search** (s_random_range)
 For an **exhaustive testing** approach, set variable  ```s_random_range```  to 0 in *Frame*. For **randomized testing** set the variable to x  where the probability of a single test case being generated is  1  in x+1.
 
 * **order of coefficients**(s_coeff_style) :
@@ -411,7 +411,7 @@ There are four steps to the implementation process:
 * 3. Python code that initiates the C code and creates FEM data (observ.py)
 * 4. Running the program (run.sh)
 For the most part steps 2-4 are the same for each example and code can be easily reused. 
-
+* Branch: [Diderot-Dev](https://github.com/cchiw/Diderot-Dev)
 ### 1.Diderot Code (observ.diderot)
 #### Simple Definition
 The user defines an input variable to represent a FEM field. The path included is a path to the relevant data file. 
@@ -470,7 +470,7 @@ fnspace VF = TensorFunctionSpace(M, E, polyorder,{i,j});
   * Check if a position is inside a field-``insideF()``: tensor[d]×ofield#k(d)[α] →boolean
   * Probe the field at a position-``inst()``: tensor[d]×ofield#k(d)[α] → tensor[α]
   * Get the cell number the point is located in-``GetCell()``: tensor[d]×ofield#k(d)[α] →  int 
-### ..
-Read full readme file in [dfn_fem](https://github.com/cchiw/latte/tree/master/dfn_fem "dfn_fem")
-* Branch: [Diderot-Dev](https://github.com/cchiw/Diderot-Dev)
-### Details
+### ...
+* Read full readme file in [dfn_fem](https://github.com/cchiw/latte/tree/master/dfn_fem "dfn_fem")
+
+
