@@ -12,15 +12,15 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "ex1.h"
+#include "observ.h"
 
-void fail (const char *msg, ex1_world_t *wrld)
+void fail (const char *msg, observ_world_t *wrld)
 {
-    if ((wrld == 0) || !ex1_any_errors(wrld)) {
+    if ((wrld == 0) || !observ_any_errors(wrld)) {
         fprintf(stderr, "Error: %s\n", msg);
     }
     else {
-        fprintf(stderr, "Error: %s\n%s\n", msg, ex1_get_errors(wrld));
+        fprintf(stderr, "Error: %s\n%s\n", msg, observ_get_errors(wrld));
     }
     exit (1);
 }
@@ -36,26 +36,26 @@ struct Function {
   float * Coords;
 };
 
-void callDiderot_ex1(char *Outfile, int type, void *valF){
+void callDiderot_observ(char *Outfile, int type, void *valF){
   
-    ex1_world_t *wrld = ex1_new_world ();
+    observ_world_t *wrld = observ_new_world ();
     if (wrld == 0) {
       fail ("unable to create world",0);
     }
 
-    if (ex1_init_world(wrld)){
+    if (observ_init_world(wrld)){
       fail ("unable to init world",wrld);
     }
 
-    if (ex1_input_set_FF0 (wrld, valF)) {
+    if (observ_input_set_FF0 (wrld, valF)) {
         fail ("unable to initialize imgRed", wrld);
     }
 
-    if (ex1_create_strands (wrld)) {
+    if (observ_create_strands (wrld)) {
         fail ("unable to create initial strands", wrld);
     }
     
-    uint32_t nsteps = ex1_run (wrld, 0);
+    uint32_t nsteps = observ_run (wrld, 0);
     if (nsteps == 0) {
         fail ("no steps taken", wrld);
     }
@@ -64,7 +64,7 @@ void callDiderot_ex1(char *Outfile, int type, void *valF){
     if (nData == 0) {
         fail ("unable to allocate nrrd for output", 0);
     }
-    if (ex1_output_get_out (wrld, nData)) {
+    if (observ_output_get_out (wrld, nData)) {
         fail ("problem getting output", wrld);
     }
     if (nrrdSave(Outfile, nData, 0)) {
@@ -75,7 +75,7 @@ void callDiderot_ex1(char *Outfile, int type, void *valF){
     }
     
     nrrdNuke (nData);
-    ex1_shutdown (wrld);
+    observ_shutdown (wrld);
     
 }
 

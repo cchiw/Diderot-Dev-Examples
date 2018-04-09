@@ -1,11 +1,11 @@
 
 
-TARGET		= ex1
+TARGET		= observ
 
 build:	$(TARGET)
 
-include fem/makedefs.gmk
-include fem/makerules_so.gmk
+include ../data/makedefs.gmk
+include ../data/makerules_so.gmk
 
-override DIDEROTC_FLAGS	+= --namespace=ex1
+override DIDEROTC_FLAGS	+= --namespace=observ
 

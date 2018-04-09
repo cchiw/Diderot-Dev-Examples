@@ -5,7 +5,7 @@
 mesh M = UnitSquareMesh(4,4);
 element E = P();
  fnspace VF0 = FunctionSpace(M,E, 4);
- string pathF0 = "/Users/chariseechiw/work/DATm/fnspace_data/";
+ string pathF0 = "/Users/chariseechiw/diderot/Diderot-Dev/fnspace_data/";
  ofield#4(2)[] F0 = convert(FF0,VF0,pathF0);
 
 ofield#3(2)[2]G = ∇(F0);
