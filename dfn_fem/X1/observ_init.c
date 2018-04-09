@@ -30,13 +30,13 @@ struct Function {
   int Gdmin;
   int Sdmin;
   int NumCells;
-  int ** CellToNode;
+  int ** CellToNode;wrld
   int ** NodeToCoords;
   float ** NodeToPoint;
   float * Coords;
 };
 
-void callDiderot_observ(char *Outfile, int type, void *valF){
+void callDiderot_observ(char *Outfile, void *valF){
   
     observ_world_t *wrld = observ_new_world ();
     if (wrld == 0) {
@@ -47,7 +47,7 @@ void callDiderot_observ(char *Outfile, int type, void *valF){
       fail ("unable to init world",wrld);
     }
 
-    if (observ_input_set_FF0 (wrld, valF)) {
+    if (observ_input_set_FF0 (, valF)) {
         fail ("unable to initialize imgRed", wrld);
     }
 

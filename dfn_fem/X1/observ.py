@@ -20,10 +20,9 @@ import numpy.ctypeslib as npct
 def init1(name, f,target):
     init_file = target+'_init.so'
     _call = ctypes.CDLL(init_file)
-    type = 1
     data = organizeData(f)
-    _call.callDiderot_observ.argtypes = (ctypes.c_char_p,ctypes.c_int,ctypes.c_void_p)
-    result = _call.callDiderot_observ(ctypes.c_char_p(name.encode('utf-8')), type,ctypes.cast(ctypes.pointer(data),ctypes.c_void_p))
+    _call.callDiderot_observ.argtypes = (ctypes.c_char_p,ctypes.c_void_p)
+    result = _call.callDiderot_observ(ctypes.c_char_p(name.encode('utf-8')),ctypes.cast(ctypes.pointer(data),ctypes.c_void_p))
     return(result)
 
 ##############################################

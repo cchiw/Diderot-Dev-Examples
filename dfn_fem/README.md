@@ -1,9 +1,10 @@
 ﻿# Field Definition: FEM
-
-Users can define fields created by outside tools
-
+We support computations on fields defined by outside sources.
 ##  In Action
-### Simple Definition
+There are four steps to the implementation process: 1. Diderot code, 2. C code that communicates to the generated Diderot code  3. Python code that initiates the C code, and 4. Running the program.  For the most part steps 2-4 are the same for each example and code can be easily reused. 
+
+### 1.Diderot Code (observ.diderot)
+#### Simple Definition
 The user defines an input variable to represent a FEM field. The path included is a path to the relevant data file. 
 ```
 input fem#k(d)[α] F0;
@@ -12,7 +13,7 @@ ofield#4(2)[] F = convert(F0, path);
 ```
 The final term is an *ofield* type that acts the same as the Diderot *field* type.
 
-### Include Function Space
+#### Include Function Space
 The user can choose to define the field by describing the function space ``VF`` and by providing a path to a directory ``pathVF``.
 ```
 input fem#k(d)[α] F0;
@@ -45,7 +46,7 @@ To accommodate a second-order (``i,j``) tensor field augment the shape parameter
 input fem#k(3)[i, j] F0;
 fnspace VF = TensorFunctionSpace(M, E, polyorder,{i,j});
 ```
-### Sumary of syntax
+#### Sumary of syntax
 * **Define a Mesh, Element, and Function Space**
   * Define a Unit Square Mesh- ``UnitSquareMesh()``:  int ×  int   → *mesh*
   * Define a Unit Cube Mesh- ``UnitCubeMesh()``: int ×  int  × int     → *mesh*
@@ -60,6 +61,46 @@ fnspace VF = TensorFunctionSpace(M, E, polyorder,{i,j});
   * Check if a position is inside a field-``insideF()``: tensor[d]×ofield#k(d)[α] →boolean
   * Probe the field at a position-``inst()``: tensor[d]×ofield#k(d)[α] → tensor[α]
   * Get the cell number the point is located in-``GetCell()``: tensor[d]×ofield#k(d)[α] →  int 
+### 2. C code that communicates to the generated Diderot code (observ_init.c)
+The C code is used to communicate with the generated Diderot code. The function ``callDiderot_observ()`` can be called by outside tools.
+``
+void callDiderot_observ(char *Outfile, void *valF)
+``
+The function takes the name of the output nrrd file and a pointer to the field data.
+
+Otherwise, the code here is FEM independent and does not need augmentation.
+
+### 3. Python code that initiates the C Code (observ.py)
+The python code is used to create the fem field data. Otherwise, the  code can be used verbatim. 
+
+It is necessary to have files *init.py **makejson.py* included in the path. Currently saved to the dfn_fem/data.
+```
+sys.path.insert(0, '../data/') #path to init.py, makejson.py
+from init import *
+from makejson import *
+```
+The field is defined by an outside source, such as Firedrake.The field could be the solution to a pde equation or the result of interpolating an expression over a function space:
+```
+from firedrake import *
+.....
+f0 = Function(V).interpolate(Expression(expf0))
+```
+After defining the field ``f0`` the following code is used to pass the field to Diderot. 
+```
+data = organizeData(f)
+_call = ctypes.CDLL('observ_init.so') 
+```
+> *Note* 'observ_init.so' is the name of Diderot init program created.
+```
+_call.callDiderot_observ.argtypes =(ctypes.c_char_p,ctypes.c_void_p) #argument types
+result =_call.callDiderot_observ(ctypes.c_char_p(name.encode('utf-8')),ctypes.cast(ctypes.pointer(data),ctypes.c_void_p))# call library
+```
+>*Note* `callDiderot_observ()` is the name of the function in *observ_init.c* we want to call. 
+
+### 4. Running the whole thing (run.sh)
+Make and run
+> make observ_init.so
+> python observ.py
 
 ## Details
 
