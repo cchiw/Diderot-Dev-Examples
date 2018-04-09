@@ -1,7 +1,12 @@
 ﻿# Field Definition: FEM
 We support computations on fields defined by outside sources.
 ##  In Action
-There are four steps to the implementation process: 1. Diderot code, 2. C code that communicates to the generated Diderot code  3. Python code that initiates the C code, and 4. Running the program.  For the most part steps 2-4 are the same for each example and code can be easily reused. 
+There are four steps to the implementation process: 
+* 1. Diderot code (observ.diderot)
+* 2. C code that communicates to the generated Diderot code   (observ_init.c)
+* 3. Python code that initiates the C code and creates FEM data (observ.py)
+* 4. Running the program (run.sh)
+For the most part steps 2-4 are the same for each example and code can be easily reused. 
 
 ### 1.Diderot Code (observ.diderot)
 #### Simple Definition
@@ -62,10 +67,10 @@ fnspace VF = TensorFunctionSpace(M, E, polyorder,{i,j});
   * Probe the field at a position-``inst()``: tensor[d]×ofield#k(d)[α] → tensor[α]
   * Get the cell number the point is located in-``GetCell()``: tensor[d]×ofield#k(d)[α] →  int 
 ### 2. C code that communicates to the generated Diderot code (observ_init.c)
-The C code is used to communicate with the generated Diderot code. The function ``callDiderot_observ()`` can be called by outside tools.
-``
+The C code is used to communicate with the generated Diderot code. The function ```callDiderot_observ()``` can be called by outside tools.
+```
 void callDiderot_observ(char *Outfile, void *valF)
-``
+```
 The function takes the name of the output nrrd file and a pointer to the field data.
 
 Otherwise, the code here is FEM independent and does not need augmentation.
