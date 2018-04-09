@@ -30,39 +30,36 @@ int polyorder = 4;
 fnspace VF = FunctionSpace(M,E,polyorder);
 ofield#4(2)[] F = convert(F0,VF,pathVF);
 ```
-To represent a 3-d scalar field we would augment the previous code as
+To represent a 3-d scalar field the ``mesh`` and ``fem`` type need to be changed:
 ```
-input fem#4(3)[] FF0;
+input fem#k(3)[] F0;
 mesh M = UnitCubeMesh(4,4,4)
 ```
-To define a vector field of length 3 we would use a TensorFunctionSpace() and make the following changes:
+To define a vector field of length ``i`` use  ``TensorFunctionSpace()``:
 ```
-input fem#4(3)[3] FF0;
-fnspace VF0 = TensorFunctionSpace(M, E, polyorder,{3});
+input fem#k(3)[i] F0;
+fnspace VF = TensorFunctionSpace(M, E, polyorder,{i});
 ```
-To accommodate a second-order tensor field we augment the shape parameter.
+To accommodate a second-order (``i,j``) tensor field augment the shape parameter:
 ```
-input fem#4(3)[3, 3] FF1;
-fnspace VF1 = TensorFunctionSpace(M, E, polyorder,{3,3});
+input fem#k(3)[i, j] F0;
+fnspace VF = TensorFunctionSpace(M, E, polyorder,{i,j});
 ```
-**Define a Mesh**
-UnitSquareMesh():  int ×  int   → *mesh*
-UnitCubeMesh(): int ×  int  × int     → *mesh*
-**Define a Element**
-Lagrange():   →*element*
-P():   → *element*
-**Define a Function Space**
-FunctionSpace(): *mesh* × *element*  × int →*fnspace*
-TensorFunctionSpace(): *mesh* × *element*  × int × int sequence→*fnspace*
-**Define a ofield with fem data**
-convert(): *fem#k(d)[α]* × string    →ofield#k(d)[α] 
-convert(): *fem#k(d)[α]* × *fnspace* × string    →ofield#k(d)[α] 
-### Other operations on ofield
-**Inside Test**
-insideF(): tensor[d]×ofield#k(d)[α] →boolean
-**Probe**
-inst(): tensor[d]×ofield#k(d)[α] → tensor[α]
-**GetCell()**: Get the cell number the point is located in
+### Sumary of syntax
+* **Define a Mesh, Element, and Function Space**
+  * Define a Unit Square Mesh- ``UnitSquareMesh()``:  int ×  int   → *mesh*
+  * Define a Unit Cube Mesh- ``UnitCubeMesh()``: int ×  int  × int     → *mesh*
+  * Define a Lagrange reference element- ``Lagrange()``:   →*element*
+  * Define a P reference element- ``P()``:   → *element*
+  * Define a function space for scalar fields- ``FunctionSpace()``: *mesh* × *element*  × int →*fnspace*
+  * Define a function space for non-scalar fields- ``TensorFunctionSpace()``: *mesh* × *element*  × int × int sequence→*fnspace*
+* **Define an ofield with fem data**
+  * Define a fem field- ``convert()``: *fem#k(d)[α]* × string    →ofield#k(d)[α] 
+  * Define a fem field with the function space-``convert()``: *fem#k(d)[α]* × *fnspace* × string    →ofield#k(d)[α] 
+* **Other operations on ofield**
+  * Check if a position is inside a field-``insideF()``: tensor[d]×ofield#k(d)[α] →boolean
+  * Probe the field at a position-``inst()``: tensor[d]×ofield#k(d)[α] → tensor[α]
+  * Get the cell number the point is located in-``GetCell()``: tensor[d]×ofield#k(d)[α] →  int 
 
 ## Details
 
