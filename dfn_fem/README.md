@@ -109,8 +109,8 @@ result =_call.callDiderot_observ(ctypes.c_char_p(name.encode('utf-8')),ctypes.ca
 * Install  [Firedrake](https://www.firedrakeproject.org/download.html "Firedrake") and activate with 
 	 > source firedrake/bin/activate
 * Make and run
-> make observ_init.so
-> python observ.py
+	> make observ_init.so
+	> python observ.py
 
 ## Details
 
