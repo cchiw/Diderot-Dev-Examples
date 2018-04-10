@@ -6,6 +6,7 @@ There are four steps to the implementation process:
 * 2. C code that communicates to the generated Diderot code   (observ_init.c)
 * 3. Python code that initiates the C code and creates FEM data (observ.py)
 * 4. Running the program (run.sh)
+
 For the most part steps 2-4 are the same for each example and code can be easily reused. 
 
 ### 1.Diderot Code (observ.diderot)
@@ -63,9 +64,11 @@ fnspace VF = TensorFunctionSpace(M, E, polyorder,{i,j});
   * Define a fem field- ``convert()``: *fem#k(d)[α]* × string    →ofield#k(d)[α] 
   * Define a fem field with the function space-``convert()``: *fem#k(d)[α]* × *fnspace* × string    →ofield#k(d)[α] 
 * **Other operations on ofield**
+  * Described in [fn_getCell](https://github.com/cchiw/latte/tree/master/fn_getCell 'fn_getCell')
   * Check if a position is inside a field-``insideF()``: tensor[d]×ofield#k(d)[α] →boolean
   * Probe the field at a position-``inst()``: tensor[d]×ofield#k(d)[α] → tensor[α]
   * Get the cell number the point is located in-``GetCell()``: tensor[d]×ofield#k(d)[α] →  int 
+
 ### 2. C code that communicates to the generated Diderot code (observ_init.c)
 The C code is used to communicate with the generated Diderot code. The function ```callDiderot_observ()``` can be called by outside tools.
 ```
@@ -103,6 +106,11 @@ result =_call.callDiderot_observ(ctypes.c_char_p(name.encode('utf-8')),ctypes.ca
 >*Note* `callDiderot_observ()` is the name of the function in *observ_init.c* we want to call. 
 
 ### 4. Running the whole thing (run.sh)
+Install  [Firedrake](https://www.firedrakeproject.org/download.html "Firedrake") and Activate with 
+> source firedrake/bin/activate
+
+Change path to Diderot-Dev compiler in  *data/makedefs.gmk* and in *X1/observ.diderot*
+
 Make and run
 > make observ_init.so
 > python observ.py
