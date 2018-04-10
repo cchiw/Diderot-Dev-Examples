@@ -2,10 +2,10 @@
 We support computations on fields defined by outside sources.
 ##  In Action
 There are four steps to the implementation process: 
-* 1. Diderot code (observ.diderot)
-* 2. C code that communicates to the generated Diderot code   (observ_init.c)
-* 3. Python code that initiates the C code and creates FEM data (observ.py)
-* 4. Running the program (run.sh)
+ - 1. Diderot code (observ.diderot) 
+ - 2. C code that communicates to the generated Diderot code   (observ_init.c) 
+ - 3. Python code that initiates the C code and creates FEM data (observ.py)
+ - 4. Running the program (run.sh)
 
 For the most part steps 2-4 are the same for each example and code can be easily reused. 
 
@@ -63,11 +63,10 @@ fnspace VF = TensorFunctionSpace(M, E, polyorder,{i,j});
 * **Define an ofield with fem data**
   * Define a fem field- ``convert()``: *fem#k(d)[α]* × string    →ofield#k(d)[α] 
   * Define a fem field with the function space-``convert()``: *fem#k(d)[α]* × *fnspace* × string    →ofield#k(d)[α] 
-* **Other operations on ofield**
-  * Described in [fn_getCell](https://github.com/cchiw/latte/tree/master/fn_getCell 'fn_getCell')
-  * Check if a position is inside a field-``insideF()``: tensor[d]×ofield#k(d)[α] →boolean
-  * Probe the field at a position-``inst()``: tensor[d]×ofield#k(d)[α] → tensor[α]
-  * Get the cell number the point is located in-``GetCell()``: tensor[d]×ofield#k(d)[α] →  int 
+* **Other operations on ofield**  Copied from [fn_getCell](https://github.com/cchiw/latte/tree/master/fn_getCell 'fn_getCell')
+  	* **Inside** Check if a position is inside a field-``insideF()``: tensor[d]×ofield#k(d)[α] →boolean
+  	* **Probe**  Probe the field at a position-``inst()``: ofield#k(d)[α] ×tensor[d]→ tensor[α]
+  	*  **GetCell**  Get the cell number the point is located in-``GetCell()``: ofield#k(d)[α] ×tensor[d]× →  int* 
 
 ### 2. C code that communicates to the generated Diderot code (observ_init.c)
 The C code is used to communicate with the generated Diderot code. The function ```callDiderot_observ()``` can be called by outside tools.
@@ -106,12 +105,10 @@ result =_call.callDiderot_observ(ctypes.c_char_p(name.encode('utf-8')),ctypes.ca
 >*Note* `callDiderot_observ()` is the name of the function in *observ_init.c* we want to call. 
 
 ### 4. Running the whole thing (run.sh)
-Install  [Firedrake](https://www.firedrakeproject.org/download.html "Firedrake") and Activate with 
-> source firedrake/bin/activate
-
-Change path to Diderot-Dev compiler in  *data/makedefs.gmk* and in *X1/observ.diderot*
-
-Make and run
+* Change path to Diderot-Dev compiler in  data/makedefs.gmk and in the relevant diderot program
+* Install  [Firedrake](https://www.firedrakeproject.org/download.html "Firedrake") and activate with 
+	 > source firedrake/bin/activate
+* Make and run
 > make observ_init.so
 > python observ.py
 
