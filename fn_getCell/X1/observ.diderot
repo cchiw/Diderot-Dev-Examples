@@ -1,0 +1,31 @@
+input int imgRes;
+input real stepSize;
+input int cell;
+
+input fem#1(2)[] f;
+fnspace V = FunctionSpace(UnitSquareMesh(2,2), Lagrange(), 2);
+string path = "/Users/chariseechiw/diderot/Diderot-Dev/fnspace_data/";
+ofield#1(2)[] F = convert(f, V, path); //field and function space
+
+
+strand sample (int ui, int vi) {
+    vec2 pos=[ui,vi]*stepSize;
+   output tensor[] out= inst(F,pos);
+
+
+    int currentcell = GetCell(F,pos);
+
+    update {
+
+
+        if(currentcell==cell){
+            out = inst(F,pos);
+        }
+        else{
+            out=0;
+        }
+             stabilize;
+    }
+}
+
+initially [ sample(ui, vi) | vi in 0..(imgRes-1), ui in 0..(imgRes-1) ];
