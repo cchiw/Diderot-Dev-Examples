@@ -7,6 +7,7 @@
 	 - A4. Min and Max: [fn_min-max](https://github.com/cchiw/latte/tree/master/fn_min-max "fn_min-max")
 	 - A5. Clerp and Clamp: [fn_clerp](https://github.com/cchiw/latte/tree/master/fn_clerp "fn_clerp")
 	 - A6. Field Selection: [fn_selection](https://github.com/cchiw/latte/tree/master/fn_selection "fn_selection")
+	 - A7. Find Cell: [fn_getCell](https://github.com/cchiw/latte/tree/master/fn_getCell "fn_getCell")
 - B. Tools
 	- B1. DATm: Diderot’s Automated Testing: [tool_DATm](https://github.com/cchiw/latte/tree/master/tool_DATm "tool_DATm")
 	- B2. Printing the intermediate representation: [tool_printIR](https://github.com/cchiw/latte/tree/master/tool_printIR "tool_printIR")
@@ -196,6 +197,44 @@ input int selection_id;
 	- *Field arguments* The function accepts 2-6 field arguments.
 * Potential issue:  The value of the *Selection id* is clamped. If the first argument is id=-7 the id is set to 1 instead of throwing an error
 * Examples directory: [fn_selection](https://github.com/cchiw/latte/tree/master/fn_selection "fn_selection")
+
+
+## A7. Math functions: GetCell()
+A user can define a field as a structure composed of    a mesh, reference element, and PDE solution.  The code to define this type of field is copied below but check out the relevant directory [dfn_fem](https://github.com/cchiw/latte/tree/master/dfn_fem "dfn_fem") for more details.
+``` 
+input fem#1(2)[] f;
+fnspace V = FunctionSpace(UnitSquareMesh(2,2), Lagrange(), 2);
+string path = "Diderot-Dev/fnspace_data/";
+ofield#1(2)[] F = convert(f, V, path)
+```
+When this type of  field is probed at a position than the compiler has find the right cell the position is located in. The surface level operator ``GetCell()`` allows the user to get the cell number for a position in a FEM field
+```
+int currentcell = GetCell(F,pos);  
+```
+or more generally do an inside test that will return a boolean result
+```
+bool TF = insideF(pos,F);  
+```
+The user probes the FEM field at a position with 
+```
+tensor[] out = inst(F,pos);  
+```
+### Run
+* Change path to Diderot-Dev compiler in  data/makedefs.gmk and in the relevant diderot program
+* Install  [Firedrake](https://www.firedrakeproject.org/download.html "Firedrake") and activate with 
+	 > source firedrake/bin/activate
+
+
+## Details
+* Branch:   [Diderot-Dev](https://github.com/cchiw/Diderot-Dev) 
+* Syntax: 
+	* **Inside** Check if a position is inside a field-``insideF()``: tensor[d]×ofield#k(d)[α] →boolean
+  	* **Probe**  Probe the field at a position-``inst()``: ofield#k(d)[α] ×tensor[d]→ tensor[α]
+  	*  **GetCell**  Get the cell number the point is located in-``GetCell()``: ofield#k(d)[α] ×tensor[d]× →  int* 
+	When there is no Cell the function returns -1.
+* Notes: Defining a FEM field: [dfn_fem](https://github.com/cchiw/latte/tree/master/dfn_fem "dfn_fem").
+* Examples directory: [fn_getCell](https://github.com/cchiw/latte/tree/master/fn_getCell "fn_getCell")
+
 # B.Tools
 ## B1. DATm: Diderot's Automated Testing
 
@@ -404,14 +443,16 @@ The distinction between G, H, and I is that differentiation is applied in respec
 
 
 ## C2. FEM
+
 We support computations on fields defined by outside sources.
 There are four steps to the implementation process: 
-* 1. Diderot code (observ.diderot)
-* 2. C code that communicates to the generated Diderot code   (observ_init.c)
-* 3. Python code that initiates the C code and creates FEM data (observ.py)
-* 4. Running the program (run.sh)
+ - 1. Diderot code (observ.diderot) 
+ - 2. C code that communicates to the generated Diderot code   (observ_init.c) 
+ - 3. Python code that initiates the C code and creates FEM data (observ.py)
+ - 4. Running the program (run.sh)
+
 For the most part steps 2-4 are the same for each example and code can be easily reused. 
-* Branch: [Diderot-Dev](https://github.com/cchiw/Diderot-Dev)
+
 ### 1.Diderot Code (observ.diderot)
 #### Simple Definition
 The user defines an input variable to represent a FEM field. The path included is a path to the relevant data file. 
@@ -466,11 +507,8 @@ fnspace VF = TensorFunctionSpace(M, E, polyorder,{i,j});
 * **Define an ofield with fem data**
   * Define a fem field- ``convert()``: *fem#k(d)[α]* × string    →ofield#k(d)[α] 
   * Define a fem field with the function space-``convert()``: *fem#k(d)[α]* × *fnspace* × string    →ofield#k(d)[α] 
-* **Other operations on ofield**
-  * Check if a position is inside a field-``insideF()``: tensor[d]×ofield#k(d)[α] →boolean
-  * Probe the field at a position-``inst()``: tensor[d]×ofield#k(d)[α] → tensor[α]
-  * Get the cell number the point is located in-``GetCell()``: tensor[d]×ofield#k(d)[α] →  int 
-### ...
+
+...
 * Read full readme file in [dfn_fem](https://github.com/cchiw/latte/tree/master/dfn_fem "dfn_fem")
 
 
