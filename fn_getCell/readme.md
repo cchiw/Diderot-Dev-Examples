@@ -19,24 +19,25 @@ The user probes the FEM field at a position with
 ```
 tensor[] out = inst(F,pos);  
 ```
-
-### Syntax Summary
-  * **Inside** Check if a position is inside a field-``insideF()``: tensor[d]×ofield#k(d)[α] →boolean
-  * **Probe**  Probe the field at a position-``inst()``: ofield#k(d)[α] ×tensor[d]→ tensor[α]
-  *  **GetCell**  Get the cell number the point is located in-``GetCell()``: ofield#k(d)[α] ×tensor[d]× →  int
-  *  **Define FEM** Defining a FEM field: [dfn_fem](https://github.com/cchiw/latte/tree/master/dfn_fem "dfn_fem").
-  
 ### Run
 * Change path to Diderot-Dev compiler in  data/makedefs.gmk and in the relevant diderot program
 * Install  [Firedrake](https://www.firedrakeproject.org/download.html "Firedrake") and activate with 
 	 > source firedrake/bin/activate
+
+
 ## Details
 * Branch:   [Diderot-Dev](https://github.com/cchiw/Diderot-Dev) 
-* Syntax: “GetCell"  field#k(d)[α] × tensor[d] →int
-* Notes- When there is no Cell the function returns -1.
+* Syntax: 
+	* **Inside** Check if a position is inside a field-``insideF()``: tensor[d]×ofield#k(d)[α] →boolean
+  	* **Probe**  Probe the field at a position-``inst()``: ofield#k(d)[α] ×tensor[d]→ tensor[α]
+  	*  **GetCell**  Get the cell number the point is located in-``GetCell()``: ofield#k(d)[α] ×tensor[d]× →  int* 
+	
+	When there is no Cell the function returns -1.
+* Notes: Defining a FEM field: [dfn_fem](https://github.com/cchiw/latte/tree/master/dfn_fem "dfn_fem").
+
 
 ## Directory Organization
 Examples: X1
->Note:  To run examples change path 
+
 
 
