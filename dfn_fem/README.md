@@ -14,8 +14,7 @@ For the most part steps 2-4 are the same for each example and code can be easily
 The user declares a FEM field with the function``FEM`` and two arguments. The first argument is an input variable and the second is a path to the relevant data file.
 ```
 input fem#k(d)[α] F0;
-string path = "fnspace_data/data.json";
-field#k(d)[α] F = FEM(F0, path);
+field#k(d)[α] F = FEM(F0, "data.json");
 ```
 
 
