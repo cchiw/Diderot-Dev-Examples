@@ -200,24 +200,22 @@ input int selection_id;
 
 
 ## A7. Math functions: GetCell()
-A user can define a field as a structure composed of    a mesh, reference element, and PDE solution.  The code to define this type of field is copied below but check out the relevant directory [dfn_fem](https://github.com/cchiw/latte/tree/master/dfn_fem "dfn_fem") for more details.
+A user can define a field created as the result of an outside tool.  The code to define this type of field is copied below
 ``` 
 input fem#1(2)[] f;
-fnspace V = FunctionSpace(UnitSquareMesh(2,2), Lagrange(), 2);
-string path = "Diderot-Dev/fnspace_data/";
-ofield#1(2)[] F = convert(f, V, path)
+field#1(2)[] F = FEM(f, "Diderot-Dev/fnspace_data/data.json")
 ```
-When this type of  field is probed at a position than the compiler has find the right cell the position is located in. The surface level operator ``GetCell()`` allows the user to get the cell number for a position in a FEM field
+but check out the relevant directory [dfn_fem](https://github.com/cchiw/latte/tree/master/dfn_fem "dfn_fem") for more details. When this type of  field is probed at a position then the right cell needs to be found. The surface level operator ``GetCell()`` allows the Diderot user to use that value in the Diderot program.
 ```
 int currentcell = GetCell(F,pos);  
 ```
-or more generally do an inside test that will return a boolean result
+An inside test will return a boolean
 ```
 bool TF = insideF(pos,F);  
 ```
 The user probes the FEM field at a position with 
 ```
-tensor[] out = inst(F,pos);  
+tensor[] out = F(pos);  
 ```
 ### Run
 * Change path to Diderot-Dev compiler in  data/makedefs.gmk and in the relevant diderot program
@@ -225,12 +223,12 @@ tensor[] out = inst(F,pos);
 	 > source firedrake/bin/activate
 
 
-## Details
+### Details
 * Branch:   [Diderot-Dev](https://github.com/cchiw/Diderot-Dev) 
 * Syntax: 
-	* **Inside** Check if a position is inside a field-``insideF()``: tensor[d]×ofield#k(d)[α] →boolean
-  	* **Probe**  Probe the field at a position-``inst()``: ofield#k(d)[α] ×tensor[d]→ tensor[α]
-  	*  **GetCell**  Get the cell number the point is located in-``GetCell()``: ofield#k(d)[α] ×tensor[d]× →  int* 
+	* **Inside** Check if a position is inside a field-``insideF()``: tensor[d]×field#k(d)[α] →boolean
+  	*  **GetCell**  Get the cell number the point is located in-``GetCell()``: field#k(d)[α] ×tensor[d]× →  int 
+	
 	When there is no Cell the function returns -1.
 * Notes: Defining a FEM field: [dfn_fem](https://github.com/cchiw/latte/tree/master/dfn_fem "dfn_fem").
 * Examples directory: [fn_getCell](https://github.com/cchiw/latte/tree/master/fn_getCell "fn_getCell")
@@ -460,8 +458,7 @@ For the most part steps 2-4 are the same for each example and code can be easily
 The user declares a FEM field with the function``FEM`` and two arguments. The first argument is an input variable and the second is a path to the relevant data file.
 ```
 input fem#k(d)[α] F0;
-string path = "fnspace_data/data.json";
-field#k(d)[α] F = FEM(F0, path);
+field#k(d)[α] F = FEM(F0, "data.json");
 ```
 
 
