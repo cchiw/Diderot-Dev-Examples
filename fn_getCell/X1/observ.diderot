@@ -5,12 +5,12 @@ input int cell;
 input fem#1(2)[] f;
 fnspace V = FunctionSpace(UnitSquareMesh(2,2), Lagrange(), 2);
 string path = "/Users/chariseechiw/diderot/Diderot-Dev/fnspace_data/";
-ofield#1(2)[] F = convert(f, V, path); //field and function space
+field#1(2)[] F = FEM(f, V, path); //field and function space
 
 
 strand sample (int ui, int vi) {
     vec2 pos=[ui,vi]*stepSize;
-   output tensor[] out= inst(F,pos);
+   output tensor[] out= 8;
 
 
     int currentcell = GetCell(F,pos);
@@ -19,7 +19,7 @@ strand sample (int ui, int vi) {
 
 
         if(currentcell==cell){
-            out = inst(F,pos);
+            out = F(pos);
         }
         else{
             out=0;

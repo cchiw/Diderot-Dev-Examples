@@ -4,7 +4,7 @@ from os.path import abspath, dirname
 import os
 from os import path
 cwd = abspath(dirname(__file__))
-sys.path.insert(0, '../data/')
+sys.path.insert(0, '../../data/')
 
 from init import *
 from makejson import *

@@ -1,21 +1,19 @@
+//Field:field #4(2)[] F0=2*x**2*y + 3*x**2 - x*y - 4*x + y**2*(-3*x**2 + 4*x - 1) - 4*y + 2
 
-
- input fem#4(2)[] FF0;
- //Field:field #4(2)[] F0=2*x**2*y + 3*x**2 - x*y - 4*x + y**2*(-3*x**2 + 4*x - 1) - 4*y + 2
+input fem#4(2)[] FF0;
 mesh M = UnitSquareMesh(4,4);
 element E = P();
- fnspace VF0 = FunctionSpace(M,E, 4);
- string pathF0 = "/Users/chariseechiw/diderot/Diderot-Dev/fnspace_data/";
- ofield#4(2)[] F0 = convert(FF0,VF0,pathF0);
-
-ofield#3(2)[2]G = ∇(F0);
+fnspace VF0 = FunctionSpace(M,E, 4);
+string pathF0 = "/Users/chariseechiw/diderot/Diderot-Dev/fnspace_data/";
+field#4(2)[] F0 = FEM(FF0,VF0,pathF0);
+field#3(2)[2]G = ∇(F0);
 int length =7;
 strand f(int i) {
 
-	output tensor [2] out =  [0.0,0.0];
+	output tensor [2] out =  [5.0,0.7];
 	    update {
 
-		tensor [2] pos=[0,0];
+		tensor [2] pos=[9,5];
 		if(i==0){
 			pos = ([0.24, 0.09]);
 		}
@@ -41,10 +39,10 @@ strand f(int i) {
 			pos = ([0.12, 0.66]);
 		}
 
-	if((insideF(pos,F0)) && true){
-			out = inst(G,pos);
+	if((insideF(pos,G))){
+            out = G(pos);
 	}
-	 else{out =  [7.2,7.2];}
+        else{out =  [7.2,7.2];}
         stabilize;
     }
 }
