@@ -11,23 +11,33 @@ When this type of  field is probed at a position than the compiler has find the 
 ```
 int currentcell = GetCell(F,pos);  
 ```
-and use it to inform the relevant computation.
+or more generally do an inside test that will return a boolean result
+```
+bool TF = insideF(pos,F);  
+```
+The user probes the FEM field at a position with 
+```
+tensor[] out = inst(F,pos);  
+```
+### Run
+* Change path to Diderot-Dev compiler in  data/makedefs.gmk and in the relevant diderot program
+* Install  [Firedrake](https://www.firedrakeproject.org/download.html "Firedrake") and activate with 
+	 > source firedrake/bin/activate
 
-### Syntax Summary
-  * **Inside** Check if a position is inside a field-``insideF()``: tensor[d]×ofield#k(d)[α] →boolean
-  * **Probe**  Probe the field at a position-``inst()``: tensor[d]×ofield#k(d)[α] → tensor[α]
-  *  **GetCell**  Get the cell number the point is located in-``GetCell()``: tensor[d]×ofield#k(d)[α] →  int
-  *  **Define FEM** Defining a FEM field: [dfn_fem](https://github.com/cchiw/latte/tree/master/dfn_fem "dfn_fem").
+
 ## Details
 * Branch:   [Diderot-Dev](https://github.com/cchiw/Diderot-Dev) 
-* Syntax: “GetCell"  field#k(d)[α] × tensor[d] →int
-* Notes- When there is no Cell the function returns -1.
-## Run Examples
-* Change path to Diderot-Dev compiler in  data/makedefs.gmk and in X1/observ.diderot
-* Install  [Firedrake](https://www.firedrakeproject.org/download.html "Firedrake") and Activate with 
-	 > source firedrake/bin/activate
+* Syntax: 
+	* **Inside** Check if a position is inside a field-``insideF()``: tensor[d]×ofield#k(d)[α] →boolean
+  	* **Probe**  Probe the field at a position-``inst()``: ofield#k(d)[α] ×tensor[d]→ tensor[α]
+  	*  **GetCell**  Get the cell number the point is located in-``GetCell()``: ofield#k(d)[α] ×tensor[d]× →  int* 
+	
+	When there is no Cell the function returns -1.
+* Notes: Defining a FEM field: [dfn_fem](https://github.com/cchiw/latte/tree/master/dfn_fem "dfn_fem").
+
+
 ## Directory Organization
 Examples: X1
->Note:  To run examples change path 
+
 
 
