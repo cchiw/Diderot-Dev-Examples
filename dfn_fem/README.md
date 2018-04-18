@@ -10,61 +10,13 @@ There are four steps to the implementation process:
 For the most part steps 2-4 are the same for each example and code can be easily reused. 
 
 ### 1.Diderot Code (observ.diderot)
-#### Simple Definition
 The user declares a FEM field with the function``FEM`` and two arguments. The first argument is an input variable and the second is a path to the relevant data file.
 ```
 input fem#k(d)[α] F0;
 field#k(d)[α] F = FEM(F0, "data.json");
 ```
+Define a fem field- ``FEM()``: *fem#k(d)[α]* × string    →field#k(d)[α] 
 
-
-#### Include Function Space
-The user can choose to define the field by describing the function space ``VF`` and by providing a path to a directory ``pathVF``.
-```
-input fem#k(d)[α] F0;
-fnspace VF = ....
-string pathVF = ...
-field#k(d)[α] F = FEM(F0,VF,pathVF);
-```
-The variable  ``VF`` is a  *fnspace* type.  It is defined with a *mesh*, *element*,  and *int* (to indicate order of coefficients). The current options for a *mesh* are ``UnitCubeMesh()`` and ``UnitSquareMesh()``. An *element* type is an abstract representation of a reference element. It can be either   ``Lagrange()``  or ``P()``.  A *fnspace* type represents a function space. It can be either    ``FunctionSpace()`` for scalars or ``TensorFunctionSpace()`` for non-scalars. 
-The following is an example of a 2-d scalar field: 
-```
-input fem#k(2)[] F0;
-mesh M = UnitSquareMesh(4,4);
-element E = P();
-int polyorder = 4;
-fnspace VF = FunctionSpace(M,E,polyorder);
-field#k(2)[] F = FEM(F0,VF,pathVF);
-```
-To represent a 3-d scalar field the ``mesh`` and ``fem`` type need to be changed:
-```
-input fem#k(3)[] F0;
-mesh M = UnitCubeMesh(4,4,4)
-```
-To define a vector field of length ``i`` use  ``TensorFunctionSpace()``:
-```
-input fem#k(3)[i] F0;
-fnspace VF = TensorFunctionSpace(M, E, polyorder,{i});
-```
-To accommodate a second-order (``i,j``) tensor field augment the shape parameter:
-```
-input fem#k(3)[i, j] F0;
-fnspace VF = TensorFunctionSpace(M, E, polyorder,{i,j});
-```
-#### Sumary of syntax
-* **Define a Mesh, Element, and Function Space**
-  * Define a Unit Square Mesh- ``UnitSquareMesh()``:  int ×  int   → *mesh*
-  * Define a Unit Cube Mesh- ``UnitCubeMesh()``: int ×  int  × int     → *mesh*
-  * Define a Lagrange reference element- ``Lagrange()``:   →*element*
-  * Define a P reference element- ``P()``:   → *element*
-  * Define a function space for scalar fields- ``FunctionSpace()``: *mesh* × *element*  × int →*fnspace*
-  * Define a function space for non-scalar fields- ``TensorFunctionSpace()``: *mesh* × *element*  × int × int sequence→*fnspace*
-* **Define a field with fem data**
-  * Define a fem field- ``FEM()``: *fem#k(d)[α]* × string    →field#k(d)[α] 
-  * Define a fem field with the function space-``FEM()``: *fem#k(d)[α]* × *fnspace* × string    →field#k(d)[α] 
-* **Other operations on field**  Copied from [fn_getCell](https://github.com/cchiw/latte/tree/master/fn_getCell 'fn_getCell')
-  	* **Inside** Check if a position is inside a field-``insideF()``: tensor[d]×field#k(d)[α] →boolean
-  	* **GetCell**  Get the cell number the point is located in-``GetCell()``: field#k(d)[α] ×tensor[d]× →  int* 
 
 ### 2. C code that communicates to the generated Diderot code (observ_init.c)
 The C code is used to communicate with the generated Diderot code. The function ```callDiderot_observ()``` can be called by outside tools.
@@ -83,15 +35,20 @@ It is necessary to have files *init.py **makejson.py* included in the path. Curr
 sys.path.insert(0, '../../data/') #path to init.py, makejson.py
 from init import *
 from makejson import *
-```
-The field is defined by an outside source, such as Firedrake.The field could be the solution to a pde equation or the result of interpolating an expression over a function space:
-```
 from firedrake import *
-.....
+```
+A function space is defined and sent to a call function to create a data file.
+```
+V= FunctionSpace(UnitSquareMesh(4,4),"P",degree=4)
+makejson(V,"data.json")
+```
+The ``makejson()`` call with create the data.json file referred to in the Diderot program. The Diderot program can now be compiled with
+```
+os.system ("make observ_init.so")	
+```
+The field is defined by an outside source, such as Firedrake.The field could be the solution to a pde equation or the result of interpolating an expression over a function space. After defining the field ``f0`` the following code is used to pass the field to Diderot. 
+```
 f0 = Function(V).interpolate(Expression(expf0))
-```
-After defining the field ``f0`` the following code is used to pass the field to Diderot. 
-```
 data = organizeData(f)
 _call = ctypes.CDLL('observ_init.so') 
 ```
@@ -107,7 +64,6 @@ result =_call.callDiderot_observ(ctypes.c_char_p(name.encode('utf-8')),ctypes.ca
 * Install  [Firedrake](https://www.firedrakeproject.org/download.html "Firedrake") and activate with 
 	 > source firedrake/bin/activate
 * Make and run
-	> make observ_init.so
 	> python observ.py
 
 ## Details
