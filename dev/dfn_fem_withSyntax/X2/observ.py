@@ -15,12 +15,7 @@ import numpy
 import numpy.ctypeslib as npct
 
 
-def compile_Diderot(V):
-    makejson(V,"data.json")
-    os.system("make clean")
-    os.system("make observ.o")
-    os.system("make observ_init.so")
-
+# init diderot program
 # single field
 def init1(name, f,target):
     init_file = target+'_init.so'
@@ -41,6 +36,6 @@ target ="observ"
 namenrrd = name+'.nrrd'
 expf0 = "0+(-2*1)+(2*x[1])+(-1*x[0])+(-1*x[1]*x[1])+(3*x[1]*x[1]*x[0])+(-1*x[0]*x[0]*x[1]*x[1])+(5*x[0]*x[0]*x[1])+(-3*x[0]*x[0])+(-4*1*x[2])+(5*x[1]*x[2])+(2*x[0]*x[1]*x[2])+(-3*x[0]*x[2])+(-5*x[1]*x[1]*x[2])+(5*x[0]*x[0]*x[1]*x[1]*x[2])+(-5*x[0]*x[0]*x[1]*x[2])+(-2*x[0]*x[0]*x[2])+(-5*1*x[2]*x[2])+(4*x[1]*x[2]*x[2])+(3*x[0]*x[1]*x[2]*x[2])+(-3*x[0]*x[2]*x[2])+(-1*x[1]*x[1]*x[2]*x[2])+(1*x[1]*x[1]*x[0]*x[2]*x[2])+(-5*x[0]*x[0]*x[1]*x[1]*x[2]*x[2])+(3*x[0]*x[0]*x[1]*x[2]*x[2])+(-1*x[0]*x[0]*x[2]*x[2])"
 V= FunctionSpace(UnitCubeMesh(4,4,4),"Lagrange",degree=4)
-compile_Diderot(V)
+
 f0 = Function(V).interpolate(Expression(expf0))
 init1(namenrrd, f0,  target)

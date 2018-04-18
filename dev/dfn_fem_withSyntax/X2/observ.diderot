@@ -1,10 +1,12 @@
 //Field:field #4(3)[] F0=5*x**2*y - 3*x**2 - x + y**2*(-x**2 + 3*x - 1) + 2*y + z**2*(3*x**2*y - x**2 + 3*x*y - 3*x + y**2*(-5*x**2 + x - 1) + 4*y - 5) + z*(-5*x**2*y - 2*x**2 + 2*x*y - 3*x + y**2*(5*x**2 - 5) + 5*y - 4) - 2
-//fnspace VF0 = FunctionSpace(UnitCubeMesh(4,4,4), Lagrange(), 4);
-//string pathF0 ="/Users/chariseechiw/diderot/Diderot-Dev/fnspace_data/";
+
 
 input fem#4(3)[] FF0;
-field#4(3)[] F = FEM(FF0,"data.json");
-field#3(3)[3]G = ∇(F);
+fnspace VF0 = FunctionSpace(UnitCubeMesh(4,4,4), Lagrange(), 4);
+string pathF0 ="/Users/chariseechiw/diderot/Diderot-Dev/fnspace_data/";
+field#4(3)[] F0 = FEM(FF0,VF0,pathF0);
+
+field#3(3)[3]G = ∇(F0);
 int length =7;
 strand f(int i) {
 
@@ -37,7 +39,7 @@ strand f(int i) {
 			pos = ([0.01, 0.47, 0.13]);
 		}
 
-	if(insideF(pos,F)){
+	if(insideF(pos,F0)){
             out = G(pos);
 	}
 	 else{out =  [7.2,7.2,7.2];}

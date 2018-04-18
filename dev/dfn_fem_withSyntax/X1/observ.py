@@ -14,12 +14,6 @@ from ctypes import POINTER, c_int, c_double, c_void_p, c_float
 import numpy
 import numpy.ctypeslib as npct
 
-#make data file and compile Diderot
-def compile_Diderot(V):
-    makejson(V,"data.json")
-    os.system("make clean")
-    os.system("make observ.o")
-    os.system("make observ_init.so")
 
 # init diderot program
 # single field
@@ -32,15 +26,15 @@ def init1(name, f,target):
     return(result)
 
 ##############################################
+#general declarations
+#init field
+# call to init
 
-#define function space
-V= FunctionSpace(UnitSquareMesh(4,4),"P",degree=4)
-# create data file
-compile_Diderot(V)
-#create field
-namenrrd = "output.nrrd"
-expf0 = "0+(2*1)+(-4*x[1])+(-1*x[0]*x[1])+(-4*x[0])+(-1*x[1]*x[1])+(4*x[1]*x[1]*x[0])+(-3*x[0]*x[0]*x[1]*x[1])+(2*x[0]*x[0]*x[1])+(3*x[0]*x[0])"
-f0 = Function(V).interpolate(Expression(expf0))
+name = "cat"
 target ="observ"
-init1(namenrrd, f0,  target)
+namenrrd = name+'.nrrd'
+expf0 = "0+(2*1)+(-4*x[1])+(-1*x[0]*x[1])+(-4*x[0])+(-1*x[1]*x[1])+(4*x[1]*x[1]*x[0])+(-3*x[0]*x[0]*x[1]*x[1])+(2*x[0]*x[0]*x[1])+(3*x[0]*x[0])"
+V= FunctionSpace(UnitSquareMesh(4,4),"P",degree=4)
 
+f0 = Function(V).interpolate(Expression(expf0))
+init1(namenrrd, f0,  target)
