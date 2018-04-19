@@ -3,9 +3,7 @@ input real stepSize;
 input int cell;
 
 input fem#1(2)[] f;
-fnspace V = FunctionSpace(UnitSquareMesh(2,2), Lagrange(), 2);
-string path = "/Users/chariseechiw/diderot/Diderot-Dev/fnspace_data/";
-field#1(2)[] F = FEM(f, V, path); //field and function space
+field#1(2)[] F = FEM(f, "UnitSquareMesh_Lagrange_2.json"); 
 
 
 strand sample (int ui, int vi) {
