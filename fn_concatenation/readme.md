@@ -1,6 +1,6 @@
 # Math functions: Function concatenation
 ## In Action
-Given two fields
+Given multiple fields
 ```
 field#k(d)[α] A;  field#k(d)[α] B; field#k(d)[α] C;
 ```
