@@ -2,19 +2,21 @@
 ## In Action
 Given two fields
 ```
-field#k(d)[i] A;  field#k(d)[i] B;
+field#k(d)[α] A;  field#k(d)[α] B; field#k(d)[α] C;
 ```
 A user might want to put two fields together to create a new field
 ```
-field#k(d)[2,i] M = concat(A,B)
+field#k(d)[3,α] M = [A,B,C]
 ```
 > **Note:** The two fields have the same type
 ## Details
 * Branch:   [Diderot-Dev](https://github.com/cchiw/Diderot-Dev) 
-* Syntax: "concat"
+* Syntax: ``[``,``]``
+    - field#k(d)[α] × field#k(d)[α]× ....field#k(d)[α] → field#k(d)[n,α] where n is the number of arguments
+* Syntax:``concat``
     - field#k(d)[α] × field#k(d)[α] → field#k(d)[2,α]
-* Text: Mentioned in dissertation-FW. Details provided in Doc
-* Future work Use syntax “[”,“]”
+    - Text: `concat` Mentioned in dissertation-FW. 
 
 ## Directory Organization
-* Test programs that created bugs (now solved)  : B*.diderot
+* Use of bracket ``[]`` or ``concat``to create a field  : X1
+* Test programs that created bugs (now solved)  : B*
