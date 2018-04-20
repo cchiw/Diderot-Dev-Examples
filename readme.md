@@ -114,26 +114,25 @@ field#k(d)[d,d] FI = inv(F)
 ----------
 ----------
 ## A4. Min and Max
-
-Given two scalar fields
+Given two scalar fields 
 ```
-field#k(d)[] A; field#k(d)[] B;
+tensor[] M;  
+field#k(d)[] A;
+field#k(d)[] B;
 ```
-A user can compare them by taking the maximum and minimum
+A user can compare them by taking the maximum and minimum 
 ```
-field#k(d)[] F = MaxF(A,B);
-field#k(d)[] G = MinF(A,B)
+field#k(d)[] F = Max(A,B);  
+field#k(d)[] G = Min(A,B)
 ```
-Then take the derivative
+Then take the derivative 
 ```
-field#k-1(d)[d] F = ∇ Max(A,B);
+field#k-1(d)[d] F = ∇ Max(A,B);  
 ```
-
 ### Details
-* Branch: [Diderot-Dev](https://github.com/cchiw/Diderot-Dev)
-* Syntax: “MaxF” and "MinF"
-	-  field#k(d)[] ×  field#k(d)[] →  field#k(d)[]
-* Future work: change "MaxF()" to just "Max()”
+* Branch:   [Diderot-Dev](https://github.com/cchiw/Diderot-Dev) 
+* Syntax: “Max” and "Min"
+    -  field#k(d)[] ×  field#k(d)[] →  field#k(d)[]
 * Examples Directory [fn_min-max](https://github.com/cchiw/latte/tree/master/fn_min-max "fn_min-max")
 ----------
 ----------
