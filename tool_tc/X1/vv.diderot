@@ -1,0 +1,24 @@
+int outSize = 10;
+vec2 x=[1,1];
+vec2 y=[8,1];
+vec2 a=[4,1];
+vec2 b=[3,1];
+real exp = (x•y);
+ofield#2(2)[] A = cfexp(exp,x);
+ofield#2(2)[] B = cfexp(exp,y);
+ofield#2(2)[] C = cfexp(exp,x,y);
+
+vec2 pos = [1,7];
+
+strand sample (int ui, int vi) {
+        //output vec2 out = inst(∇A, x);
+        //output vec2 out = inst(∇B, y);
+         output vec2 out = inst(∇C, a,b);
+        output real t = printIR(out, "cat");
+
+    update {
+             stabilize;
+    }
+}
+
+initially [ sample(ui, vi) | vi in 0..(outSize-1), ui in 0..(outSize-1) ];

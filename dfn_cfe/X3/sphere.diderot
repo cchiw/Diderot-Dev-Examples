@@ -99,6 +99,7 @@ strand sample (int ui, int vi) {
     //Expected Solution: -0.055535015 -0.055535015 -0.055535015 45.169216 15.056403 45.169216
 
     output tensor[3] out = (-4*(1-(|pos|/rad))^3)*(1/rad)*(pos/|pos|)- inst(∇enr,pos);//Expected Solution:0
+    output int cut=printIR(out,"tmp");
 
     update {
              stabilize;

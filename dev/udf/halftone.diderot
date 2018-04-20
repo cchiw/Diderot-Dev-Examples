@@ -1,0 +1,19 @@
+
+
+//user-defined function
+//where is a function defined? (block structure)
+//how should we express differentiation?
+real m=9;
+function real cat(real r) =
+    (m+r) if r < m else 0;
+
+
+
+int outSize = 10;
+strand sample (int ui, int vi) {
+    real s = 3;
+    output real out = cat(s);
+    update { stabilize;}
+}
+
+initially [ sample(ui, vi) | vi in 0..(outSize-1), ui in 0..(outSize-1) ];

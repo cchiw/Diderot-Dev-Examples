@@ -4,8 +4,8 @@ field#2(2)[] y = c4hexic⊛  image("../../data/y7.nrrd");
 field#2(2)[] xy = c4hexic⊛  image("../../data/xy7.nrrd");
 
 
-field#2(2)[] m2 = maxF(y, xy);
-field#1(2)[2] gm2 = ∇ (maxF(y, xy));
+field#2(2)[] m2 = max(y, xy);
+field#1(2)[2] gm2 = ∇ (max(y, xy));
 
 
 int outSize = 5;
@@ -22,7 +22,7 @@ strand sample (int i) {
         else if(i==2){pos=[-0.2,-0.2];}
         else if(i==3){pos=[-0.4,-0.4];}
         else if(i==4){pos=[0.4,0.4];}
-        if(inside(pos, m2)){
+        if(inside(pos, a) && inside(pos, x) && inside(pos, y) && inside(pos, xy)){
             if(obs==true){ out = gm2(pos);}
             else{
                 if(xy(pos)> y(pos)){out =(∇(xy))(pos);}

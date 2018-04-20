@@ -1,42 +1,45 @@
 
 field#4(2)[]F0 = c4hexic⊛  image("inputfile0.nrrd");
-field#4(2)[]F1 = c4hexic⊛  image("inputfile1.nrrd");
+field#4(2)[2]F1 = c4hexic⊛  image("inputfile1.nrrd");
 field#4(2)[2]F2 = c4hexic⊛  image("inputfile2.nrrd");
-input real scale = 1;
-field#4(2)[]G = compose(max((F0),(F1)),(F2*0.1));
+
+field#4(2)[]G = ((F0∘(F1*0.1))∘(F2*0.1));
 int length =7;
 strand f(int i) {
 
 	output tensor [] out = 0.0;
+
+        output int rr = printIR(G,"tt");
+
 	    update {
 
 		tensor [2] pos=[0,0];
 		if(i==0){
-			pos = ([0.15, 0.03]);
+			pos = ([-0.07, 0.31]);
 		}
 		else if(i==1){
-			pos = ([0.15, 0.03]);
+			pos = ([-0.07, 0.31]);
 		}
 		else if(i==2){
-			pos = ([-0.36, -0.13]);
+			pos = ([0.23, -0.18]);
 		}
 		else if(i==3){
-			pos = ([-0.2, -0.07]);
+			pos = ([0.3, 0.11]);
 		}
 		else if(i==4){
-			pos = ([-0.19, 0.09]);
+			pos = ([0.37, 0.37]);
 		}
 		else if(i==5){
-			pos = ([0.16, -0.09]);
+			pos = ([-0.28, 0.24]);
 		}
 		else if(i==6){
-			pos = ([0.03, 0.21]);
+			pos = ([-0.2, 0.2]);
 		}
 		else if(i==7){
-			pos = ([-0.1, -0.23]);
+			pos = ([-0.1, 0.11]);
 		}
 
-	if((inside(pos,F2)) && (inside(F2(pos)*0.1,F1)) && (inside(F2(pos)*0.1,F0)) && true){
+	if((inside(pos,F2)) && (inside((F2)(pos)*0.1,F1)) && (inside((F1)(((F2)(pos))*0.1)*0.1,F0)) && true){
 			out = (G)(pos);
 	}
 	 else{out = 7.2;}

@@ -29,6 +29,7 @@ strand sample (int ui, int vi) {
     //output tensor [2] out  =  inst(∇C,pos)-(3 - 1/((|pos|/rad)^2) - 2*(|pos|/rad))* (1/rad) * pos/|pos|;//Expected Solution:0
     output tensor [2] out  =  ((3 - 1/((|pos|/rad)^2) - 2*(|pos|/rad))* (1/rad) * pos/|pos|)-inst(∇C,pos);
 
+    output tensor [] t  = printIR(out,"pink");
     update {
              stabilize;
     }

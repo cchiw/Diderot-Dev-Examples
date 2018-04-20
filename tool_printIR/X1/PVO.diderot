@@ -13,8 +13,8 @@ int length =1;
 strand f(int i) {
 
 
-output tensor[] out =  (G)(pos);
-//output tensor[3] out =  ∇(G)(pos);
+//output tensor[] out =  (G)(pos);
+output tensor[3] out =  ∇(G)(pos);
 //output tensor[3,3] out = ∇⊗ ∇(G)(pos);
 
 

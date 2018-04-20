@@ -16,8 +16,8 @@ strand f(int i) {
 
     // output int out =  printIR((G)(pos));
 
-    output int out =  printIR((G)(pos),"cupcake");
-    //output int out =  printIR(∇⊗(G)(pos),"kitten");
+    //output int out =  printIR((G)(pos),"cupcake");
+    output int out =  printIR(∇⊗(G)(pos),"kitten");
 
 
 
