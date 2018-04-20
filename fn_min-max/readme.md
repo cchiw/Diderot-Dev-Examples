@@ -8,8 +8,8 @@ field#k(d)[] B;
 ```
 A user can compare them by taking the maximum and minimum 
 ```
-field#k(d)[] F = MaxF(A,B);  
-field#k(d)[] G = MinF(A,B)
+field#k(d)[] F = Max(A,B);  
+field#k(d)[] G = Min(A,B)
 ```
 Then take the derivative 
 ```
@@ -17,9 +17,8 @@ field#k-1(d)[d] F = ∇ Max(A,B);
 ```
 ## Details
 * Branch:   [Diderot-Dev](https://github.com/cchiw/Diderot-Dev) 
-* Syntax: “MaxF” and "MinF"
+* Syntax: “Max” and "Min"
     -  field#k(d)[] ×  field#k(d)[] →  field#k(d)[]
-* Future work: change "MaxF()" to just "Max()”
 ## Directory Organization
 * Examples:
     - Max()  : X1
