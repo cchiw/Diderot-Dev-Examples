@@ -72,3 +72,6 @@ The distinction between G, H, and I is that differentiation is applied in respec
 	* [f<sub>sv</sub> = s ∗ v] : X5/m1.diderot, 
 	* [f<sub>svx</sub> = s ∗ v + x] : X5/m2.diderot, and
 	*  [f<sub>abc</sub> = a³bc²] : X5/m3.diderot
+	
+## Note to future developers
+* Everything inside CFExp needs to be written in EIN (because of substitution process)
