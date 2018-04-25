@@ -75,3 +75,4 @@ The distinction between G, H, and I is that differentiation is applied in respec
 	
 ## Note to future developers
 * Everything inside CFExp needs to be written in EIN (because of substitution process)
+* Should every expression be a tensor type? Should they support the application of field operators. Type Checking issue?field#3(2)[]GCFE = cfexp(compose(F0,F1*0.1),x,y);
