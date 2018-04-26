@@ -1,0 +1,12 @@
+p_p_o6_o23_t0_tN__l2
+
+observed data from Diderot-Dev [4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0]
+
+correct data from python[4, 4, 4, 4, 4, 4, 4]
+
+ positions[0.25, 0.4, 0.26, 0.35, 0.12, -0.38, -0.21]
+
+Params(0)
+
+-p_o6_o23_t0_tN__l2 grad(trace)| F_m2x2_d1| Rst: V-0 RA
+
