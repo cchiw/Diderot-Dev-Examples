@@ -52,11 +52,13 @@ The distinction between G, H, and I is that differentiation is applied in respec
 	* cfexp(): tensor[α] × tensor[β] . . . → ofield#k(d)[α]  
 	* inst(): ofield#k(d)[α] × tensor[β] · · · → tensor[α]
 * Text: see [Doc]
-* Issues/Future Work:  
+* Issues:  
 	* Need to define/initiate all variables before cfexp() is called.  
-	* OField type doesn’t describe types for multiple inputs, need to change typechecker 
-	* Remove k-continuity 
-	*  Needs more extensive testing
+* Syntax:  
+	* OField type doesn’t describe types for multiple inputs, need to change typechecker, Remove k-continuity 
+* Testing:
+	* DATm tested cfexp incombination with all tensor operators
+	* Sympy does not support product rule. So those tests had to be made by hand
 ## Directory Organization
 * Base Case Examples
 	*   [f<sub>v</sub> = v] : X1/v.diderot, 
