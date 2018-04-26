@@ -3,10 +3,10 @@ int outSize = 10;
 
 vec2 x = [1,1];
 vec2 exp = (x•x)*x;
-ofield#3(2)[2] T = cfexp(exp,x);
-ofield#2(2)[2,2] GT =  ∇⊗T;
-ofield#1(2)[2,2,2] GGT =  ∇⊗∇⊗T;
-ofield#0(2)[2,2,2,2] GGGT =  ∇⊗∇⊗∇⊗T;
+field#3(2)[2] T = cfexp(exp,x);
+field#2(2)[2,2] GT =  ∇⊗T;
+field#1(2)[2,2,2] GGT =  ∇⊗∇⊗T;
+field#0(2)[2,2,2,2] GGGT =  ∇⊗∇⊗∇⊗T;
 
 
 

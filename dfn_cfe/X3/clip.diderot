@@ -2,11 +2,11 @@ input vec3 cutPos=[5,1,6];
 input vec3 cutNorm=[4,2,9];
 vec3 x=[1,1,1];
 real exp= (x- cutPos)•cutNorm;
-ofield#1(3)[]cut = cfexp(exp,x);
+field#1(3)[]cut = cfexp(exp,x);
 vec2 v=[1,3];
 
 // takes the derivative
-ofield#0(3)[3]Dcut = ∇cut;
+field#0(3)[3]Dcut = ∇cut;
 
 int outSize = 10;
 strand sample (int ui, int vi) {

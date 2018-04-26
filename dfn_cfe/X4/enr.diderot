@@ -4,7 +4,7 @@ vec2 x=[1,1];
 real rad = 0.1;
 
 
-ofield#1(2)[] enr = cfexp(1/tan(|x|/rad*π/2) + (|x|/rad)*π/2 - π/2,x);
+field#1(2)[] enr = cfexp(1/tan(|x|/rad*π/2) + (|x|/rad)*π/2 - π/2,x);
 
 
 //Each example is tested below

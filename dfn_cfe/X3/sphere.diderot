@@ -3,11 +3,11 @@ vec3 x=[1,1,1];
 real rad = 0.1;
 
 //function broken out in steps during testing
-ofield#1(3)[3] A = cfexp(x, x);
-ofield#1(3)[] B = cfexp(|x|,x);
-ofield#1(3)[] C = cfexp(|x|/rad,x);
-ofield#1(3)[] D= cfexp(1-(|x|/rad),x);
-ofield#1(3)[] enr = cfexp((1-(|x|/rad))^4,x);
+field#1(3)[3] A = cfexp(x, x);
+field#1(3)[] B = cfexp(|x|,x);
+field#1(3)[] C = cfexp(|x|/rad,x);
+field#1(3)[] D= cfexp(1-(|x|/rad),x);
+field#1(3)[] enr = cfexp((1-(|x|/rad))^4,x);
 
 //Read here
 // Comment in a field definition "A"^ and an outline line below under "Example A".

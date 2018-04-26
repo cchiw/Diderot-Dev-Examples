@@ -7,8 +7,8 @@ real a1=1;
 real b1=2;
 real c1=3;
 real exp = c1*a1*a1*a1*b1*c1;
-ofield#2(2)[] k = cfexp(exp,a1,b1,c1);
-ofield#1(2)[2] Dk = ∇k;
+field#2(2)[] k = cfexp(exp,a1,b1,c1);
+field#1(2)[2] Dk = ∇k;
 
 
 int outSize = 10;

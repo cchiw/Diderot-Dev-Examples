@@ -3,10 +3,11 @@ int outSize = 10;
 
 real y= 7;
 real exp = y*y*y;
-ofield#3(1)[] A = cfexp(exp,y);
-ofield#2(1)[] GA =  ∇A;
-ofield#1(1)[] GGA =  ∇GA;
-ofield#0(1)[] GGGA =  ∇GGA;
+
+field#3(1)[] A = cfexp(exp,y);
+//field#2(1)[] GA =  ∇A;
+//field#1(1)[] GGA =  ∇GA;
+//field#0(1)[] GGGA =  ∇GGA;
 
 strand sample (int ui, int vi) {
     real uu = lerp(0.0, 1.0, -0.5, real(ui), real(outSize)-0.5);
@@ -14,6 +15,7 @@ strand sample (int ui, int vi) {
     vec2 pos = [uu,vv];
     real x =uu;
     real y=vv;
+    output tensor[] out = inst(A,x);
 
     // ************************ Example A *********************
 
@@ -39,7 +41,7 @@ strand sample (int ui, int vi) {
     //output tensor[] out = inst(GGA,x);
     //Expected Solution:0.30000001 0.90000004 1.5 2.0999999 2.6999998 3.3000002 3.8999999 4.5
 
-    output tensor[] out = 6*x-inst(GGA,x);//Expected Solution:0
+   // output tensor[] out = 6*x-inst(GGA,x);//Expected Solution:0
 
     // ************************ Example GGGA*********************
 

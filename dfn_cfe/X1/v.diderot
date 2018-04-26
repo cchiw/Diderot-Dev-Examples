@@ -2,9 +2,9 @@ int outSize = 10;
 //define variable
 vec2 x=[1,1];
 //define cfexpnomial ofield
-ofield#2(2)[2] V = cfexp(x, x);
+field#2(2)[2] V = cfexp(x, x);
 //apply computations to ofield
-ofield#1(2)[2,2] GV = ∇⊗V;
+field#1(2)[2,2] GV = ∇⊗V;
 
 strand sample (int ui, int vi) {
     real uu = lerp(0.0, 1.0, -0.5, real(ui), real(outSize)-0.5);

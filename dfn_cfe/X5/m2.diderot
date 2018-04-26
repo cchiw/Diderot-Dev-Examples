@@ -2,8 +2,8 @@
 real rad=8;
 vec2 v=[1,3];
 vec2 x= [1,1];
-ofield#2(2)[2] f = cfexp(rad*v+x,x,v,rad);
-ofield#1(2)[2,2] Df = ∇⊗f;
+field#2(2)[2] f = cfexp(rad*v+x,x,v,rad);
+field#1(2)[2,2] Df = ∇⊗f;
 
 int outSize = 10;
 strand sample (int ui, int vi) {

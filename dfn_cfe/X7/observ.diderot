@@ -7,7 +7,7 @@ tensor [2, 2]F0 = [[-x - 5, x + 2], [-4*x - 2, 3*x + 5]];
 tensor []F1 = -3*x - 2;
 
 tensor []G = (det(F0))*(F1);
-ofield#2(1)[]GCFE = cfexp(G,x);
+field#2(1)[]GCFE = cfexp(G,x);
 int length =7;
 strand f(int i) {
 

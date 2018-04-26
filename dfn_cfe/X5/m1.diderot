@@ -1,8 +1,8 @@
 //Takes two input variables
 real rad=8;
 vec2 v=[1,3];
-ofield#2(2)[2] g = cfexp(rad*v,v,rad);
-ofield#1(2)[2,2] Dg = ∇⊗g;
+field#2(2)[2] g = cfexp(rad*v,v,rad);
+field#1(2)[2,2] Dg = ∇⊗g;
 
 
 

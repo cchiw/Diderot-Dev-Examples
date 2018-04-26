@@ -4,7 +4,7 @@ vec2 x=[1,1];
 real rad = 0.1;
 
 
-ofield#1(2)[] C = cfexp((1/(|x|/rad))*(1 - (|x|/rad))^3,x);
+field#1(2)[] C = cfexp((1/(|x|/rad))*(1 - (|x|/rad))^3,x);
 
 
 strand sample (int ui, int vi) {
