@@ -52,7 +52,8 @@ The distinction between G, H, and I is that differentiation is applied in respec
 	* inst(): field#k(d)[α] × tensor[β] · · · → tensor[α]
 * Text: see [Doc]
 * Issues:  
-	* Need to define/initiate all variables before cfexp() is called.    
+	* Need to define all variables and initiate with unique values before cfexp() is called. 
+	* Variables are also a tensor type? Retink that?
 	* Field type doesn’t describe types for multiple inputs, need to change typechecker, Remove k-continuity 
 * Testing:
 	* DATm tested cfexp in combination with all tensor operators. Sympy does not support product rule so thatw wasn't as agressively tested (examples included use differentiation). 
@@ -75,4 +76,4 @@ The distinction between G, H, and I is that differentiation is applied in respec
 * Expression is a large polynomial. Afterwards multiple operators applied to it : X8, X9	
 ## Note to future developers
 * Everything inside CFExp needs to be written in EIN (because of substitution process)
-* Should every expression be a tensor type? Should they support the application of field operators. Type Checking issue?field#3(2)[]GCFE = cfexp(compose(F0,F1*0.1),x,y);
+
