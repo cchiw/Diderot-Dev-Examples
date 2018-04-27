@@ -1,0 +1,20 @@
+bool g= true;
+real x = 8;
+real y = 8;
+
+field#3(1)[] Remy = cfexp(x,x);
+field#3(1)[] Tashi= cfexp(8,x);
+//field#2(1)[] F = Tashi if (g) else Remy;
+field#3(1)[] F = Remy if (g) else Tashi;
+
+
+int outSize = 10;
+strand sample (int ui, int vi) {
+
+    output real out = F(9);
+    update {
+             stabilize;
+    }
+}
+
+initially [ sample(ui, vi) | vi in 0..(outSize-1), ui in 0..(outSize-1) ];
