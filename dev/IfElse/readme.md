@@ -10,18 +10,18 @@ Apply if then and else on fields
 bool g =true;
 field#k(d)[α] G = F0 if (g) else F1;
 ```
-> **Note:** 
+> **Note:** Still under development and has not be throughly tested
 ## Details
 * Branch:   [Diderot-Dev](https://github.com/cchiw/Diderot-Dev) 
 * Syntax: "if else"  
-    -  field#k(d)[α]× boolean×field#k(d)[α] → field#k(d)[α]
-* Notes :
-    - Still under development
-    - Created new *simple* expressions in the compiler
-    - boolean is constant variable
-* Issues for compiler :
-    - Fields can't be defined inside update? Swap operator is better
-
+    -  field#k(d)[α] × boolean × field#k(d)[α] → field#k(d)[α]
+* Issues :
+    - Conditional expression can't be an input (yet)
+    - Needs to be run with "--dev"
+* Issues not isolated to this function :
+    - Fields can't be defined inside update 
+* Development:
+    - Created new *simple* expressions in the compiler, perhaps not a long term solution
 ## Directory Organization
 * Examples
     - Basic Example  : X1
