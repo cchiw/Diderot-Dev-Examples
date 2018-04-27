@@ -1,17 +1,17 @@
 bool g= true;
-real x = 8;
-real y = 8;
+real x = 8.8;
 
-field#3(1)[] Remy = cfexp(x,x);
-field#3(1)[] Tashi= cfexp(8*x,x);
-//field#2(1)[] F = Tashi if (g) else Remy;
-field#3(1)[] F = Remy if (g) else Tashi;
+
+field#3(1)[] Remy = cfexp(3*x,x);
+field#3(1)[] Tashi= cfexp(4*x*x,x);
+field#3(1)[] F = Tashi if (g) else Remy;
 
 
 int outSize = 10;
 strand sample (int ui, int vi) {
 
-    output real out = F(9);
+    //output real out = ∇F(9);
+    output real out = inst(∇F,9);
     update {
              stabilize;
     }
