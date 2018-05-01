@@ -7,7 +7,7 @@ It is natural to define a function with an expression: F(x) = x²
 In the surface language we added function cfexp() where the first argument exp is an expression and the second x is a variable.
  ``` 
 tensor [] exp = x*x;  
-field#2(2)[] F = cfexp(exp,x);//define F with variable x 
+field#k(1)[] F = cfexp(exp,x);//define F with variable x 
 tensor[2] v = [3,7];  
 tensor[] outF = inst(F,v);//evaluate F with argument v
  ```
@@ -38,9 +38,9 @@ field#k(d)[] I = cfexp(exp,b);
  ```
 The distinction between G, H, and I is that differentiation is applied in respect to either one or two variables.
 
-∇G<sub>a</sub>= ∇ a +b               
+∇G<sub>a</sub>= ∇ a              
 ∇H<sub>ab</sub>= ∇ a +∇ b                       
-∇I<sub>b</sub>=   a +∇ b
+∇I<sub>b</sub>=   ∇ b
 
 ## Details
 * Branch:   [Diderot-Dev](https://github.com/cchiw/Diderot-Dev) 
