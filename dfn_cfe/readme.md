@@ -30,7 +30,7 @@ A function can be defined with multiple variables.
                     F (a, b) = a + b 
 and similarly a cfexp can be defined with multiple variables
   ```
-real[] a = 1; real b = 7;  
+real a = 1; real b = 7;  
 tensor [] exp = a+b;  
 field#k(d)[] G = cfexp(exp,a); 
 field#k(d)[] H = cfexp(exp,a,b); 
