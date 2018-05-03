@@ -1,0 +1,46 @@
+real s = 10.1;
+real A = 11.1;
+real B = 22.2;
+real exp = s*((A*A)-B);
+//issue when it's 1-2 or 2-1 can't tell
+
+//field#1(1)[]G =  (cfexpTwo(s,B, exp,A));
+//s*((A*A)-B)
+// [-6, -4, 2, 12]
+
+//field#1(1)[]G = ∇ (cfexpTwo(s,B, exp,A));
+// s*((A*A)-B)
+// s*2*a
+//[0 4 8 12]
+
+
+//field#1(1)[]G = ∇ (cfexpTwo(s,A, exp,B));
+// s*((A*A)-B)
+// -s
+//-2
+
+
+//field#1(1)[]G = ∇(cfexpOne(s,exp,A,B));
+//s*(2*A -1)
+//[10, 10, 10,10]
+
+
+field#1(1)[]G = ∇(cfexpOne(s,A*(s+B),A,B));
+//A*s+A*B
+//∇A*s+∇(A*B)
+//∇A*s+A*∇(B)+B*∇(A)
+//2+3+i
+
+
+int length = 3;
+strand f(int i) {
+	output tensor [] out = 0.0;
+	    update {
+            real ss = 2;
+            real tt = 3;
+
+            out = inst(G,ss, tt, i);
+        stabilize;
+    }
+}
+initially [ f(i) | i in 0..length];
