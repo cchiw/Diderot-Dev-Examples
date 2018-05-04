@@ -11,6 +11,7 @@ field#k(1)[] F = cfexp(exp,x);//define F with variable x
 tensor[2] v = [3,7];  
 tensor[] outF = inst(F,v);//evaluate F with argument v
  ```
+ 	> *Note* For this feature continuity k and dimension is unchecked and unuseful. New syntax being developed.
 We commonly refer to the right-hand-side to variable F as a cfexp (closed-form expression). The cfe is created with variable x, but is actually evaluated with v. 
 
               outF= F(v)=    v[0]²+  v[1]² 
@@ -36,11 +37,40 @@ field#k(d)[] G = cfexp(exp,a);
 field#k(d)[] H = cfexp(exp,a,b); 
 field#k(d)[] I = cfexp(exp,b);
  ```
-The distinction between G, H, and I is that differentiation is applied in respect to either one or two variables.
+While ``exp`` uses two variables we only probe the fields G, H, and I with the number of variables used in the field definition.
+``` 
+real x= 3; real y =4;
+tensor[] GP = G(x); 
+tensor[] HP = H(x,y); 
+tensor[] IP = I(y);
+ ```
+	 
+The distinction between G, H, and I is that differentiation is applied in respect to either one or two variables. 
+∇<sub>a</sub>G= ∇ a              
+∇<sub>ab</sub> H= ∇ a +∇ b                       
+∇<sub>b</sub> I=   ∇ b
 
-∇G<sub>a</sub>= ∇ a              
-∇H<sub>ab</sub>= ∇ a +∇ b                       
-∇I<sub>b</sub>=   ∇ b
+ 
+Note that with ``cfexp`` all variables are treated as fields. 
+To provide more options we created  ``cfexpOne`` and ``cfexpTwo``, which both take three variables.
+With ``cfexpOne`` the first variable is treated as a tensor. 
+With ``cfexpTwo`` the first two variables are treated as a tensor. 
+
+Here is a more interesting example:
+                    F (s, a, b) = s*r*(A²-B) 
+  ```
+real r = 2; real s=...
+tensor [] exp = s*r*(A²-B);  
+field#k+1(d)[] J =   cfexpTwo(exp, s, B, A)); 
+field#k(d)[] K = ∇(cfexpTwo(exp, s ,B, A)); 
+field#k(d)[] L = ∇(cfexpTwo(exp, s, A, B));
+field#k(d)[] M = ∇(cfexpOne(exp, s, A, B));
+ ```
+The code does the following computations:  
+J = exp = s*r*(A²-B)              
+K = ∇<sub>A</sub> exp = ∇<sub>A</sub>  s*r*(A²-B) = s*r*2*a                      
+L = ∇<sub>B</sub> exp = ∇<sub>B</sub>  s*r*(A²-B)=   -s*r       
+M = ∇<sub>AB</sub> exp = ∇<sub>AB</sub> s*r*(A²-B)= s*r*(2*A -1)
 
 ## Details
 * Branch:   [Diderot-Dev](https://github.com/cchiw/Diderot-Dev) 
@@ -74,6 +104,7 @@ The distinction between G, H, and I is that differentiation is applied in respec
 	*  [f<sub>abc</sub> = a³bc²] : X5/m3.diderot
 * Expression had multiple tensor operstors applied to it : X7
 * Expression is a large polynomial. Afterwards multiple operators applied to it : X8, X9	
+* Input variables are treated as tensors and fields  : X10	
 ## Note to future developers
 * Everything inside CFExp needs to be written in EIN (because of substitution process)
 
