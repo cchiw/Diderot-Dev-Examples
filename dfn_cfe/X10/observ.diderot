@@ -1,31 +1,33 @@
+
 real s = 10.1;
+real r = 2;
 real A = 11.1;
 real B = 22.2;
-real exp = s*((A*A)-B);
+real exp = r*s*((A*A)-B);
 //issue when it's 1-2 or 2-1 can't tell
 
-//field#1(1)[]G =  (cfexpTwo(s,B, exp,A));
+//field#1(1)[]G =  (cfexpTwo(exp, s,B, A));
 //s*((A*A)-B)
 // [-6, -4, 2, 12]
 
-//field#1(1)[]G = ∇ (cfexpTwo(s,B, exp,A));
+//field#1(1)[]G = ∇ (cfexpTwo(exp,s,B,A));
 // s*((A*A)-B)
 // s*2*a
 //[0 4 8 12]
 
 
-//field#1(1)[]G = ∇ (cfexpTwo(s,A, exp,B));
+//field#1(1)[]G = ∇ (cfexpTwo(exp,s,A,B));
 // s*((A*A)-B)
 // -s
 //-2
 
 
-//field#1(1)[]G = ∇(cfexpOne(s,exp,A,B));
+field#1(1)[]G = ∇(cfexpOne(exp,s,A,B));
 //s*(2*A -1)
 //[10, 10, 10,10]
 
 
-field#1(1)[]G = ∇(cfexpOne(s,A*(s+B),A,B));
+//field#1(1)[]G = ∇(cfexpOne(A*(s+B),s,A,B));
 //A*s+A*B
 //∇A*s+∇(A*B)
 //∇A*s+A*∇(B)+B*∇(A)
