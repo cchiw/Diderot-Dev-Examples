@@ -54,7 +54,7 @@ Differentiation is applied in respect to all the field variables:
 There are two ways to define a field with a closed form expression:``cfexp()`` and ``expression()``.
 The difference between ``cfexp()`` and ``expression()`` is that the variable arguments are treated as type tty or fty, respectively. 
 The derivative of a tty variable is 0, while a fty variable is treated like a field.
-With the function ``expression()`` individual variables can be set to fty, regardless of their order in the field definition.
+With the function ``setDiffVar()`` individual variables can be set to fty, regardless of their order in the field definition.
 
 Here is an example:
                     F (s, a, b) = s*(A²-B) 
@@ -72,7 +72,7 @@ L = ∇<sub>B</sub> exp = ∇<sub>B</sub>  s*(A²-B)=   -s
 M = ∇<sub>AB</sub> exp = ∇<sub>AB</sub> s*(A²-B)= s*(2*A -1)
 
 
-As a shorthand functions `cfexpOne()` sets the first variable to tty and next two as fty.   
+As a shorthand function `cfexpOne()` sets the first variable to tty and next two as fty.   
 ```
 field#k(d)[]M = ∇(cfexpOne(exp, s, A, B));  
 // The above is the same as below   
