@@ -12,26 +12,23 @@ real r = 2;
 real A = 11.1;
 real B = 22.2;
 
-real exp = s*((A*A)-B);
-field#1(1)[]F =  expression(exp, s, A, B);
+real exp = A*(s+B);
+field#1(1)[]F =  expression(exp,s,A,B);
+field#1(1)[]G =  setDiffVar(setDiffVar(F, A),B);
+//field#1(1)[]G =   cfexpOne(exp,s,A,B);
+//A*s+A*B
+//∇A*s+∇(A*B)
+//∇A*s+A*∇(B)+B*∇(A)
+//expected output: 2+3+i [5,6,7,8]
 
-//field#1(1)[]G = setDiffVar(F,A);
-//expected output:  s*2*a = 12
 
-
-//field#1(1)[]G = setDiffVar(F,B);
-//expected output:  -s = -2
-
-
-field#1(1)[]G = setDiffVar(setDiffVar(F,A),B);
-//field#1(1)[]G =  cfexpOne(exp, s, A, B);
-//s*(2*A -1)
-//expected output: [10, 10, 10,10]
+//dev notes. as we set different fields as variables we had to make sure we maintained order
+//instead made (id,inputTy) list
 
 
 int length = 3;
 strand f(int i) {
-output tensor [] out = 0.0;
+    output tensor [] out = 0.0;
     update {
         real ss = 2;
         real aa = 3;
