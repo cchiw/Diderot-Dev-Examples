@@ -1,0 +1,66 @@
+image(2)[2]A = image("inputfile0.nrrd");
+//image(2)[2]B = image("inputfile1.nrrd");
+
+//field#2(2)[2]G = A ⊛ c4hexic;
+//field#2(2)[2]G = A ⊛ bspln3;
+//tensor[2] f=λ(t0[2],t1[2])<(T0_{i0}) - (T1_{i0})>_{2}
+
+//vY_=TensorIndex<tensor[2],[1]>(f04EB)
+//kernY_=BuildPos<3>(vY_04F7)
+//kevalY_d0_=EvalKernel<6,c4hexic,0>(kernY_04F8)
+
+//vX_=TensorIndex<tensor[2],[0]>(f04EB)
+//kernX_=BuildPos<3>(vX_04FA)
+//kevalX_d0_=EvalKernel<6,c4hexic,0>(kernX_04FB
+
+// ->:tensor[2] out=λ(V0(2)[2],H1,T2[2],t3[2 2],V4(2)[2],H5,H6)<ΣΣ(i1)(i2)((V4_{i0}(3)[i1,i2] * H5(1) * H6(2)))Σ(i1)(i2)>_{2}-
+//	0_image(IMAGE2D<float[2]>) A, 1_kernel _t, 2_tensor[2] pos,
+// 3_tensor[2,2] P, 4_tensor[2,6,6] ldvox,
+//5_tensor[6] kevalX_d0_, 6_tensor[6] kevalY_d0_,
+//<ΣΣ(i1=~2..3)(i2=~2..3)((V4_{i0}(3)[i1,i2] * H5(1) * H6(2)))Σ(i1=~2..3)(i2=~2..3)>_{2}
+
+//bspln3
+//tensor[2]out{0}=λ(V0(2)[2],H1,T2[2],t3[2 2],V4(2)[2],H5,H6)<ΣΣ(i1=~1..2)(i2=~1..2)((V4_{i0}(2)[i1,i2] * H5(1) * H6(2)))Σ(i1=~1..2)(i2=~1..2)>_{2}image(IMAGE2D<float[2]>)A{0}
+
+
+field#2(2)[2]G = A ⊛ KRNS(c4hexic,bspln3);//[ly,lx]//[4,6].
+int length =7;
+strand f(int i) {
+
+	output tensor [2] out =  [0.0,0.0];
+	    update {
+
+		tensor [2] pos=[0,0];
+		if(i==0){
+			pos = ([0.08, 0.0]);
+		}
+		else if(i==1){
+			pos = ([0.08, 0.0]);
+		}
+		else if(i==2){
+			pos = ([-0.38, -0.04]);
+		}
+		else if(i==3){
+			pos = ([0.01, -0.27]);
+		}
+		else if(i==4){
+			pos = ([-0.26, -0.29]);
+		}
+		else if(i==5){
+			pos = ([-0.33, 0.04]);
+		}
+		else if(i==6){
+			pos = ([-0.02, -0.26]);
+		}
+		else if(i==7){
+			pos = ([-0.39, 0.28]);
+		}
+
+	if(inside(pos,G)){
+            out = (G)(pos);
+	}
+	 else{out =  [7.2,7.2];}
+        stabilize;
+    }
+}
+initially [ f(i) | i in 0..length];
