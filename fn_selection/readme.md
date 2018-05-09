@@ -26,6 +26,8 @@ input int selection_id;
 * Potential issue:  The value of the *Selection id* is clamped. If the first argument is id=-7 the id is set to 1 instead of throwing an error 
 ## Directory Organization
 Examples:
-    - Global Initialization of the *selection id* in a shaded v.r. program (dvr)  : X1
-    - The *selection id* is set in the update method  : X2
+
+    - Global Initialization of the *selection id* in a shaded v.r. program (dvr)  : X1 
+    
+    - The *selection id* is set in the update method  : X2 
 
