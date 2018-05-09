@@ -231,14 +231,15 @@ tensor[] out = F(pos);
 * Examples directory: [fn_getCell](https://github.com/cchiw/latte/tree/master/fn_getCell "fn_getCell")
 
 # B.Tools
-## B1. DATm: Diderot's Automated Testing
-
+## B1.  DATm: Diderot's Automated testing 
+### Details
 * Branch:   [Diderot-Dev](https://github.com/cchiw/Diderot-Dev) 
 * Use: Test operators on and between tensors/image data based on correctness
 * Tool: DATm:Diderot’s Automated Testing tool  
 * Text:  [ICSE-AST paper](https://www.researchgate.net/publication/317836930_DATm_Diderot%27s_Automated_Testing_Model) and Testing chapter in [Dissertation](http://pl.cs.uchicago.edu/documents/chiw_dissertation.pdf)
 	 > Testing environment variables in Pg 102 
 	> Adding a new operator in Pg 113 
+### User Guide
 ### Getting Started
 Quick instructions
  1. Checkout github directory for [DATm](https://github.com/cchiw/DATm.git)
@@ -257,13 +258,17 @@ Tell DATm the name of branch being tested. Some branch names are built in(vis15,
 	#s_branch = branch_chiw17
 	#s_branch  = branch_other
 	```
-or comment in ``branch_other`` and set the variable to a string in *shared/base_constants.py*
+	or comment in ``branch_other`` and set the variable to a string in *shared/base_constants.py*
     
 * **Complexity** (s_layer):
 The core computation in a Diderot test program can be simple or more complicated. s_layer indicates the number of operators to apply in a core computation. That number can be 1, 2, or 3.
 
 *  **type of field**(c_pde_test) :
-DATm test tensors and fields. The fields can either be made by **nrrd** files or by Firedrake (outside tool to solve **PDE** solutions). For an original Diderot Field types created with nrrd, set variable  ```c_pde_test``` to False in *Frame*. For PDE solutions set the variable to true and change the path in fem/makedefs.gmk.
+DATm test tensors and fields. The fields can either be made by **nrrd** files or by Firedrake (outside tool to solve **PDE** solutions). For an original Diderot Field types created with nrrd, comment in ``s_field = field_conv``  in the *Frame*. For PDE solutions comment in ``s_field = field_pde`` and change the path in fem/makedefs.gmk.
+	```
+	s_field = field_conv 
+	#s_field = field_pde
+	```
 
 * **type of search** (s_random_range)
 For an **exhaustive testing** approach, set variable  ```s_random_range```  to 0 in *Frame*. For **randomized testing** set the variable to x  where the probability of a single test case being generated is  1  in x+1.
