@@ -25,15 +25,19 @@ Tell DATm the name of branch being tested. Some branch names are built in(vis15,
 	#s_branch = branch_chiw17
 	#s_branch  = branch_other
 	```
-or comment in ``branch_other`` and set the variable to a string in *shared/base_constants.py*
+	or comment in ``branch_other`` and set the variable to a string in *shared/base_constants.py*
     
 * **Complexity** (s_layer):
 The core computation in a Diderot test program can be simple or more complicated. s_layer indicates the number of operators to apply in a core computation. That number can be 1, 2, or 3.
 
 *  **type of field**(c_pde_test) :
-DATm test tensors and fields. The fields can either be made by **nrrd** files or by Firedrake (outside tool to solve **PDE** solutions). For an original Diderot Field types created with nrrd, set variable  ```c_pde_test``` to False in *Frame*. For PDE solutions set the variable to true and change the path in fem/makedefs.gmk.
+DATm test tensors and fields. The fields can either be made by **nrrd** files or by Firedrake (outside tool to solve **PDE** solutions). For an original Diderot Field types created with nrrd, comment in ``s_field = field_conv``  in the *Frame*. For PDE solutions comment in ``s_field = field_pde`` and change the path in fem/makedefs.gmk.
+	```
+	s_field = field_conv 
+	#s_field = field_pde
+	```
 
-**type of search** (s_random_range)
+* **type of search** (s_random_range)
 For an **exhaustive testing** approach, set variable  ```s_random_range```  to 0 in *Frame*. For **randomized testing** set the variable to x  where the probability of a single test case being generated is  1  in x+1.
 
 * **order of coefficients**(s_coeff_style) :
