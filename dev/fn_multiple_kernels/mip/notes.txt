@@ -1,0 +1,11 @@
+image
+B5B== Type:tensor[4] realv110_{0} realv111_{0} realv112_{0} realv113_{0}
+ v1_0B5C== Type:tensor[2,4] tensor[4]v10_{0} tensor[4]v11_{0}
+v_0B5D== Type:tensor[2,2,4] tensor[2,4]v0_{0} tensor[2,4]v1
+
+ein expand
+ojectLast<tensor[2,2,4],[0,0]> :  tensor[2,2,4]ldvox{0}
+			        tensor[4]projIx0-1T{0}==ProjectLast<tensor[2,2,4],[0,
+
+
+[2,4,2]

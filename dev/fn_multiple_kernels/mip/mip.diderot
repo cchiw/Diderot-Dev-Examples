@@ -184,8 +184,8 @@ input bool inSphere ("only render samples inside a unit sphere") = false;
 
 //field#0(3)[] F = vol ⊛ KRNS(ctmr,tent,tent); //works
 //field#0(3)[] F = vol ⊛ KRNS(tent,ctmr,tent); //field-to-low looks fine (but seg issue)
-//field#0(3)[] F = vol ⊛ KRNS(tent,tent,ctmr);   // ^
-field#0(3)[] F = vol ⊛ KRNS(bspln3,ctmr,ctmr);
+field#0(3)[] F = vol ⊛ KRNS(tent,tent,ctmr);   // ^
+//field#0(3)[] F = vol ⊛ KRNS(bspln3,ctmr,ctmr);
 
 // (boilerplate) computing ray parameters and view-space basis
 vec3 camN = normalize(camAt - camEye);  // N: away from eye

@@ -1,0 +1,20 @@
+//radial basis function defnition
+real r= 7;
+int  x =5;
+real exp = r*r*x;
+field#3(1)[] F = cfexp(exp,r, x);
+
+//sequence of points
+int{4} X= {3,9,2,1};
+
+// ∇;
+
+int outSize = 10;
+strand sample (int R) {
+    output tensor[] out = instS(F,real(R),X);
+    update {
+             stabilize;
+    }
+}
+
+initially [ sample(vi) | vi in 0..(outSize-1)];
