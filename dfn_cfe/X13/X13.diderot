@@ -1,0 +1,26 @@
+
+
+
+//define cfexpnomial ofield
+field#2(3)[3] V = c4hexic⊛  image("../../data/v3a.nrrd");
+//field(3)[3] V1 (y) = c4hexic⊛  image("../../data/v3a.nrrd");
+//field#2(3)[3] V2(y) = c4hexic⊛  image("../../data/v3a.nrrd");
+//field(3)[3] V3(vec3 y) = y;
+field(3)[3] V4(y) =c4hexic⊛  image("../../data/v3a.nrrd");
+
+int outSize = 10;
+strand sample (int ui, int vi) {
+    vec2 pos = [real(ui),real(vi)];
+
+
+    //output tensor[2] out = inst(V,pos);
+    output real t=3;
+
+
+
+    update {
+             stabilize;
+    }
+}
+
+initially [ sample(ui, vi) | vi in 0..(outSize-1), ui in 0..(outSize-1) ];
