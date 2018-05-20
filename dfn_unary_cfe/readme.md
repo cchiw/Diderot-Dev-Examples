@@ -96,21 +96,15 @@ field#k(d)[]M= ∇(setDiffVar(setDiffVar(F,A),B));
 
 ## Directory Organization
 * Base Case Examples
-	*  [f<sub>v</sub> = v] : X1/v.diderot, 
+	*  [f<sub>v</sub> = v] : X1, 
 	* [f<sub>v</sub> = v • v] : X1/vv.diderot,
 	*  [f<sub>v</sub> = (v • v) ∗ v] : X1/vvv.diderot, and 
 	* [f<sub>s</sub> = s³] : X2/sss.diderot
+	* [f<sub>v</sub> = v • v] : X1/vv.diderot,
+	* [f<sub>v</sub> =  ∇• v] Divergence : X7
 * Multiple variables in core computation and differentiate in respect to one variable
 	*  [f<sub>x</sub> =(1−|x|)⁴]Sphere: X3/sphere.diderot,
-	*  [f<sub>x</sub> =(x−cutPos)•curNorm] clip: X3/clip.diderot,
-	*  [f<sub>x</sub>= ( 1 ∗ (1 − |x| ))³] Circle : X4/circle.diderot, and 
+	*  [f<sub>x</sub> =(x−cutPos)•curNorm] clip: X3
+	*  [f<sub>x</sub>= ( 1 ∗ (1 − |x| ))³] Circle : X4, and 
 	* [f<sub>x</sub> = (1 − |x|/y)⁴	] Enr : X4/enr.diderot
-* Multiple variables are in the core computation and we differentiate in respect to multiple variables  
-	* [f<sub>sv</sub> = s ∗ v] : X5/m1.diderot, 
-	* [f<sub>svx</sub> = s ∗ v + x] : X5/m2.diderot, and
-	*  [f<sub>abc</sub> = a³bc²] : X5/m3.diderot
-* Input variables are treated as tensors and fields  : X10, X11	
-## Note to future developers
-* Everything inside CFExp needs to be written in EIN (because of substitution process)
-* DATm tested cfexp in combination with all tensor operators. Sympy does not support product rule so that wasn't as agressively tested 
-* Tensor variable argument is the pair (param_id, tty/fty) 
+
