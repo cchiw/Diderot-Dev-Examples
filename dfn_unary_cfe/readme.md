@@ -1,98 +1,34 @@
 # Field Definition: Closed Form expression
 
-Users can define closed form expressions. The expression can include tensor operators and variables.  Differentiation is applied by differentiating in respect to some variable(s).
+Users can define closed form expressions. The expression can include tensor operators and variables.  Differentiation is applied by differentiating in respect to one variable.
 	
 ## In Action
 It is natural to define a function with an expression: F(x) = x²
-In the surface language we added function cfexp() where the first argument exp is an expression and the second x is a variable.
- ``` 
-tensor [] exp = x*x;  
-field#k(1)[] F = cfexp(exp,x);//define F with variable x 
+ ```  
+field#k(2)[] F(x) = x*x;
 tensor[2] v = [3,7];  
-tensor[] outF = inst(F,v);//evaluate F with argument v
+tensor[] out = F(v);//evaluate F with argument v
  ```
- 	> *Note* For this feature continuity k and dimension is unchecked and unuseful. New syntax being developed.
-We commonly refer to the right-hand-side to variable F as a cfexp (closed-form expression). The cfe is created with variable x, but is actually evaluated with v. 
+ 	> *Note* variable x is a vector of length d, where d is the dimension of the field.
 
-              outF= F(v)=    v[0]²+  v[1]² 
+              out= F(v)=    v[0]²+  v[1]² 
 
 The user can apply other tensor and field operators on the cfexp including differentiation.
   ```
-field #1(2)[2] GF = ∇F; 
-tensor[] outGF = inst(GF,v);
+tensor[2] out = ∇F(v);
  ```
 The differentiation of the cfexp is computed in respect to the variable v. We illustrate the expected structure below:      
 
-   outGF=  ∇F(v)
+   out=  ∇F(v)
    =[2*v[0],2*v[1]]
 
-
-A function can be defined with multiple variables.
-                    F (a, b) = a + b 
-and similarly a closed-form expression can be defined with multiple variables
-  ```
-real a = 1; real b = 7;  
-tensor [] exp = a+b;  
-field#k(d)[] G = cfexp(exp,a); 
-field#k(d)[] H = cfexp(exp,a,b); 
-field#k(d)[] I = cfexp(exp,b);
- ```
-While ``exp`` uses two variables we only probe the fields G, H, and I with the number of variables used in the field definition.
-``` 
-real x= 3; real y =4;
-tensor[] GP = G(x); 
-tensor[] HP = H(x,y); 
-tensor[] IP = I(y);
- ```
-	
-Differentiation is applied in respect to all the field variables: 
-∇ G= ∇ a              
-∇ H= ∇ a +∇ b                       
-∇ I=   ∇ b
-
-
-There are two ways to define a field with a closed form expression:``cfexp()`` and ``expression()``.
-The difference between ``cfexp()`` and ``expression()`` is that the variable arguments are treated as type tty or fty, respectively. 
-The derivative of a tty variable is 0, while a fty variable is treated like a field.
-With the function ``setDiffVar()`` individual variables can be set to fty, regardless of their order in the field definition.
-
-Here is an example:
-                    F (s, a, b) = s*(A²-B) 
-  ```
-tensor [] exp = s*(A²-B);  
-field#k+1(d)[] F =   expression(exp, s, A B);  
-field#k(d)[] K = ∇(setDiffVar(F,A));   //Takes derivative in respect to A
-field#k(d)[] L = ∇(setDiffVar(F,B));   //Takes derivative in respect to B
-field#k(d)[] M = ∇(setDiffVar(setDiffVar(F,A),B));  //Takes derivative in respect to A and B 
- ```
-The code does the following computations:  
-F = exp = s*(A²-B)              
-K = ∇<sub>A</sub> exp = ∇<sub>A</sub>  s*(A²-B) = s*2*a                      
-L = ∇<sub>B</sub> exp = ∇<sub>B</sub>  s*(A²-B)=   -s       
-M = ∇<sub>AB</sub> exp = ∇<sub>AB</sub> s*(A²-B)= s*(2*A -1)
-
-
-As a shorthand function `cfexpOne()` sets the first variable to tty and next two as fty.   
-```
-field#k(d)[]M = ∇(cfexpOne(exp, s, A, B));  
-// The above is the same as below   
-field#k(d)[]M= ∇(setDiffVar(setDiffVar(F,A),B));   
-```
 ## Details
 * Branch:   [Diderot-Dev](https://github.com/cchiw/Diderot-Dev) 
-* Syntax: “cfexp()"
-	- Declare a closed form expression with cfexp(exp,v) and evaluate it with “inst()”
-	* “exp” is the core computation that includes operators on and between variables 
-	* “v” is the variable we differentiate in respect to. We accept 1-3 “v” terms  
-	* cfexp(): tensor[α] × tensor[β] . . . → field#k(d)[α]  
-	* expression(): tensor[α] × tensor[β1]× tensor[β2]× tensor[β3] → field#k(d)[α]  
-	* cfexpOne():   tensor[α] × tensor[β1]× tensor[β2]× tensor[β3] → field#k(d)[α]  
-	* inst(): field#k(d)[α] × tensor[β] · · · → tensor[α]
+* Syntax: “field#k(d)[alpha](var) = expression"
+	* “exp” is the core computation that includes operators on variable var 
+	* “var” is a vector of length d
 * Text: see [Doc]
-* Issues:  
-	* Need to define all variables and initiate with unique values before cfexp() is called. 
-	* Variables are also a tensor type? Retink that?
-	* Field type doesn’t describe types for multiple inputs, need to change typechecker, Remove k-continuity 
+* Issues:  Very limiting. See other directory 
 
 ## Directory Organization
 * Base Case Examples
@@ -107,4 +43,4 @@ field#k(d)[]M= ∇(setDiffVar(setDiffVar(F,A),B));
 	*  [f<sub>x</sub> =(x−cutPos)•curNorm] clip: X3
 	*  [f<sub>x</sub>= ( 1 ∗ (1 − |x| ))³] Circle : X4, and 
 	* [f<sub>x</sub> = (1 − |x|/y)⁴	] Enr : X4/enr.diderot
-
+	* X5
