@@ -95,16 +95,7 @@ field#k(d)[]M= ∇(setDiffVar(setDiffVar(F,A),B));
 	* Field type doesn’t describe types for multiple inputs, need to change typechecker, Remove k-continuity 
 
 ## Directory Organization
-* Base Case Examples
-	*  [f<sub>v</sub> = v] : X1/v.diderot, 
-	* [f<sub>v</sub> = v • v] : X1/vv.diderot,
-	*  [f<sub>v</sub> = (v • v) ∗ v] : X1/vvv.diderot, and 
-	* [f<sub>s</sub> = s³] : X2/sss.diderot
-* Multiple variables in core computation and differentiate in respect to one variable
-	*  [f<sub>x</sub> =(1−|x|)⁴]Sphere: X3/sphere.diderot,
-	*  [f<sub>x</sub> =(x−cutPos)•curNorm] clip: X3/clip.diderot,
-	*  [f<sub>x</sub>= ( 1 ∗ (1 − |x| ))³] Circle : X4/circle.diderot, and 
-	* [f<sub>x</sub> = (1 − |x|/y)⁴	] Enr : X4/enr.diderot
+* One input variable that has to be vector the length of the field dimension shown in directory : X1-X4, X6
 * Multiple variables are in the core computation and we differentiate in respect to multiple variables  
 	* [f<sub>sv</sub> = s ∗ v] : X5/m1.diderot, 
 	* [f<sub>svx</sub> = s ∗ v + x] : X5/m2.diderot, and
