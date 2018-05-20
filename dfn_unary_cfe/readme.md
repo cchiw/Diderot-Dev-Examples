@@ -8,7 +8,8 @@ It is natural to define a function with a closed form expression: F(x) = 7٭x. W
 field#k(d)[d] F(x) = 7٭x;
 tensor[d] v =...;
 tensor[d] out = F(v);
-tensor[d,d] outD = ∇⊗F(v)
+tensor[d,d] jacob = ∇⊗F(v)
+tensor[] divergence = ∇•F(v)
  ```
 > *Note* that variable x is a vector of length d, where d is the dimension of the field.
 
@@ -21,6 +22,10 @@ If v = [3,5] then F(v) =  [21, 35]
 The user can apply other tensor and field operators on the field term `F` including differentiation. The Jacobian of our field `F` creates the following matrix.
 
 ∇⊗F(x) ⇨∇⊗(7٭x) ⇨ [[7,0],[0,7]]
+
+and the divergence creates the following
+
+∇•F(x) ⇨∇•(7٭x) ⇨ 14
 
 Differentiation is applied to the entire expression on the right hand side of the field definition `F` and in respect to the variable `x`. Internally, The tensor variable `x` is expanded into it's components and  the differentiation operator is applied to the components.
 
