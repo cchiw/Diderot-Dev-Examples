@@ -1,11 +1,10 @@
 #version 2.0
 
 int outSize = 10;
-vec2 x=[1,1];
 real rad = 0.1;
 
 
-field#1(2)[] C = cfexp((1/(|x|/rad))*(1 - (|x|/rad))^3,x);
+field#1(2)[] C (x)=  (1/(|x|/rad))*(1 - (|x|/rad))^3;
 
 
 strand sample (int ui, int vi) {
@@ -15,22 +14,23 @@ strand sample (int ui, int vi) {
 
     // ************************ Example C **********************
     //output tensor [] out  = (1/(|pos|/rad))*(1 - (|pos|/rad))^3;
-    //output tensor[] out=  inst(C,pos);
+    //output tensor[] out=  C(pos);
     //Expected Solution: 0.035533886 -0.12412799 -1.4592385 -4.6105556 -9.6960573 -16.750887
 
-    //output tensor [] out  = (1/(|pos|/rad))*(1 - (|pos|/rad))^3- inst(C,pos);//Expected Solution:0
-    //output tensor [] out  =  inst(C,pos) -((1/(|pos|/rad))*(1 - (|pos|/rad))^3);
+    //output tensor [] out  = (1/(|pos|/rad))*(1 - (|pos|/rad))^3- C(,pos);//Expected Solution:0
+    //output tensor [] out  =  C(pos) -((1/(|pos|/rad))*(1 - (|pos|/rad))^3);
 
 
     // ************************ Example Del C **********************
     // output tensor [2] out  = (3 - 1/((|pos|/rad)^2) - 2*(|pos|/rad))* (1/rad) * pos/|pos|;
-    output tensor[2] out=  inst(∇C,pos);
+    output tensor[2] out=  ∇C(pos);
+    //comment in ^ for rtest
     //Expected Solution:-2.9289312 -2.9289312 -5.3342342 -1.7780782 -22.091166 -4.4182334
 
-    //output tensor [2] out  =  inst(∇C,pos)-(3 - 1/((|pos|/rad)^2) - 2*(|pos|/rad))* (1/rad) * pos/|pos|;//Expected Solution:0
-   // output tensor [2] out  =  ((3 - 1/((|pos|/rad)^2) - 2*(|pos|/rad))* (1/rad) * pos/|pos|)-inst(∇C,pos);
+    //output tensor [2] out  =  ∇C(pos)-(3 - 1/((|pos|/rad)^2) - 2*(|pos|/rad))* (1/rad) * pos/|pos|;//Expected Solution:0
+   // output tensor [2] out  =  ((3 - 1/((|pos|/rad)^2) - 2*(|pos|/rad))* (1/rad) * pos/|pos|)-∇C(,pos);
 
-    output tensor [] t  = printIR(out,"pink");
+    //output tensor [] t  = printIR(out,"pink");
     update {
              stabilize;
     }

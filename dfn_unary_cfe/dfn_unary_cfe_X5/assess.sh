@@ -6,6 +6,6 @@ if [ ! -r out.nrrd ] ; then
 fi
 
 unu 2op - out.nrrd correct.nrrd \
-| unu reshape -s 1 200 \
+| unu reshape -s 1 30 \
 | unu project -a 1 -m l1 \
 | unu save -f text

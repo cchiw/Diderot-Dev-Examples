@@ -12,8 +12,8 @@ strand sample (int ui, int vi) {
 
     vec2 uuk = clerp(a, b, t);
 
-    //output tensor[2] out = uuk;
-    output tensor [] out =clerp(a[0], b[0], t);
+    output tensor[2] out = uuk;
+//output tensor[2] out = uu;
 
     update {
              stabilize;

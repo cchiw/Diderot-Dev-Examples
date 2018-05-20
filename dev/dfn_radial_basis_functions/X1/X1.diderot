@@ -1,20 +1,34 @@
+#version 1.0
 //radial basis function defnition
 real r= 7;
-int  x =5;
-real exp = r*r*x;
-field#3(1)[] F = cfexp(exp,r, x);
+real exp = r-8;
+field#3(1)[] F = cfexp(exp,r);
 
 //sequence of points
 int{4} X= {3,9,2,1};
 
-// ∇;
-
 int outSize = 10;
 strand sample (int R) {
-    output tensor[] out = instS(F,real(R),X);
+    // Translates to SUM(F(real(R)-X[i]))
+    //output tensor[] out = instS(F,real(R),X);//built-in sums over sequence results
+
+    // but maybe we should make this two steps
+    //real{4} pos = real(R) - X; //apply tensor operators over a sequence returns a sequence
+    //real{4} tmp = instS(F, pos);//probe at a sequence returns a sequence
+    // output tensor[] out = SUM(tmp)  apply reduction operator over a sequence returns real
+
+    //probe field F with sequence X. then so a sum over it
+    // output tensor[] out= instS(F, X);
+
+//real{4} t= inst(F, X);
+        output tensor[] out= SUM(inst(F, X));
+
     update {
              stabilize;
     }
 }
 
 initially [ sample(vi) | vi in 0..(outSize-1)];
+
+
+// ∇;

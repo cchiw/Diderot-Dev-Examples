@@ -1,11 +1,10 @@
 #version 2.0
 
 int outSize = 10;
-vec2 x=[1,1];
 real rad = 0.1;
 
 
-field#1(2)[] enr = cfexp(1/tan(|x|/rad*π/2) + (|x|/rad)*π/2 - π/2,x);
+field#1(2)[] enr(x) = 1/tan(|x|/rad*π/2) + (|x|/rad)*π/2 - π/2;
 
 
 //Each example is tested below
@@ -22,21 +21,21 @@ strand sample (int ui, int vi) {
     // ************************ Example enr **********************
 
     //output tensor [] out =  1/tan(|pos|/rad*π/2) + (|pos|/rad)*π/2 - π/2;
-    //output tensor[] out=  inst(enr,pos);
+    //output tensor[] out=  enr(pos);
     //Expected Solution: 0.035467267 -0.3811146 3.2893772 2.8644447 6.4578643 6.0302925 9.6109667
 
-    //output tensor[] out=  1/tan(|pos|/rad*π/2) + (|pos|/rad)*π/2 - π/2-inst(enr,pos);
-    //output tensor[] out=  inst(enr,pos)-(1/tan(|pos|/rad*π/2) + (|pos|/rad)*π/2 - π/2);
+    //output tensor[] out=  1/tan(|pos|/rad*π/2) + (|pos|/rad)*π/2 - π/2-enr(pos);
+    //output tensor[] out=  enr(pos);-(1/tan(|pos|/rad*π/2) + (|pos|/rad)*π/2 - π/2);
 
     // ************************ Example frc **********************
 
     //phi'(real r) = (π/2)*(1 - (1/sin((|x|/rad)*π/2))^2);
     //output tensor[2] out = (π/2)*(1 - (1/sin((|pos|/rad)*π/2))^2)* (1/rad) * pos/|pos|;
-    //output tensor[2] out=  inst(∇enr,pos);
+    output tensor[2] out=  ∇enr(pos);
     //Expected Solution:-2.7275143 -2.7275143 -24.950911 -8.3169699 -11.270805 -2.2541609
 
-    //output tensor[2] out=  inst(∇enr,pos)-((π/2)*(1 - (1/sin((|pos|/rad)*π/2))^2)* (1/rad) * pos/|pos|);
-    output tensor[2] out=  ((π/2)*(1 - (1/sin((|pos|/rad)*π/2))^2)* (1/rad) * pos/|pos|)-inst(∇enr,pos);
+    //output tensor[2] out=  ∇enr(pos)-((π/2)*(1 - (1/sin((|pos|/rad)*π/2))^2)* (1/rad) * pos/|pos|);
+    //output tensor[2] out=  ((π/2)*(1 - (1/sin((|pos|/rad)*π/2))^2)* (1/rad) * pos/|pos|)-∇enr(pos);
 
 
     update {
