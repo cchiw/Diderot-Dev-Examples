@@ -3,24 +3,31 @@
 Users can define closed form expressions. The expression can include tensor operators and variables.  Differentiation is applied by differentiating in respect to one variable.
 	
 ## In Action
-It is natural to define a function with an expression: F(x) = x²
+It is natural to define a function with a closed form expression: F(x) = 7٭x. We allow a user to define such a field in Diderot
  ```  
-field#k(2)[] F(x) = x*x;
-tensor[2] v = [3,7];  
-tensor[] out = F(v);//evaluate F with argument v
+field#k(d)[d] F(x) = 7٭x;
+tensor[d] v =...;
+tensor[d] out = F(v);
+tensor[d,d] outD = ∇⊗F(v)
  ```
- 	> *Note* variable x is a vector of length d, where d is the dimension of the field.
+> *Note* that variable x is a vector of length d, where d is the dimension of the field.
 
-              out= F(v)=    v[0]²+  v[1]² 
+The probed field is evaluated as  
 
-The user can apply other tensor and field operators on the cfexp including differentiation.
-  ```
-tensor[2] out = ∇F(v);
- ```
-The differentiation of the cfexp is computed in respect to the variable v. We illustrate the expected structure below:      
+F(x) ⇨7٭x  ⇨ 7*[x<sub>a </sub>, x<sub>b </sub>,..x<sub>d </sub>]]  where x = [x<sub>a </sub>, x<sub>  b</sub>,..x<sub>d </sub>]
 
-   out=  ∇F(v)
-   =[2*v[0],2*v[1]]
+If v = [3,5] then F(v) =  [21, 35]
+
+The user can apply other tensor and field operators on the field term `F` including differentiation. The Jacobian of our field `F` creates the following matrix.
+
+∇⊗F(x) ⇨∇⊗(7٭x) ⇨ [[7,0],[0,7]]
+
+Differentiation is applied to the entire expression on the right hand side of the field definition `F` and in respect to the variable `x`. Internally, The tensor variable `x` is expanded into it's components and  the differentiation operator is applied to the components.
+
+∇⊗F(x)⇨ [[∇<sub>a </sub> 7*x<sub>a </sub>, ∇<sub>a </sub> 7*x<sub>b </sub>], [∇<sub>b </sub> 7*x<sub>a </sub>,∇<sub>b </sub> 7*x<sub>b </sub>]]
+
+
+
 
 ## Details
 * Branch:   [Diderot-Dev](https://github.com/cchiw/Diderot-Dev) 
@@ -32,11 +39,10 @@ The differentiation of the cfexp is computed in respect to the variable v. We il
 
 ## Directory Organization
 * Base Case Examples
-	*  [f<sub>v</sub> = v] : X1, 
+	*  [f<sub>v</sub> = 7*v] : X1, 
 	* [f<sub>v</sub> = v • v] : X1/vv.diderot,
 	*  [f<sub>v</sub> = (v • v) ∗ v] : X1/vvv.diderot, and 
-	* [f<sub>s</sub> = s³] : X2/sss.diderot
-	* [f<sub>v</sub> = v • v] : X1/vv.diderot,
+	* [f<sub>s</sub> = s³] : X2
 	* [f<sub>v</sub> =  ∇• v] Divergence : X7
 * Multiple variables in core computation and differentiate in respect to one variable
 	*  [f<sub>x</sub> =(1−|x|)⁴]Sphere: X3/sphere.diderot,
