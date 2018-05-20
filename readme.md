@@ -383,9 +383,9 @@ In lieu of using the ```printIR()``` operation the user can use command line arg
 # C. Field Definitions
 ## C1. Field Definition: Closed Form expression
 
-Users can define closed form expressions. The expression can include tensor operators and variables.  Differentiation is applied by differentiating in respect to one variable.
+Users can define closed form expressions. The expression can include tensor operators and variables.  Differentiation is applied by differentiating in respect to one or more variables.
 	
-
+### Single input variable 
 It is natural to define a function with a closed form expression: F(x) = 7٭x. We allow a user to define such a field in Diderot
  ```  
 field#k(d)[d] F(x) = 7٭x;
@@ -416,7 +416,7 @@ Differentiation is applied to the entire expression on the right hand side of th
 
 
 
-## Details
+#### Details
 * Branch:   [Diderot-Dev](https://github.com/cchiw/Diderot-Dev) 
 * Syntax: “field#k(d)[alpha](var) = expression"
 	* “exp” is the core computation that includes operators on variable var 
@@ -425,6 +425,7 @@ Differentiation is applied to the entire expression on the right hand side of th
 * Issues:  Very limiting. Keep reading
 * Examples in directory [dfn_unary_cfe](https://github.com/cchiw/Diderot-Dev-Examples/tree/master/dfn_unary_cfe "dfn_unary_cfe")
 
+### Multiple input variables
 A function can be defined with multiple variables.
                     F (a, b) = a + b 
 and similarly a closed-form expression can be defined with multiple variables
@@ -476,7 +477,7 @@ field#k(d)[]M = ∇(cfexpOne(exp, s, A, B));
 // The above is the same as below   
 field#k(d)[]M= ∇(setDiffVar(setDiffVar(F,A),B));   
 ```
-### Details
+#### Details
 * Branch:   [Diderot-Dev](https://github.com/cchiw/Diderot-Dev) 
 * Syntax: “cfexp()"
 	- Declare a closed form expression with cfexp(exp,v) and evaluate it with “inst()”
