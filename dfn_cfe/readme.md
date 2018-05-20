@@ -3,35 +3,11 @@
 Users can define closed form expressions. The expression can include tensor operators and variables.  Differentiation is applied by differentiating in respect to some variable(s).
 	
 ## In Action
-It is natural to define a function with an expression: F(x) = x²
-In the surface language we added function cfexp() where the first argument exp is an expression and the second x is a variable.
- ``` 
-tensor [] exp = x*x;  
-field#k(1)[] F = cfexp(exp,x);//define F with variable x 
-tensor[2] v = [3,7];  
-tensor[] outF = inst(F,v);//evaluate F with argument v
- ```
- 	> *Note* For this feature continuity k and dimension is unchecked and unuseful. New syntax being developed.
-We commonly refer to the right-hand-side to variable F as a cfexp (closed-form expression). The cfe is created with variable x, but is actually evaluated with v. 
-
-              outF= F(v)=    v[0]²+  v[1]² 
-
-The user can apply other tensor and field operators on the cfexp including differentiation.
-  ```
-field #1(2)[2] GF = ∇F; 
-tensor[] outGF = inst(GF,v);
- ```
-The differentiation of the cfexp is computed in respect to the variable v. We illustrate the expected structure below:      
-
-   outGF=  ∇F(v)
-   =[2*v[0],2*v[1]]
-
-
 A function can be defined with multiple variables.
                     F (a, b) = a + b 
 and similarly a closed-form expression can be defined with multiple variables
   ```
-real a = 1; real b = 7;  
+real a = 1; real b = 7;  //all variables set to dummy values
 tensor [] exp = a+b;  
 field#k(d)[] G = cfexp(exp,a); 
 field#k(d)[] H = cfexp(exp,a,b); 
@@ -95,12 +71,15 @@ field#k(d)[]M= ∇(setDiffVar(setDiffVar(F,A),B));
 	* Field type doesn’t describe types for multiple inputs, need to change typechecker, Remove k-continuity 
 
 ## Directory Organization
-* One input variable that has to be vector the length of the field dimension shown in directory : X1-X4, X6
-* Multiple variables are in the core computation and we differentiate in respect to multiple variables  
+Multiple variables are in the core computation 
+* Uses Cfexp(). Differentiate in respect to all variables  
 	* [f<sub>sv</sub> = s ∗ v] : X5/m1.diderot, 
 	* [f<sub>svx</sub> = s ∗ v + x] : X5/m2.diderot, and
 	*  [f<sub>abc</sub> = a³bc²] : X5/m3.diderot
-* Input variables are treated as tensors and fields  : X10, X11	
+* Uses expression(). Differentiate in respect to indicated variables  	
+	* [f<sub>sv</sub> =s*((A*A)-B)] : X10
+	* [f<sub>sv</sub> =A*(s+B)] : X11
+	
 ## Note to future developers
 * Everything inside CFExp needs to be written in EIN (because of substitution process)
 * DATm tested cfexp in combination with all tensor operators. Sympy does not support product rule so that wasn't as agressively tested 
