@@ -12,7 +12,9 @@
 	- B1. DATm: Diderot’s Automated Testing: [tool_DATm](https://github.com/cchiw/latte/tree/master/tool_DATm "tool_DATm")
 	- B2. Printing the intermediate representation: [tool_printIR](https://github.com/cchiw/latte/tree/master/tool_printIR "tool_printIR")
 - C. Field Definitions
-	- C1. Closed Form expressions: [dfn_cfe](https://github.com/cchiw/latte/tree/master/dfn_cfe "dfn_cfe")
+	- C1. Closed Form expressions:
+		-  Single argument [dfn_unary_cfe](https://github.com/cchiw/Diderot-Dev-Examples/tree/master/dfn_unary_cfe "dfn_unary_cfe")
+		-  Multiple arguments [dfn_cfe](https://github.com/cchiw/latte/tree/master/dfn_cfe "dfn_cfe")
 	- C2. FEM: [dfn_fem](https://github.com/cchiw/latte/tree/master/dfn_fem "dfn_fem")
 
 Please see individual directory for full details. They are summarized (or fully copied) below.
@@ -381,32 +383,47 @@ In lieu of using the ```printIR()``` operation the user can use command line arg
 # C. Field Definitions
 ## C1. Field Definition: Closed Form expression
 
-
-Users can define closed form expressions. The expression can include tensor operators and variables.  Differentiation is applied by differentiating in respect to some variable(s).
+Users can define closed form expressions. The expression can include tensor operators and variables.  Differentiation is applied by differentiating in respect to one variable.
 	
-It is natural to define a function with an expression: F(x) = x²
-In the surface language we added function cfexp() where the first argument exp is an expression and the second x is a variable.
- ``` 
-tensor [] exp = x*x;  
-field#k(1)[] F = cfexp(exp,x);//define F with variable x 
-tensor[2] v = [3,7];  
-tensor[] outF = inst(F,v);//evaluate F with argument v
+
+It is natural to define a function with a closed form expression: F(x) = 7٭x. We allow a user to define such a field in Diderot
+ ```  
+field#k(d)[d] F(x) = 7٭x;
+tensor[d] v =...;
+tensor[d] out = F(v);
+tensor[d,d] jacob = ∇⊗F(v)
+tensor[] divergence = ∇•F(v)
  ```
- 	> *Note* For this feature continuity k and dimension is unchecked and unuseful. New syntax being developed.
-We commonly refer to the right-hand-side to variable F as a cfexp (closed-form expression). The cfe is created with variable x, but is actually evaluated with v. 
+> *Note* that variable x is a vector of length d, where d is the dimension of the field.
 
-              outF= F(v)=    v[0]²+  v[1]² 
+The probed field is evaluated as  
 
-The user can apply other tensor and field operators on the cfexp including differentiation.
-  ```
-field #1(2)[2] GF = ∇F; 
-tensor[] outGF = inst(GF,v);
- ```
-The differentiation of the cfexp is computed in respect to the variable v. We illustrate the expected structure below:      
+F(x) ⇨7٭x  ⇨ 7*[x<sub>a </sub>, x<sub>b </sub>,..x<sub>d </sub>]]  where x = [x<sub>a </sub>, x<sub>  b</sub>,..x<sub>d </sub>]
 
-   outGF=  ∇F(v)
-   =[2*v[0],2*v[1]]
+If v = [3,5] then F(v) =  [21, 35]
 
+The user can apply other tensor and field operators on the field term `F` including differentiation. The Jacobian of our field `F` creates the following matrix.
+
+∇⊗F(x) ⇨∇⊗(7٭x) ⇨ [[7,0],[0,7]]
+
+and the divergence creates the following
+
+∇•F(x) ⇨∇•(7٭x) ⇨ 14
+
+Differentiation is applied to the entire expression on the right hand side of the field definition `F` and in respect to the variable `x`. Internally, The tensor variable `x` is expanded into it's components and  the differentiation operator is applied to the components.
+
+∇⊗F(x)⇨ [[∇<sub>a </sub> 7*x<sub>a </sub>, ∇<sub>a </sub> 7*x<sub>b </sub>], [∇<sub>b </sub> 7*x<sub>a </sub>,∇<sub>b </sub> 7*x<sub>b </sub>]]
+
+
+
+## Details
+* Branch:   [Diderot-Dev](https://github.com/cchiw/Diderot-Dev) 
+* Syntax: “field#k(d)[alpha](var) = expression"
+	* “exp” is the core computation that includes operators on variable var 
+	* “var” is a vector of length d
+* Text: see [Doc]
+* Issues:  Very limiting. Keep reading
+* Examples in directory [dfn_unary_cfe](https://github.com/cchiw/Diderot-Dev-Examples/tree/master/dfn_unary_cfe "dfn_unary_cfe")
 
 A function can be defined with multiple variables.
                     F (a, b) = a + b 
