@@ -1,14 +1,24 @@
-﻿
+Traditional math operators, such as the inner product and curl, have been available in Diderot for a while and are not documented here. 
+This directory provides examples with the newer features available in the [Diderot-Dev](https://github.com/cchiw/Diderot-Dev) branch. The features are organized in three different categories: Field and function operators "fn_", tools "tool_", and field definitions "dfn_".
+New operators that can applied in Diderot-Dev include composition, concatenation,inverse, min, max, clerp, clamp, field selection, and find cell. 
+Tools that have been developed include Diderot's automated testing tool and printIR, which prints the intermediate representation.
+There are also new ways to define fields with closed-form expressions and by data created by solving a PDE (FEM).
+
+
 # Overview of Repo
- - A. Functions and Operators
-	 - A1. Function composition: [fn_composition](https://github.com/cchiw/latte/tree/master/fn_composition "fn_composition")
-	 - A2. Function concatenation: [fn_concatenation](https://github.com/cchiw/latte/tree/master/fn_concatenation "fn_concatenation")
+ - A. Functions and Operators  "fn_"
+	 - A1. Field composition: [fn_composition](https://github.com/cchiw/latte/tree/master/fn_composition "fn_composition")
+	 
+	    Also known as function composition F0 ∘ F1
+	 - A2. Field concatenation: [fn_concatenation](https://github.com/cchiw/latte/tree/master/fn_concatenation "fn_concatenation")
 	 - A3. Matrix Inverse: [fn_matrixInverse](https://github.com/cchiw/latte/tree/master/fn_matrixInverse "fn_matrixInverse")
 	 - A4. Min and Max: [fn_min-max](https://github.com/cchiw/latte/tree/master/fn_min-max "fn_min-max")
 	 - A5. Clerp and Clamp: [fn_clerp](https://github.com/cchiw/latte/tree/master/fn_clerp "fn_clerp")
 	 - A6. Field Selection: [fn_selection](https://github.com/cchiw/latte/tree/master/fn_selection "fn_selection")
 	 - A7. Find Cell: [fn_getCell](https://github.com/cchiw/latte/tree/master/fn_getCell "fn_getCell")
 - B. Tools
+
+	Return a cell number for a given position, relevant to FEM fields only.
 	- B1. DATm: Diderot’s Automated Testing: [tool_DATm](https://github.com/cchiw/latte/tree/master/tool_DATm "tool_DATm")
 	- B2. Printing the intermediate representation: [tool_printIR](https://github.com/cchiw/latte/tree/master/tool_printIR "tool_printIR")
 - C. Field Definitions
@@ -17,6 +27,7 @@
 		-  Multiple arguments [dfn_cfe](https://github.com/cchiw/latte/tree/master/dfn_cfe "dfn_cfe")
 	- C2. FEM: [dfn_fem](https://github.com/cchiw/latte/tree/master/dfn_fem "dfn_fem")
 
+	Define fields created with finite element data.
 Please see individual directory for full details. They are summarized (or fully copied) below.
 
 # A.Functions and Operators
