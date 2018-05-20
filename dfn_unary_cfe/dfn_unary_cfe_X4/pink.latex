@@ -1,0 +1,6 @@
+
+\documentclass{article}
+\begin{document}_t
+\\
+\newline $\rightarrow_{match} \nabla  CFExp[var:,f_x](exp:(\frac{(_t*rad)}{|x|}*((_t-\frac{|x|}{rad}))^3))$
+\end{document}

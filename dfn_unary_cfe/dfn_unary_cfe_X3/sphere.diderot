@@ -1,0 +1,110 @@
+#version 2.0
+
+int outSize = 10;
+real rad = 0.1;
+
+//function broken out in steps during testing
+field#1(3)[3] A(x) = x;
+field#1(3)[] B (x)= |x|;
+field#1(3)[] C (x)= |x|/rad;
+field#1(3)[] D (x)= 1-(|x|/rad);
+field#1(3)[] enr(x) = (1-(|x|/rad))^4;
+
+//Read here
+// Comment in a field definition "A"^ and an outline line below under "Example A".
+//Each field definition (A,B,C,D,enr) tests a different computation increasing in complexity.
+//There are two "output" lines in each "Example" section. The first line probes a tensor and produces the expected result. The second line tests the corresponding ofield definition.
+
+
+
+
+strand sample (int ui, int vi) {
+    real uu = lerp(0.0, 1.0, -0.5, real(ui), real(outSize)-0.5);
+    real vv = lerp(0.0, 1.0, -0.5, real(vi), real(outSize)-0.5);
+    vec3 pos = [uu,vv,uu];
+    real x  = pos[0];
+    real y  = pos[1];
+    real z  = pos[2];
+
+    // ************************ Example A **********************
+
+    //output tensor[3] out = pos;
+    // output tensor[3] out=  A(pos);
+    //Expected Solution: 0.050000001 0.050000001 0.050000001 0.15000001 0.050000001 0.15000001 0.25
+
+    //output tensor[3] out=  A(pos)-pos;//Expected Solution:0
+    //output tensor[3] out= pos- A(pos);
+
+    //derivative of A
+    // output tensor[3,3] out=  ∇⊗A(pos);
+    //Expected Solution: 1 0 0 0 1
+
+    // ************************ Example B **********************
+
+    //output tensor[] out = |pos|;
+    // output tensor[] out=  B(pos);
+    //Expected Solution:0.086602539 0.21794495 0.35707143 0.49749371 0.63835722 0.77942288
+
+    //output tensor[] out=  B(pos)-|pos|;//Expected Solution:0
+    //output tensor[] out=  |pos|-B(pos);
+
+    //derivative of B
+    real denom = 2.0*sqrt(x*x+y*y+z*z);
+    //output tensor[3] out=  2*[x, y, z]/denom;
+    //output tensor[3] out=  ∇B(pos);
+    //Expected Solution: 0.57735032 0.57735032 0.57735032 0.6882472 0.22941573 0.6882472 0.70014
+
+    //output tensor[3] out=  2*[x, y, z]/denom- ∇B(pos);//Expected Solution:0
+
+    // ************************ Example C **********************
+
+    //output tensor[] out = |pos|/rad;
+    //output tensor[] out=  C(pos);
+    //Expected Solution: 0.86602539 2.1794496 3.5707142 4.974937 6.3835721 7.7942286 9.2059755
+
+    //output tensor[] out=  C(pos)-|pos|/rad;
+    //output tensor[] out= |pos|/rad- C(pos);
+
+    //derivative of C
+    //output tensor[3] out=  (2*[x, y, z]/denom)/rad;
+    //output tensor[3] out=  ∇C(pos);
+    //Expected Solution: 5.7735028 5.7735028 5.7735028 6.882472 2.294157 6.882472 7.0013995
+
+    // ************************ Example D **********************
+
+    //output tensor[] out = 1-|pos|/rad;
+    //output tensor[] out=  D(pos);
+    //Expected Solution: 0.13397461 -1.1794496 -2.5707142 -3.974937 -5.3835721 -6.7942286 -8.2059755
+
+    //output tensor[] out = 1-|pos|/rad-D(pos);//Expected Solution:0
+    // output tensor[] out = D(pos)-(1-|pos|/rad);
+
+
+    //derivative of D
+    output tensor[3] out=  ∇D(pos);// (same as delC)
+    //Expected Solution: -5.7735028 -5.7735028 -5.7735028 -6.882472 -2.294157 -6.882472 -7.0013995
+
+    // ************************ Example enr **********************
+
+    //output tensor[] out = (1-(|pos|/rad))^4;
+    //output tensor[] out=  inst(enr,pos);
+    //Expected Solution: 0.00032217367 1.9351627 43.673218 249.64392 840.00555 2130.8879 4534.4111
+
+    //output tensor[] out=  inst(enr,pos)-(1-(|pos|/rad))^4;//Expected Solution:0
+    //output tensor[] out=  (1-(|pos|/rad))^4-inst(enr,pos);
+
+    // ************************ Example frc **********************
+
+    //output tensor[3] out = (-4*(1-(|pos|/rad))^3)*(1/rad)*(pos/|pos|);
+    //output tensor[3] out=  ∇enr(pos);
+    //Expected Solution: -0.055535015 -0.055535015 -0.055535015 45.169216 15.056403 45.169216
+
+    //output tensor[3] out = (-4*(1-(|pos|/rad))^3)*(1/rad)*(pos/|pos|)- ∇enr(pos);//Expected Solution:0
+    //output int cut=printIR(out,"tmp");
+
+    update {
+             stabilize;
+    }
+}
+
+create_array {  sample(ui, vi) | vi in 0..(outSize-1), ui in 0..(outSize-1)};

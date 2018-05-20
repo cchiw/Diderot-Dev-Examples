@@ -1,0 +1,25 @@
+
+real s = 10.1;
+real r = 2;
+vec2 A = [4,6];
+
+
+field#1(2)[2]F =  cfexp(A, A);
+//field#0(2)[2,2] J = ∇⊗F;
+field#0(2)[]G = ∇•F;
+
+int length = 3;
+strand f(int i) {
+	//output tensor [2,2] out = [[2,0],[0.0,9]];
+	output tensor [] out = 0.0;
+	    update {
+            real ss = 2;
+            real tt = 3;
+            vec2 AP= [ss,tt];
+
+            //out = inst(J,AP);
+            out = inst(G,AP);
+        stabilize;
+    }
+}
+initially [ f(i) | i in 0..length];

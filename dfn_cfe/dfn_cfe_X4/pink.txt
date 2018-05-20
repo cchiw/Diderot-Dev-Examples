@@ -1,0 +1,3 @@
+_t
+
+ match	->∇ CFExp[var:,f_x](exp:(divide{(_t*rad)}{|x|}*((_t-divide{|x|}{rad}))^3))
