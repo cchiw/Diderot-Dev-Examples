@@ -7,24 +7,20 @@ There are also new ways to define fields with closed-form expressions and by dat
 
 # Overview of Repo
  - A. Functions and Operators  "fn_"
-	 - A1. Field composition: [fn_composition](https://github.com/cchiw/latte/tree/master/fn_composition "fn_composition")
-	 
-	    Also known as function composition F0 ∘ F1
-	 - A2. Field concatenation: [fn_concatenation](https://github.com/cchiw/latte/tree/master/fn_concatenation "fn_concatenation")
+	 - A1. Composition: [fn_composition](https://github.com/cchiw/latte/tree/master/fn_composition "fn_composition")
+	 - A2. Concatenation: [fn_concatenation](https://github.com/cchiw/latte/tree/master/fn_concatenation "fn_concatenation")
 	 - A3. Matrix Inverse: [fn_matrixInverse](https://github.com/cchiw/latte/tree/master/fn_matrixInverse "fn_matrixInverse")
 	 - A4. Min and Max: [fn_min-max](https://github.com/cchiw/latte/tree/master/fn_min-max "fn_min-max")
 	 - A5. Clerp and Clamp: [fn_clerp](https://github.com/cchiw/latte/tree/master/fn_clerp "fn_clerp")
 	 - A6. Field Selection: [fn_selection](https://github.com/cchiw/latte/tree/master/fn_selection "fn_selection")
-	 - A7. Find Cell: [fn_getCell](https://github.com/cchiw/latte/tree/master/fn_getCell "fn_getCell")
+	 - A7. Find Cell (for FEM fields): [fn_getCell](https://github.com/cchiw/latte/tree/master/fn_getCell "fn_getCell")
 - B. Tools
-
-	Return a cell number for a given position, relevant to FEM fields only.
 	- B1. DATm: Diderot’s Automated Testing: [tool_DATm](https://github.com/cchiw/latte/tree/master/tool_DATm "tool_DATm")
 	- B2. Printing the intermediate representation: [tool_printIR](https://github.com/cchiw/latte/tree/master/tool_printIR "tool_printIR")
 - C. Field Definitions
 	- C1. Closed Form expressions:
-		-  Single argument [dfn_unary_cfe](https://github.com/cchiw/Diderot-Dev-Examples/tree/master/dfn_unary_cfe "dfn_unary_cfe")
-		-  Multiple arguments [dfn_cfe](https://github.com/cchiw/latte/tree/master/dfn_cfe "dfn_cfe")
+		-  Single argument [dfn_input_unary](https://github.com/cchiw/Diderot-Dev-Examples/tree/master/dfn_input_unary "dfn_input_unary")
+		-  Multiple arguments [dfn_input_multi](https://github.com/cchiw/Diderot-Dev-Examples/tree/master/dfn_input_multi "dfn_input_multi")
 	- C2. FEM: [dfn_fem](https://github.com/cchiw/latte/tree/master/dfn_fem "dfn_fem")
 
 	Define fields created with finite element data.
@@ -433,77 +429,12 @@ Differentiation is applied to the entire expression on the right hand side of th
 	* “exp” is the core computation that includes operators on variable var 
 	* “var” is a vector of length d
 * Text: see [Doc]
-* Issues:  Very limiting. Keep reading
-* Examples in directory [dfn_unary_cfe](https://github.com/cchiw/Diderot-Dev-Examples/tree/master/dfn_unary_cfe "dfn_unary_cfe")
+* Issues:  Very limited. Keep reading
+* Examples in directory  [dfn_input_unary](https://github.com/cchiw/Diderot-Dev-Examples/tree/master/dfn_input_unary "dfn_input_unary")
 
 ### Multiple input variables
-A function can be defined with multiple variables.
-                    F (a, b) = a + b 
-and similarly a closed-form expression can be defined with multiple variables
-  ```
-real a = 1; real b = 7;  
-tensor [] exp = a+b;  
-field#k(d)[] G = cfexp(exp,a); 
-field#k(d)[] H = cfexp(exp,a,b); 
-field#k(d)[] I = cfexp(exp,b);
- ```
-While ``exp`` uses two variables we only probe the fields G, H, and I with the number of variables used in the field definition.
-``` 
-real x= 3; real y =4;
-tensor[] GP = G(x); 
-tensor[] HP = H(x,y); 
-tensor[] IP = I(y);
- ```
-	
-Differentiation is applied in respect to all the field variables: 
-∇ G= ∇ a              
-∇ H= ∇ a +∇ b                       
-∇ I=   ∇ b
 
-
-There are two ways to define a field with a closed form expression:``cfexp()`` and ``expression()``.
-The difference between ``cfexp()`` and ``expression()`` is that the variable arguments are treated as type tty or fty, respectively. 
-The derivative of a tty variable is 0, while a fty variable is treated like a field.
-With the function ``setDiffVar()`` individual variables can be set to fty, regardless of their order in the field definition.
-
-Here is an example:
-                    F (s, a, b) = s*(A²-B) 
-  ```
-tensor [] exp = s*(A²-B);  
-field#k+1(d)[] F =   expression(exp, s, A B);  
-field#k(d)[] K = ∇(setDiffVar(F,A));   //Takes derivative in respect to A
-field#k(d)[] L = ∇(setDiffVar(F,B));   //Takes derivative in respect to B
-field#k(d)[] M = ∇(setDiffVar(setDiffVar(F,A),B));  //Takes derivative in respect to A and B 
- ```
-The code does the following computations:  
-F = exp = s*(A²-B)              
-K = ∇<sub>A</sub> exp = ∇<sub>A</sub>  s*(A²-B) = s*2*a                      
-L = ∇<sub>B</sub> exp = ∇<sub>B</sub>  s*(A²-B)=   -s       
-M = ∇<sub>AB</sub> exp = ∇<sub>AB</sub> s*(A²-B)= s*(2*A -1)
-
-
-As a shorthand function`cfexpOne()` sets the first variable to tty and next two as fty.   
-```
-field#k(d)[]M = ∇(cfexpOne(exp, s, A, B));  
-// The above is the same as below   
-field#k(d)[]M= ∇(setDiffVar(setDiffVar(F,A),B));   
-```
-#### Details
-* Branch:   [Diderot-Dev](https://github.com/cchiw/Diderot-Dev) 
-* Syntax: “cfexp()"
-	- Declare a closed form expression with cfexp(exp,v) and evaluate it with “inst()”
-	* “exp” is the core computation that includes operators on and between variables 
-	* “v” is the variable we differentiate in respect to. We accept 1-3 “v” terms  
-	* cfexp(): tensor[α] × tensor[β] . . . → field#k(d)[α]  
-	* expression(): tensor[α] × tensor[β1]× tensor[β2]× tensor[β3] → field#k(d)[α]  
-	* cfexpOne():   tensor[α] × tensor[β1]× tensor[β2]× tensor[β3] → field#k(d)[α]  
-	* inst(): field#k(d)[α] × tensor[β] · · · → tensor[α]
-* Text: see [Doc]
-* Issues:  
-	* Need to define all variables and initiate with unique values before cfexp() is called. 
-	* Variables are also a tensor type? Retink that?
-	* Field type doesn’t describe types for multiple inputs, need to change typechecker, Remove k-continuity 
-* Examples in directory [dfn_cfe](https://github.com/cchiw/latte/tree/master/dfn_cfe "dfn_cfe")
+* Examples in directory [dfn_input_multi](https://github.com/cchiw/Diderot-Dev-Examples/tree/master/dfn_input_multi "dfn_input_multi")
 
 
 ## C2. FEM
