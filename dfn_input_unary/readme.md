@@ -44,14 +44,15 @@ Differentiation is applied to the entire expression on the right hand side of th
 
 ## Directory Organization
 * Base Case Examples
-	*  [f<sub>v</sub> = 7*v] : X1, 
-	* [f<sub>v</sub> = v • v] : X1/vv.diderot,
-	*  [f<sub>v</sub> = (v • v) ∗ v] : X1/vvv.diderot, and 
-	* [f<sub>s</sub> = s³] : X2
-	* [f<sub>v</sub> =  ∇• v] Divergence : X7
-* Multiple variables in core computation and differentiate in respect to one variable
-	*  [f<sub>x</sub> =(1−|x|)⁴]Sphere: X3/sphere.diderot,
-	*  [f<sub>x</sub> =(x−cutPos)•curNorm] clip: X3
-	*  [f<sub>x</sub>= ( 1 ∗ (1 − |x| ))³] Circle : X4, and 
-	* [f<sub>x</sub> = (1 − |x|/y)⁴	] Enr : X4/enr.diderot
-	* X5
+	*  [f<sub>v</sub> = 7*v] : base_v, 
+	* [f<sub>v</sub> = v • v] : base_vv,
+	*  [f<sub>v</sub> = (v • v) ∗ v] : base_vvv, and 
+	* [f<sub>s</sub> = s³] : base_sss
+	* [f<sub>v</sub> =  ∇• v] : Divergence 
+* Variables defined outside field used in core computation 
+	* [f<sub>x</sub>= ( 1 ∗ (1 − |x| ))³] : circle , 
+	* [f<sub>x</sub> = (1 − |x|/y)⁴	] : enr , 
+	* [f<sub>x</sub> =(1−|x|)⁴]: sphere ,
+	* [f<sub>x</sub> =(x−cutPos)•curNorm]: clip
+* Other examples
+	* X5,X6
