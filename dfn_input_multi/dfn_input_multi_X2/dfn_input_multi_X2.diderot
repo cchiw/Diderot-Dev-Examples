@@ -1,0 +1,31 @@
+#version 2.0
+
+//2 input scalar arguments. Some are treated like fields
+ofield#1(1,1)[]FA (real A)(real B) =  (A*A)-B;
+ofield#0(1,1)[] GFA = ∇FA;
+//expected output:  2*a
+
+ofield#1(1,1)[]FAB (real A, real B) =  (A*A)-B;
+ofield#0(1,1)[] GFAB = ∇FAB;
+//expected output:  2*a-1
+
+
+
+
+int length = 3;
+strand f(int i) {
+output tensor [] out = 0.0;
+    update {
+        real aa = 3;
+        real bb = i;
+
+        //out = (FA)(aa, bb);
+        // out = (GFA)(aa, bb);// //6
+         out = (GFAB)(aa, bb);//5
+
+
+
+        stabilize;
+    }
+}
+create_array {  f(i) | i in 0..length};

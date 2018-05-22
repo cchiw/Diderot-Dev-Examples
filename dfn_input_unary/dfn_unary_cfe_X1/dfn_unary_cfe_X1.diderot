@@ -1,0 +1,20 @@
+#version 2.0
+
+field#2(2)[2] V (x)= 7*x;
+
+int outSize = 10;
+strand sample (int ui, int vi) {
+    vec2 pos = [ui,vi];
+
+
+     output tensor[2,2] out = ∇⊗V(pos);//rtest comment in
+
+   // output tensor[] out  = ∇•V(pos);
+
+
+    update {
+             stabilize;
+    }
+}
+
+create_array  { sample(ui, vi) | vi in 0..(outSize-1), ui in 0..(outSize-1) };
