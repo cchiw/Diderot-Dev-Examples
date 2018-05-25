@@ -1,5 +1,5 @@
 # Math functions: Field Selection
-## In Action
+### In Action
 Inside a Diderot program there may be many different field definitions and computations on those fields 
 ``` 
 field#k(d)[α] A;   field#k(d)[α] B;   field#k(d)[α] C;    field#k(d)[α] D;...
@@ -13,7 +13,7 @@ As a note, the selection_id can also be an input variable.
 ``` 
 input int selection_id;
 ```
-## Details
+### Overview 
 * Branch:   [Diderot-Dev](https://github.com/cchiw/Diderot-Dev) 
 * Syntax: “swap()"
     - fty = field#k(d)[α]

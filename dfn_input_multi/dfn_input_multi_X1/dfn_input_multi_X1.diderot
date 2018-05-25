@@ -18,20 +18,16 @@ strand sample (int i) {
         real B = 7;
         real C = 2;
 
-        output tensor[] out = GF1(A);//75
+        //output tensor[] out = GF1(A);//75
 
         //output tensor[] out = 3*A*A*B + A*A*A; //650
         //output tensor[] out = GF2(A,B);
 
-        //output tensor[] out = GF3(A,B,C);//651
+        output tensor[] out = GF3(A,B,C);//651
+        // comment in ^ for rtest
 
     update {
              stabilize;
     }
 }
 create_array { sample(vi) | vi in 0..(outSize-1)};
-/*
-[Fail: type error for field application
-ofield#2(1)[] F1 (real a) = a*a*a;
-ofield#1(1)[] GF1 = ∇F1;
-*/

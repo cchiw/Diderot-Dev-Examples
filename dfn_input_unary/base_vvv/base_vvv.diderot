@@ -1,0 +1,90 @@
+#version 2.0
+
+int outSize = 10;
+
+
+field#3(2)[2] T (x) = (x•x)*x;
+field#2(2)[2,2] GT =  ∇⊗T;
+field#1(2)[2,2,2] GGT =  ∇⊗∇⊗T;
+field#0(2)[2,2,2,2] GGGT =  ∇⊗∇⊗∇⊗T;
+
+
+
+strand sample (int ui, int vi) {
+    real uu = lerp(0.0, 1.0, -0.5, real(ui), real(outSize)-0.5);
+    real vv = lerp(0.0, 1.0, -0.5, real(vi), real(outSize)-0.5);
+    vec2 pos = [uu,vv];
+    real x =uu;
+    real y=vv;
+
+    // ************************ ExampleT*********************
+
+    //output tensor[2] out = pos*(pos[0]*pos[0]+pos[1]*pos[1]);
+    //output tensor[2] out = [x*x*x+x*y*y, y*x*x+y*y*y]
+    //output tensor[2] out = T(pos);
+    //Expected solution:0.00025000001 0.00025000001 0.0037500001 0.0012500001 0.016249999
+
+    //output tensor[2] out = [x*x*x+x*y*y, y*x*x+y*y*y] - T(pos);//Expected solution: 0
+
+    // ************************ ExampleGT*********************
+
+    // first derivative
+    //output tensor[2,2] out = GT(pos);
+    real a = 3*x*x+y*y;
+    real b = 2*x*y;
+    real c = 2*y*x;
+    real d = x*x+3*y*y;
+    //output tensor[2, 2] out =[[a,b],[c,d]];
+    //Expected solution:0.010000001 0.0050000004 0.0050000004 0.010000001 0.07 0.015000001
+
+    //output tensor[2,2] out = GT(pos)-[[a,b],[c,d]];
+    //output tensor[2,2] out = [[a,b],[c,d]]-GT(pos);//Expected solution: 0
+
+    // ************************ ExampleGGT*********************
+
+    //second derivative
+    //output tensor[2,2,2] out = GGT(pos);
+    real ax = 3*2*x;
+    real ay = 2*y;
+    real bx = 2*y;
+    real by = 2*x;
+    real cx = 2*y;
+    real cy = 2*x;
+    real dx = 2*x;
+    real dy = 3*2*y;
+    //output tensor[2, 2,2] out =[[[ax,ay],[bx,by]],[[cx,cy],[dx,dy]]];
+    //Expected solution: 0.30000001 0.1 0.1 0.1 0.1 0.1 0.1 0.30000001 0.90000004 0.1 0.1 0.30000001
+
+    //output tensor[2, 2,2] out = [[[ax,ay],[bx,by]],[[cx,cy],[dx,dy]]]-GGT(pos);//Expected solution: 0
+
+   // ************************ ExampleGGGT*********************
+
+    //third derivative
+    real axx = 3*2;
+    real axy = 0;
+    real ayx = 0;
+    real ayy = 2;
+    real bxx = 0;
+    real bxy = 2;
+    real byx = 2;
+    real byy = 0;
+    real cxx = 0;
+    real cxy = 2;
+    real cyx = 2;
+    real cyy = 0;
+    real dxx = 2;
+    real dxy = 0;
+    real dyx = 0;
+    real dyy = 3*2;
+    //output tensor[2, 2,2,2] out =[[[[axx,axy],[ayx,ayy]],[[bxx,bxy],[byx,byy]]],[[[cxx,cxy],[cyx,cyy]],[[dxx,dxy],[dyx,dyy]]]];
+        output tensor[2,2,2,2] out = GGGT(pos);
+    //Expected solution:  6.0999999 0 0 2 0 2 2 0.1 0.1 2 2 0 2 0 0 6.0999999 6.3000002 0 0 2 0 2 2
+
+    //output tensor[2,2,2,2] out = GGGT(pos)-[[[[axx,axy],[ayx,ayy]],[[bxx,bxy],[byx,byy]]],[[[cxx,cxy],[cyx,cyy]],[[dxx,dxy],[dyx,dyy]]]];//Expected solution: 0
+
+    update {
+             stabilize;
+    }
+}
+
+create_array {  sample(ui, vi) | vi in 0..(outSize-1), ui in 0..(outSize-1) };

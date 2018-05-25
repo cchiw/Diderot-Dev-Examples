@@ -1,8 +1,8 @@
-# Field Definition: Closed Form expression
+## Field Definition: Closed Form expression
 
 Users can define closed form expressions. The expression can include tensor operators and variables.  Differentiation is applied by differentiating in respect to one variable.
 	
-## In Action
+### In Action 
 It is natural to define a function with a closed form expression: F(x) = 7٭x. We allow a user to define such a field in Diderot
  ```  
 field#k(d)[d] F(x) = 7٭x;
@@ -31,10 +31,14 @@ Differentiation is applied to the entire expression on the right hand side of th
 
 ∇⊗F(x)⇨ [[∇<sub>a </sub> 7*x<sub>a </sub>, ∇<sub>a </sub> 7*x<sub>b </sub>], [∇<sub>b </sub> 7*x<sub>a </sub>,∇<sub>b </sub> 7*x<sub>b </sub>]]
 
+### Implementation Details 
+- New grammar added and translated to FieldFunc 
+- Closed-form expression added to EIN as a type of ofield
+- Each argument has a param-id and input type that decided if it is differentiated against
+- Substitution and closed-form expressions are expanded in high-to-mid.
+- Poly term translated/evaluated in mid to low
 
-
-
-## Details
+### Overview 
 * Branch:   [Diderot-Dev](https://github.com/cchiw/Diderot-Dev) 
 * Syntax: “field#k(d)[alpha](var) = expression"
 	* “exp” is the core computation that includes operators on variable var 

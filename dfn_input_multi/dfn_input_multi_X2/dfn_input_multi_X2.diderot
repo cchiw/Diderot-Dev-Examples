@@ -20,8 +20,9 @@ output tensor [] out = 0.0;
         real bb = i;
 
         //out = (FA)(aa, bb);
-        // out = (GFA)(aa, bb);// //6
-         out = (GFAB)(aa, bb);//5
+        out = (GFA)(aa, bb);// //6
+        // ^ comment in for rtest
+        // out = (GFAB)(aa, bb);//5
 
 
 
