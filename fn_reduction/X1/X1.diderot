@@ -1,0 +1,36 @@
+#version 2.0
+
+
+field#3(1)[] F (r) = r*r-8;
+field#2(1)[] G = ∇F;
+
+
+
+//Probe field at a sequence of positions and reduce the results
+
+int outSize = 10;
+strand sample (int R) {
+
+    //sequence of points
+    real[5] X= {3,7,R,2,1};
+
+    //Summation
+    //output tensor[] out= SUM(F, X); //23 24 27  32
+    output tensor[] out = SUM(G, X);   // 26  28  30
+    // rtest comment in ^
+    //output tensor[] out = 2*(3+7+R+2+1);
+
+    //maximal
+    //output tensor[] out= MAX(F, X);//41
+    //output tensor[] out= MAX(G, X);//14....16 18
+
+
+     //output tensor[] out = MIN(F, X);//-8 ..-7
+     //output tensor[] out= MIN(G, X); //0, 2...
+
+    update {
+             stabilize;
+    }
+}
+
+create_array {  sample(vi) | vi in 0..(outSize-1)};

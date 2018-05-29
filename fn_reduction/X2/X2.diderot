@@ -1,0 +1,33 @@
+#version 2.0
+
+//sequence of vectors
+field#3(2)[] F (r) = |r|;
+field#2(2)[2] G = ∇F;
+
+field#2(2)[2] K (r) = (r*2)/(2*|r|);
+//sqrt(r•r));
+int outSize = 10;
+strand sample (int R) {
+
+    //sequence of points
+    vec2 [5] X = {[3,1],[7,9],[R,8],[1,2],[6,1]};
+
+
+    //summation
+    output tensor[] out= SUM(F, X);
+    //  output tensor[2] out= SUM(G, X);
+    //output tensor[2] out= K([3,1])+K([7,9])+K([R,8])+K([1,2])+K([6,1]);
+
+
+
+    //maximal
+    //output tensor[] out= MAX(F, X); //11.401754...12.041595
+    //output tensor[] out= F([R,8]);
+    //output tensor[] out= F([7,9]);
+
+    update {
+        stabilize;
+    }
+}
+
+create_array {  sample(vi) | vi in 0..(outSize-1)};

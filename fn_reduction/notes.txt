@@ -1,0 +1,4 @@
+
+//Probe field at a sequence of positions and reduce the results
+- for a field defined with input-unary,  
+- but not tried with other field types

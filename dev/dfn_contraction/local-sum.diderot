@@ -1,0 +1,22 @@
+#version 2
+
+vec2[] points = { [1, 2], [3, 4], [5, 6] };
+field#0(2)[] F = tent ⊛ load_image("../../data/const7.nrrd");
+field(2)[] G(x) = max { F(x + y) | y in points };
+
+// limit to iterating over just one variable ^
+// sequence comprehenssion also there
+//PT.COMP_Comprehension(Expression, Iterator :: SR)))
+
+
+//field(2)[] G(v) = max { v • x | x in points };
+strand Sample ()
+{
+    output real s = nan;
+    update {
+	s = G([0.5, 0.5]);
+	stabilize;
+    }
+}
+
+create_array { Sample() | i in 1..1 }

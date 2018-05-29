@@ -1,0 +1,21 @@
+#version 2.0
+
+//sequence of vectors
+field#3(2)[2] F (r) = r*2;
+field#2(2)[2,2] J  = ∇⊗ F;
+
+int outSize = 10;
+strand sample (int R) {
+
+    //sequence of points
+    vec2 [5] X = {[3,1],[7,9],[R,8],[1,2],[6,1]};
+    //output tensor[2] out= SUM(F, X); //34 42..
+
+    output tensor[2,2] out= SUM(J, X); //[10 0 0 10]
+
+    update {
+        stabilize;
+    }
+}
+
+create_array {  sample(vi) | vi in 0..(outSize-1)};
