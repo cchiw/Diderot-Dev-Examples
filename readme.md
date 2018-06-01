@@ -14,6 +14,7 @@ There are also new ways to define fields with closed-form expressions and by dat
 	 - A5. Clerp and Clamp: [fn_clerp](https://github.com/cchiw/latte/tree/master/fn_clerp "fn_clerp")
 	 - A6. Field Selection: [fn_selection](https://github.com/cchiw/latte/tree/master/fn_selection "fn_selection")
 	 - A7. Find Cell (for FEM fields): [fn_getCell](https://github.com/cchiw/latte/tree/master/fn_getCell "fn_getCell")
+               - A8. Absolute function:  [fn_abs](https://github.com/cchiw/Diderot-Dev-Examples/tree/master/fn_abs "fn_abs")  
 - B. Tools
 	- B1. DATm: Diderot’s Automated Testing: [tool_DATm](https://github.com/cchiw/latte/tree/master/tool_DATm "tool_DATm")
 	- B2. Printing the intermediate representation: [tool_printIR](https://github.com/cchiw/latte/tree/master/tool_printIR "tool_printIR")
@@ -238,6 +239,23 @@ tensor[] out = F(pos);
 	When there is no Cell the function returns -1.
 * Notes: Defining a FEM field: [dfn_fem](https://github.com/cchiw/latte/tree/master/dfn_fem "dfn_fem").
 * Examples directory: [fn_getCell](https://github.com/cchiw/latte/tree/master/fn_getCell "fn_getCell")
+
+## A8. Math functions: Abs()
+The absolute function can be used on fields
+```
+#version 2.0
+field#2(1)[] A  (x) = x*2;
+field#2(1)[] F = abs(A);
+field#1(1)[] G = ∇F;
+```
+The derivative is derived as the following
+```
+output real out = |x*2|/(x*2);
+```
+### Details
+* Branch:   [Diderot-Dev](https://github.com/cchiw/Diderot-Dev) 
+* Syntax: “abs”: field#k(d)[]  → field#k(d)[]
+* Examples directory [fn_abs](https://github.com/cchiw/Diderot-Dev-Examples/tree/master/fn_abs) 
 
 # B.Tools
 ## B1.  DATm: Diderot's Automated testing 
