@@ -1,0 +1,16 @@
+#version 2.0
+
+field#2(1)[] A  (x) = x*2;
+field#2(1)[] F = abs(A);
+field#1(1)[] G = ∇F;
+int outSize = 5;
+
+strand sample (int i) {
+    real pos = i-3;
+    output real out =  G(pos); //observed
+    //output real out = |pos*2|/(pos*2);//expected
+    update {
+        stabilize;
+    }
+}
+create_array {sample(i) | i in 0..(outSize-1)};
