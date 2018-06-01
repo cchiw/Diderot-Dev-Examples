@@ -14,7 +14,7 @@ There are also new ways to define fields with closed-form expressions and by dat
 	 - A5. Clerp and Clamp: [fn_clerp](https://github.com/cchiw/latte/tree/master/fn_clerp "fn_clerp")
 	 - A6. Field Selection: [fn_selection](https://github.com/cchiw/latte/tree/master/fn_selection "fn_selection")
 	 - A7. Find Cell (for FEM fields): [fn_getCell](https://github.com/cchiw/latte/tree/master/fn_getCell "fn_getCell")
-               - A8. Absolute function:  [fn_abs](https://github.com/cchiw/Diderot-Dev-Examples/tree/master/fn_abs "fn_abs")  
+	 - A8. Absolute function:  [fn_abs](https://github.com/cchiw/Diderot-Dev-Examples/tree/master/fn_abs "fn_abs")  
 - B. Tools
 	- B1. DATm: Diderot’s Automated Testing: [tool_DATm](https://github.com/cchiw/latte/tree/master/tool_DATm "tool_DATm")
 	- B2. Printing the intermediate representation: [tool_printIR](https://github.com/cchiw/latte/tree/master/tool_printIR "tool_printIR")
@@ -204,7 +204,8 @@ input int selection_id;
 	- *Field arguments* The function accepts 2-6 field arguments.
 * Potential issue:  The value of the *Selection id* is clamped. If the first argument is id=-7 the id is set to 1 instead of throwing an error
 * Examples directory: [fn_selection](https://github.com/cchiw/latte/tree/master/fn_selection "fn_selection")
-
+----------
+----------
 
 ## A7. Math functions: GetCell()
 A user can define a field created as the result of an outside tool.  The code to define this type of field is copied below
@@ -239,7 +240,8 @@ tensor[] out = F(pos);
 	When there is no Cell the function returns -1.
 * Notes: Defining a FEM field: [dfn_fem](https://github.com/cchiw/latte/tree/master/dfn_fem "dfn_fem").
 * Examples directory: [fn_getCell](https://github.com/cchiw/latte/tree/master/fn_getCell "fn_getCell")
-
+----------
+----------
 ## A8. Math functions: Abs()
 The absolute function can be used on fields
 ```
@@ -257,6 +259,8 @@ output real out = |x*2|/(x*2);
 * Syntax: “abs”: field#k(d)[]  → field#k(d)[]
 * Examples directory [fn_abs](https://github.com/cchiw/Diderot-Dev-Examples/tree/master/fn_abs) 
 
+----------
+----------
 # B.Tools
 ## B1.  DATm: Diderot's Automated testing 
 ### Details
@@ -403,7 +407,8 @@ In lieu of using the ```printIR()``` operation the user can use command line arg
 	* image types needs to be defined separately so we have a unique variable to refer to
 	
 	
-	
+----------
+----------	
 	
 # C. Field Definitions
 ## C1. Field Definition: Closed Form expression
@@ -442,7 +447,7 @@ Differentiation is applied to the entire expression on the right hand side of th
 
 
 #### Details
-* Branch:   [Diderot-Dev](https://github.com/cchiw/Diderot-Dev) 
+* Branch:   [Diderot-Dev](https://github.com/cchiw/Diderot-Dev) and [main] (https://github.com/cchiw/diderot)
 * Syntax: “field#k(d)[alpha](var) = expression"
 	* “exp” is the core computation that includes operators on variable var 
 	* “var” is a vector of length d
