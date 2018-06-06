@@ -1,0 +1,33 @@
+#version 2.0
+
+//dimension 1
+input real choice = 0;
+
+// ***************************** Define an unary-variable field *************************
+
+// ******** Nrrd file Fields ********
+field#3(1)[] RemyN = c4hexic⊛  load_image("../../data/dim1_2x.nrrd"); // 0, 2, 4, 6
+field#3(1)[] TashiN = c4hexic⊛  load_image("../../data/dim1_const4.nrrd");//4, 4, 4, 4
+// ******** Input Variable Fields ********
+field#3(1)[] RemyV (x) = x*8; // 0, .8, 1.6, 2.4
+field#3(1)[] TashiV(x)= x-1; //-1 -.9 -.8 -.7
+
+field#3(1)[] F (x) = RemyN(x+0.1);//need to replace
+
+
+//field#3(1)[] F (x) = 6-TashiN(x) if (choice>2) else RemyN(x+0.1)+RemyV(x);
+//^ doesn't replace x with new var
+//need to search probe expressions and replace with variable
+
+
+int outSize = 4;
+strand sample (int i) {
+
+    real pos = i*0.1;
+    output real out = F(pos);
+
+    update {
+             stabilize;
+    }
+}
+create_array { sample(i) | i in 0..(outSize-1)};

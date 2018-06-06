@@ -1,0 +1,27 @@
+#version 2.0
+
+/* Define an unary-variable field with an if/else statement
+*/
+
+
+
+input real choice = 0;
+
+field#3(1)[] RemyN = c4hexic⊛  load_image("../../data/dim1_2x.nrrd"); // 0, .2, .4, .6
+field#3(1)[] TashiN = c4hexic⊛  load_image("../../data/dim1_const4.nrrd");//4, 4, 4, 4
+field#3(1)[] RemyV (x) = x*8; // 0, .8, 1.6, 2.4
+
+
+field#3(1)[] F (x) = TashiN(x) if (choice>2) else RemyN(x);
+
+int outSize = 4;
+strand sample (int i) {
+
+    real pos = i*0.1;
+    output real out = F(pos);
+
+    update {
+             stabilize;
+    }
+}
+create_array { sample(i) | i in 0..(outSize-1)};
