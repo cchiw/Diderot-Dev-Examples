@@ -1,7 +1,7 @@
 #version 2.0
 
 //dimension 1
-input real choice = 0;
+input real choice = 10;
 
 // ***************************** Define an unary-variable field *************************
 
@@ -11,14 +11,19 @@ field#3(1)[] TashiN = c4hexic⊛  load_image("../../data/dim1_const4.nrrd");//4,
 // ******** Input Variable Fields ********
 field#3(1)[] RemyV (x) = x*8; // 0, .8, 1.6, 2.4
 field#3(1)[] TashiV(x)= x-1; //-1 -.9 -.8 -.7
-
-field#3(1)[] F (x) = RemyN(x+0.1);//need to replace
-
+field#3(1)[] Fluffy(x)= x;
 
 //field#3(1)[] F (x) = 6-TashiN(x) if (choice>2) else RemyN(x+0.1)+RemyV(x);
-//^ doesn't replace x with new var
-//need to search probe expressions and replace with variable
+//if: [2,2,2,2]
+//else: [0, .8, 1.6, 2.4]+[.2, .4, .6] = [.2, 1.2, 2.2]
 
+
+field#3(1)[] F (x) = 6-TashiN(x)+x if (choice>2) else RemyN(x+0.1)+RemyV(x)+x;
+//if:[2, 2.1,2.2,2.3]
+//else: [.2, 1.3, 2.4]
+
+//field#3(1)[] F (x) = Fluffy(RemyV(Fluffy(x+0.1)))+x if (choice>2) else TashiN(x);
+//if: .8, 1.7, 2.6
 
 int outSize = 4;
 strand sample (int i) {

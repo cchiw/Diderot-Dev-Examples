@@ -1,0 +1,22 @@
+#version 2.0
+
+
+input real choice = 0.1;
+
+
+field#3(1)[] TashiN = c4hexic⊛  load_image("../../data/dim1_const4.nrrd");//4, 4, 4, 4
+field#3(1)[] reflectV(x)= x+0.05;
+
+
+field#3(1)[] F (x) = reflectV(x) if (x>=choice) else TashiN(x);
+
+
+int outSize = 4;
+strand sample (int i) {
+    real pos = i*0.1;
+    output real out = F(pos);
+    update {
+             stabilize;
+    }
+}
+create_array { sample(i) | i in 0..(outSize-1)};

@@ -1,0 +1,23 @@
+#version 2.0
+
+//dimension 1
+input real choice = 0;
+
+
+field#3(1)[] RemyN = c4hexic⊛  load_image("../../data/dim1_2x.nrrd"); // 0, 2, 4, 6
+
+
+real y = 0.1;
+field#3(1)[] F (x) = RemyN(x+y);
+
+int outSize = 4;
+strand sample (int i) {
+
+    real t = i*0.1;
+    output real out = F(t);
+
+    update {
+             stabilize;
+    }
+}
+create_array { sample(i) | i in 0..(outSize-1)};

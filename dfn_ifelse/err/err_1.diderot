@@ -8,16 +8,14 @@ input real choice = 0;
 // ******** Nrrd file Fields ********
 field#3(1)[] RemyN = c4hexic⊛  load_image("../../data/dim1_2x.nrrd"); // 0, 2, 4, 6
 field#3(1)[] TashiN = c4hexic⊛  load_image("../../data/dim1_const4.nrrd");//4, 4, 4, 4
+
 // ******** Input Variable Fields ********
 field#3(1)[] RemyV (x) = x*8; // 0, .8, 1.6, 2.4
 field#3(1)[] TashiV(x)= x-1; //-1 -.9 -.8 -.7
 
-
-// ******** Unhandled case (need to discuss) ********
-//field#3(1)[] F (x) = RemyN(x) if (x>2) else TashiN(x);
-//field#3(1)[] F (x) = RemyV(x) if (x>2) else TashiV(x);
-
-
+// ******** Expects a Typecheck error ********
+field#3(1)[] F (x) = RemyN if (choice >2) else TashiN;
+//field#3(1)[] F (x) = RemyV if (choice >2) else TashiV;
 
 int outSize = 4;
 strand sample (int i) {
