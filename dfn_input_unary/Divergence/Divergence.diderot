@@ -11,8 +11,8 @@ strand f(int i) {
             real tt = 3;
             vec2 AP= [ss,tt];
 
-            //out =   ∇⊗F(AP);
-             out =    ∇•F(AP);
+          //  out =   ∇⊗F(AP);
+            out =    ∇•F(AP);
         stabilize;
     }
 }

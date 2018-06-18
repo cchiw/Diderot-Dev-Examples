@@ -1,0 +1,46 @@
+#version 2.0
+
+field#4(2)[]F0 = c4hexic⊛  load_image("inputfile0.nrrd");
+field#4(2)[2]F1 = c4hexic⊛  load_image("inputfile1.nrrd");
+
+field#3(2)[2]G = (∇(F0))∘(F1*0.1);
+int length =7;
+strand f(int i) {
+
+	output tensor [2] out =  [0.0,0.0];
+	    update {
+
+		tensor [2] pos=[0,0];
+		if(i==0){
+			pos = ([0.35, 0.06]);
+		}
+		else if(i==1){
+			pos = ([0.35, 0.06]);
+		}
+		else if(i==2){
+			pos = ([-0.31, 0.07]);
+		}
+		else if(i==3){
+			pos = ([0.18, 0.27]);
+		}
+		else if(i==4){
+			pos = ([0.18, 0.36]);
+		}
+		else if(i==5){
+			pos = ([0.02, -0.04]);
+		}
+		else if(i==6){
+			pos = ([-0.37, 0.38]);
+		}
+		else if(i==7){
+			pos = ([0.28, 0.32]);
+		}
+
+	if((inside(pos,F1)) && (inside((F1)(pos)*0.1,F0)) && true){
+			out = (G)(pos);
+	}
+	 else{out =  [7.2,7.2];}
+        stabilize;
+    }
+}
+create_array { f(i) | i in 0..length};

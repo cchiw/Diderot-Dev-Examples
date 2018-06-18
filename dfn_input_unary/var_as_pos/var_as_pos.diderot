@@ -4,7 +4,7 @@
 input real choice = 0;
 
 
-field#3(1)[] RemyN = c4hexic⊛  load_image("../../data/dim1_2x.nrrd"); // 0, 2, 4, 6
+field#3(1)[] RemyN = c4hexic⊛  load_image("../../data/dim1_2x.nrrd"); // 0, .2, .4, .6
 
 
 real y = 0.1;
@@ -14,7 +14,8 @@ int outSize = 4;
 strand sample (int i) {
 
     real t = i*0.1;
-    output real out = F(t);
+   output real out = F(t);
+  //  output real out = ∇ F(t); //[0,0] //doesn't distribute to probed term
 
     update {
              stabilize;
